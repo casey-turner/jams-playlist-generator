@@ -1,32 +1,9 @@
-import Express from 'express'
-import querystring from 'querystring'
-import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI } from '../config'
-import { generateRandomString } from '../utils/generateRandomString'
-import { logger, logLevels } from '../utils/logger'
+import express from 'express'
+import { connect } from '../controllers/spotifyAuthController'
 
-const spotifyAuthRouter = Express.Router()
+const router = express.Router()
 
-spotifyAuthRouter.get('/connect', (req, res) => {
-  const scopes =
-    'user-read-private user-read-email playlist-modify-public playlist-modify-private'
-  const state = generateRandomString(16)
+// Define routes
+router.get('/connect', connect)
 
-  try {
-    const redirectUrl =
-      'https://accounts.spotify.com/authorize?' +
-      querystring.stringify({
-        response_type: 'code',
-        client_id: SPOTIFY_CLIENT_ID,
-        scope: scopes,
-        redirect_uri: SPOTIFY_REDIRECT_URI,
-        state: state,
-      })
-
-    res.redirect(redirectUrl)
-  } catch (error) {
-    logger(logLevels.error, 'Error in /connect', __filename, error.message)
-    res.status(500)
-  }
-})
-
-export { spotifyAuthRouter }
+export default router
