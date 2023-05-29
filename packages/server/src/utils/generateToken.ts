@@ -1,4 +1,4 @@
-import jwt, { Secret } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 interface User {
   accessToken: string
@@ -8,8 +8,8 @@ interface User {
   userId: string
 }
 
-const generateToken = (user: User, jwtSecret: Secret): string => {
-  const token = jwt.sign(
+const generateToken = (user: User, jwtSecret: string): string => {
+  const token: string = jwt.sign(
     {
       accessToken: user.accessToken,
       refreshToken: user.refreshToken,
