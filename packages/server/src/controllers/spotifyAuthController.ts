@@ -55,7 +55,7 @@ const callbackController = (req: Request, res: Response): void => {
             const timestamp = Date.now()
             const token = generateToken(
               { accessToken, refreshToken, expiresIn, timestamp, userId },
-              'JWT_SECRET'
+              'MY-SECRET-KEY'
             )
 
             res.cookie('spotify', token)

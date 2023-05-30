@@ -17,8 +17,7 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(spotifyAuthRouter)
 app.use(generatePlaylistRouter)
-
-app.get('/hello', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 

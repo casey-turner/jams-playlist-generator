@@ -1,12 +1,8 @@
 import axios from 'axios'
 import { NextFunction, Request, Response } from 'express'
 import jwt, { JwtPayload, Secret } from 'jsonwebtoken'
-import {
-  JWT_SECRET,
-  SPOTIFY_CLIENT_ID,
-  SPOTIFY_CLIENT_SECRET,
-} from '../config.js'
-import { logLevels, logger } from '../utils/logger.js'
+import { JWT_SECRET, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from '../config'
+import { logLevels, logger } from '../utils/logger'
 
 const isAccessTokenExpired = (
   timestamp: number,
