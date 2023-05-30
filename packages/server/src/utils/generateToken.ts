@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 interface User {
   accessToken: string
   refreshToken: string
-  expiresIn: string
+  expiresIn: number
   timestamp: number
   userId: string
 }

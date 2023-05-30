@@ -10,7 +10,14 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration)
 
 router.post('/playlist', authenticateUser as any, async (req, res) => {
-  console.log(req)
+  const { accessToken, refreshToken, expiresIn, userId } = req.userData
+  const prompt = req.body.prompt
+
+  console.log('prompt', prompt)
+  console.log('accessToken', accessToken)
+  console.log('refreshToken', refreshToken)
+  console.log('expiresIn', expiresIn)
+  console.log('userId', userId)
 })
 
 export default router
