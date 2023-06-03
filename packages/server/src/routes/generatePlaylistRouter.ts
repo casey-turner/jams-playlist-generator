@@ -9,15 +9,18 @@ const configuration = new Configuration({
 })
 const openai = new OpenAIApi(configuration)
 
-router.post('/playlist', authenticateUser as any, async (req, res) => {
-  const { accessToken, refreshToken, expiresIn, userId } = req.userData
-  const prompt = req.body.prompt
+router.post(
+  '/playlist',
 
-  console.log('prompt', prompt)
-  console.log('accessToken', accessToken)
-  console.log('refreshToken', refreshToken)
-  console.log('expiresIn', expiresIn)
-  console.log('userId', userId)
-})
+  // eslint-disable-next-line
+  // @ts-ignore
+  // eslint-disable-next-line
+  authenticateUser,
+
+  (req, res) => {
+
+    console.log(req.userData)
+  }
+)
 
 export default router
