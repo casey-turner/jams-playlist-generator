@@ -5,7 +5,7 @@ import { JWT_SECRET, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from '../config'
 import { generateToken } from '../utils/generateToken'
 import { logLevels, logger } from '../utils/logger'
 
-
+ 
 
 const isAccessTokenExpired = (timestamp: number, expiresIn: number, accessToken: string): boolean => {
   if (timestamp && expiresIn && accessToken) {
@@ -60,21 +60,6 @@ const refreshAccessToken = (refreshToken: string) => {
     })
 }
 
-interface UserData {
-  accessToken: string
-  refreshToken: string
-  expiresIn: number
-  timestamp: number
-  userId: string
-}
-
-declare module 'express' {
-  interface Request {
-    userData: UserData;
-  }
-}
-
-
 const authenticateUser = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization
   console.log('authHeader', authHeader)
@@ -86,6 +71,7 @@ const authenticateUser = async (req: Request, res: Response, next: NextFunction)
     const decodedToken = jwt.verify(token, JWT_SECRET as Secret) as JwtPayload
 
     if (!isAccessTokenExpired( decodedToken.timestamp as number, decodedToken.expiresIn as number, decodedToken.accessToken as string )) {
+      
       req.userData = {
         accessToken: decodedToken.accessToken as string,
         refreshToken: decodedToken.refreshToken as string,
