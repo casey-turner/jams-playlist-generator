@@ -24,8 +24,9 @@ function App() {
       try {
         const response = await authClient.post('/playlist', { prompt })
         if (response.data.success) {
+          console.log(response.data)
           const { playlist, playlistTitles } = response.data
-          setTracks(playlist.tracks)
+          setTracks(playlist)
           setPlaylistTitles(playlistTitles)
         } else {
           const error = response.data.error
