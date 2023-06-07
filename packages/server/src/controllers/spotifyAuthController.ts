@@ -29,51 +29,47 @@ const connectController = (req: Request, res: Response): void => {
   }
 }
 
-const callbackController = (req: Request, res: Response): void => {
-  const code = req.query.code || null
+const callbackController = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const code = req.query.code || null
 
-  spotifyTokenApi
-    .post('', {
+    const tokenResponse = await spotifyTokenApi.post('', {
       code: code,
       redirect_uri: SPOTIFY_REDIRECT_URI,
       grant_type: 'authorization_code',
     })
-    .then((response) => {
-      if (response.status === 200) {
-        const accessToken: string = response.data.access_token
-        const refreshToken: string = response.data.refresh_token
-        const expiresIn: number = response.data.expires_in
 
-        spotifyApi
-          .get('/me', {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          })
-          .then((response) => {
-            const userId: string = response.data.id
-            const timestamp = Date.now()
-            const token = generateToken(
-              { accessToken, refreshToken, expiresIn, timestamp, userId },
-              JWT_SECRET as string
-            )
+    if (tokenResponse.status === 200) {
+      const accessToken: string = tokenResponse.data.access_token
+      const refreshToken: string = tokenResponse.data.refresh_token
+      const expiresIn: number = tokenResponse.data.expires_in
 
-            res.cookie('spotify', token)
-            res.redirect('http://localhost:5173')
-          })
-          .catch((error) => {
-            logger(logLevels.error, error, '/me', error)
-            res.status(500).send()
-          })
-      } else {
-        logger(logLevels.error, 'something', '/callback', 'something')
-        res.status(500).send()
-      }
-    })
-    .catch((error) => {
-      logger(logLevels.error, error, '/callback', error)
+      const userInfoResponse = await spotifyApi.get('/me', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+
+      const userId: string = userInfoResponse.data.id
+      const timestamp = Date.now()
+      const token = generateToken(
+        { accessToken, refreshToken, expiresIn, timestamp, userId },
+        JWT_SECRET as string
+      )
+
+      res.cookie('spotify', token)
+      res.redirect('http://localhost:5173')
+    } else {
+      logger(logLevels.error, 'something', '/callback', 'something')
       res.status(500).send()
-    })
+    }
+  } catch (error) {
+    logger(logLevels.error, 'error', '/callback', 'error')
+    res.status(500).send()
+  }
 }
 
 export { connectController, callbackController }
