@@ -10,7 +10,7 @@ const logger = (
   level: logLevels,
   message: string,
   src: string,
-  data: unknown
+  data?: unknown
 ) => {
   switch (level) {
     case logLevels.info:
