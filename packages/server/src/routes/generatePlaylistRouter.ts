@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import { Configuration, OpenAIApi } from 'openai'
 import { OPENAI_API_KEY } from '../config'
 import { authenticateUser } from '../middlewares/authenticateUser'
@@ -11,15 +11,10 @@ const openai = new OpenAIApi(configuration)
 
 router.post(
   '/playlist',
-
-  // eslint-disable-next-line
-  // @ts-ignore
-  // eslint-disable-next-line
   authenticateUser,
-
-  (req, res) => {
-
-    console.log(req.userData)
+  (req: Request, res: Response) => {
+    console.log(req.body)
+    console.log(req.spotifyAuthData)
   }
 )
 

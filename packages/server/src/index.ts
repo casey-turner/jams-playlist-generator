@@ -18,7 +18,7 @@ app.use(bodyParser.json())
 app.use(spotifyAuthRouter)
 app.use(generatePlaylistRouter)
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello Boston!')
 })
 
 app.listen(PORT as string, () => {
