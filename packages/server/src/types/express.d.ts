@@ -1,4 +1,4 @@
-import { SpotifyAuthData } from "./spotifyAuthData"
+import { SpotifyAuthData } from "./spotifyTypes"
 
 declare global {
   namespace Express {
