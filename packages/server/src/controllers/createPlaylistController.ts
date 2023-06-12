@@ -1,22 +1,23 @@
 import { spotifyApi } from '../apis/spotifyApi'
+import { PlaylistTrack } from '../types/playlistTypes'
 import { logLevels, logger } from '../utils/logger'
 
-const createPlaylist = (accessToken, userId, options) => {
+const createPlaylist = (accessToken: string, userId: string, options: { name: string; description: string; public: boolean }) => {
   return spotifyApi
     .post(`/users/${userId}/playlists`, options, {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
     .then((response) => response.data)
     .catch((error) => {
-      logger(logLevels.error, error.message, 'createPlaylist', error)
+      logger(logLevels.error, 'error', 'createPlaylist', error)
     })
 }
 
-const getSongUris = (songs) => {
+const getSongUris = (songs: PlaylistTrack[]) => {
   return songs.map((song) => song.uri)
 }
 
-const addTracksToPlaylist = async (accessToken, playlistId, uris) => {
+const addTracksToPlaylist = async (accessToken: string, playlistId: string, uris: string[]) => {
   return spotifyApi
     .post(
       `/playlists/${playlistId}/tracks`,
@@ -31,4 +32,5 @@ const addTracksToPlaylist = async (accessToken, playlistId, uris) => {
     })
 }
 
-export { createPlaylist, getSongUris, addTracksToPlaylist }
+export { addTracksToPlaylist, createPlaylist, getSongUris }
+

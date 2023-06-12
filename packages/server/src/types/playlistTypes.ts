@@ -14,3 +14,16 @@ export type SpotifyTrackData = {
   artists: { name: string }[];
   album: { name: string; images: { url: string }[] };
 }
+
+export type PlaylistCreationRequest = {
+  tracks: PlaylistTrack[];
+  playlistTitle: string;
+}
+
+export type PlaylistTrack = {
+  title: string;
+  uri: string;
+  artist: string;
+  album: string;
+  albumCover: string;
+}
