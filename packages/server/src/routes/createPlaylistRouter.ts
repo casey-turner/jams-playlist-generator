@@ -27,17 +27,39 @@ router.post(
       public: false,
     }
 
-    if(!accessToken || !userId || !tracks || !playlistTitle || !playlistOptions ) {
-      logger(logLevels.error, 'string', '/create-playlist', 'Missing required parameters')
+    if (
+      !accessToken ||
+      !userId ||
+      !tracks ||
+      !playlistTitle ||
+      !playlistOptions
+    ) {
+      logger(
+        logLevels.error,
+        'string',
+        '/create-playlist',
+        'Missing required parameters'
+      )
       res.status(400).json({ message: 'Missing required parameters' })
       return
     }
 
-  
     createPlaylist(accessToken, userId, playlistOptions)
       .then((playlist) => {
-        const playlistId = playlist.id
+        const playlistId = playlist?.id
         const uris = getSongUris(tracks)
+
+        if (!playlistId) {
+          logger(
+            logLevels.error,
+            'string',
+            '/create-playlist',
+            'Missing Playlist ID'
+          )
+          res.status(400).json({ message: 'Missing Playlist ID' })
+          return
+        }
+
         addTracksToPlaylist(accessToken, playlistId, uris)
           .then((response) => {
             logger(
