@@ -79,10 +79,10 @@ function App() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="w-full mb-4">
+      <form onSubmit={handleSubmit} className="mb-4 w-full">
         <label
           htmlFor="prompt"
-          className="block mb-2 text-sm font-medium text-gray-900"
+          className="mb-2 block text-sm font-medium text-gray-900"
         >
           Your playlist
         </label>
@@ -91,13 +91,13 @@ function App() {
           onChange={handleChange}
           id="prompt"
           rows="4"
-          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
           placeholder="Write your playlist prompt..."
         ></textarea>
         <button
           type="submit"
           disabled={!prompt}
-          className="mt-4 text-3xl text-blue-950 bg-red-500 rounded-full px-6 py-3"
+          className="mt-4 rounded-full bg-red-500 px-6 py-3 text-3xl text-blue-950"
         >
           Submit
         </button>
@@ -108,7 +108,7 @@ function App() {
           <h2 className="text-3xl text-blue-950">Playlist Titles</h2>
           <div>
             {playlistTitles.map((title) => (
-              <label key={title} className="inline-flex items-center mt-3">
+              <label key={title} className="mt-3 inline-flex items-center">
                 <input
                   type="radio"
                   className="form-radio h-5 w-5 text-blue-600"
@@ -126,7 +126,7 @@ function App() {
       <hr className="my-4" />
       <button
         onClick={createPlaylist}
-        className="text-3xl text-blue-950 bg-red-500 rounded-full px-6 py-3"
+        className="rounded-full bg-red-500 px-6 py-3 text-3xl text-blue-950"
       >
         Create Playlist
       </button>
