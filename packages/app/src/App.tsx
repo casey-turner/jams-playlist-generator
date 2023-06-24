@@ -1,9 +1,9 @@
+import LogoutButton from '@components/LogoutButton'
+import TrackList from '@components/TrackList'
 import Cookies from 'js-cookie'
 import { useState } from 'react'
 import './App.css'
 import authClient from './api/authClient'
-import LogoutButton from './components/LogoutButton'
-import TrackList from './components/TrackList'
 
 function App() {
   const [prompt, setPrompt] = useState('')
