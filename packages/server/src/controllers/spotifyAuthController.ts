@@ -60,8 +60,8 @@ const callbackController = async (
         JWT_SECRET as string
       )
 
-      res.cookie('spotify', token)
-      res.redirect('http://localhost:5173')
+      res.cookie('jams_token', token)
+      res.redirect('http://localhost:5173/generate-playlist')
     } else {
       logger(logLevels.error, 'something', '/callback', 'something')
       res.status(500).send()
@@ -72,4 +72,4 @@ const callbackController = async (
   }
 }
 
-export { connectController, callbackController }
+export { callbackController, connectController }
