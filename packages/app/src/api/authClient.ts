@@ -1,4 +1,4 @@
-import token from '@/utils/token'
+import token from '@utils/token'
 import axios from 'axios'
 
 const authClient = axios.create({

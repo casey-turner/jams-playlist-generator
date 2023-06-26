@@ -6,10 +6,14 @@ import { RefreshTokenResult } from '../types/spotifyTypes'
 import { generateToken } from '../utils/generateToken'
 import { logLevels, logger } from '../utils/logger'
 
-const isAccessTokenExpired = (timestamp: number, expiresIn: number, accessToken: string): boolean => {
+const isAccessTokenExpired = (
+  timestamp: number,
+  expiresIn: number,
+  accessToken: string
+): boolean => {
   if (timestamp && expiresIn && accessToken) {
     const now = Date.now()
-    const expiresAt = timestamp + (expiresIn * 1000)
+    const expiresAt = timestamp + expiresIn * 1000
     return expiresAt > now
   }
   return true
@@ -38,9 +42,11 @@ const refreshAccessToken = (
       logLevels.error,
       'Spotify Client ID or Spotify Client Secret is missing',
       'middlewares/authenticateUser.ts (refreshAccessToken)',
-      {SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET}
+      { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET }
     )
-    return Promise.reject({ error: 'Spotify Client ID or Spotify Client Secret is missing' })
+    return Promise.reject({
+      error: 'Spotify Client ID or Spotify Client Secret is missing',
+    })
   }
   return axios
     .post('https://accounts.spotify.com/api/token', data, {
@@ -92,26 +98,22 @@ const refreshAccessToken = (
     })
 }
 
-const authenticateUser = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const authHeader = req.headers.authorization;
+const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
+  const authHeader = req.headers.authorization
   if (!authHeader) {
-    return res.status(401).json({ message: 'Authorization header missing' });
+    return res.status(401).json({ message: 'Authorization header missing' })
   }
-  const token = authHeader.split(' ')[1];
+  const token = authHeader.split(' ')[1]
 
   const handleAuthentication = async () => {
     try {
-      const decodedToken = jwt.verify(token, JWT_SECRET as Secret) as JwtPayload;
+      const decodedToken = jwt.verify(token, JWT_SECRET as Secret) as JwtPayload
 
       if (!decodedToken) {
-        return res.status(401).json({ message: 'Invalid or expired token' });
+        return res.status(401).json({ message: 'Invalid or expired token' })
       }
 
-      let newToken;
+      let newToken
       if (
         isAccessTokenExpired(
           decodedToken.timestamp as number,
@@ -122,11 +124,11 @@ const authenticateUser = (
         newToken = await refreshAccessToken(
           decodedToken.refreshToken as string,
           decodedToken.userId as string
-        );
+        )
       }
 
       if (newToken) {
-        const newTimestamp = Date.now();
+        const newTimestamp = Date.now()
         const token = generateToken(
           {
             accessToken: newToken.accessToken,
@@ -136,16 +138,16 @@ const authenticateUser = (
             userId: decodedToken.userId as string,
           },
           JWT_SECRET as string
-        );
+        )
 
-        res.cookie('spotify', token);
+        res.cookie('jams_token', token)
         req.spotifyAuthData = {
           accessToken: newToken.accessToken,
           refreshToken: decodedToken.refreshToken as string,
           expiresIn: newToken.expiresIn,
           timestamp: newTimestamp,
           userId: decodedToken.userId as string,
-        };
+        }
       } else {
         req.spotifyAuthData = {
           accessToken: decodedToken.accessToken as string,
@@ -153,23 +155,30 @@ const authenticateUser = (
           expiresIn: decodedToken.expiresIn as number,
           timestamp: decodedToken.timestamp as number,
           userId: decodedToken.userId as string,
-        };
+        }
       }
 
-      next();
+      next()
     } catch (error) {
-      logger(logLevels.error, 'authenticateUser failed', 'middlewares/authenticateUser.ts (authenticateUser)', error);
-      return res.status(401).json({ message: 'Invalid or expired token' });
+      logger(
+        logLevels.error,
+        'authenticateUser failed',
+        'middlewares/authenticateUser.ts (authenticateUser)',
+        error
+      )
+      return res.status(401).json({ message: 'Invalid or expired token' })
     }
-  };
+  }
 
   handleAuthentication().catch((error) => {
-    logger(logLevels.error, 'handleAuthentication failed', 'middlewares/authenticateUser.ts (authenticateUser)', error);
-    return res.status(401).json({ message: 'Invalid or expired token' });
-  });
-};
- 
-
+    logger(
+      logLevels.error,
+      'handleAuthentication failed',
+      'middlewares/authenticateUser.ts (authenticateUser)',
+      error
+    )
+    return res.status(401).json({ message: 'Invalid or expired token' })
+  })
+}
 
 export { authenticateUser }
-

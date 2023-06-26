@@ -1,32 +1,40 @@
-import TrackList from '@components/TrackList'
 import { useLocation } from 'react-router-dom'
+import useCustomisePlaylistFormContext from '../hooks/useCustomisePlaylistFormContext'
+import CustomiseCoverImage from './CustomiseCoverImage'
+import CustomiseTitle from './CustomiseTitle'
+import CustomiseTracks from './CustomiseTracks'
 
 const CustomisePlaylistForm = () => {
+  const { step, setStep, data, title, isFormValid } =
+    useCustomisePlaylistFormContext()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(JSON.stringify(data))
+  }
+
   const location = useLocation()
   const { playlist, playlistTitles } = location.state
+
   return (
     <>
-      {playlist && playlist.length > 0 && <TrackList tracks={playlist} />}
-      {playlistTitles && playlistTitles.length > 0 && (
-        <div className="mt-4">
-          <h2 className="text-3xl text-blue-950">Playlist Titles</h2>
-          <div>
-            {playlistTitles.map((title) => (
-              <label key={title} className="mt-3 inline-flex items-center">
-                <input
-                  type="radio"
-                  className="form-radio h-5 w-5 text-blue-600"
-                  name={`playlist-${title}`}
-                  value={title}
-                  onChange={handlePlaylistTitleChange}
-                  checked={selectedPlaylistTitle === title}
-                />
-                <span className="ml-2 text-gray-700">{title}</span>
-              </label>
-            ))}
-          </div>
+      <form action="" onSubmit={handleSubmit}>
+        {/* <header>{title[step]}</header> */}
+        <CustomiseTracks tracks={playlist} />
+        <CustomiseTitle playlistTitles={playlistTitles} />
+        <CustomiseCoverImage />
+        <div>
+          <button type="button" onClick={() => setStep(step - 1)}>
+            Back
+          </button>
+          <button type="button" onClick={() => setStep(step + 1)}>
+            Next
+          </button>
+          <button type="submit" disabled={!isFormValid}>
+            Submit
+          </button>
         </div>
-      )}
+      </form>
     </>
   )
 }

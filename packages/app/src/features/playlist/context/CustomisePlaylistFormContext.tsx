@@ -1,0 +1,99 @@
+import { createContext, useState } from 'react'
+
+type Track = {
+  title?: string
+  artist?: string
+  album?: string
+  albumCover?: string
+}
+
+type CustomisePlaylistFormContextType = {
+  title: { [key: number]: string }
+  step: number
+  setStep: (step: number) => void
+  data: {
+    tracks: Track[]
+    title: string
+    coverImage: string
+  }
+  setData: (data: {
+    tracks: Track[]
+    title: string
+    coverImage: string
+  }) => void
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  isFormValid: () => boolean
+}
+
+const CustomisePlaylistFormContext =
+  createContext<CustomisePlaylistFormContextType>(
+    {} as CustomisePlaylistFormContextType
+  )
+
+export const CustomisePlaylistFormProvider = ({
+  children,
+}: {
+  children: React.ReactNode
+}) => {
+  const title = {
+    0: 'Tracks',
+    1: 'Title',
+    2: 'Cover Image',
+  }
+
+  const [step, setStep] = useState(0)
+
+  const [data, setData] = useState<{
+    tracks: Track[]
+    title: string
+    coverImage: string
+  }>({
+    tracks: [],
+    title: '',
+    coverImage: '',
+  })
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const type = event.target.type
+    const name = event.target.name
+
+    const value =
+      type === 'checkbox' ? event.target.checked : event.target.value
+
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+  }
+
+  const isFormValid = () => {
+    const { tracks, title, coverImage } = data
+    if (
+      tracks.length === 0 ||
+      title === '' ||
+      coverImage === '' ||
+      step !== Object.keys(title).length - 1
+    ) {
+      return false
+    }
+    return true
+  }
+
+  const contextValue: CustomisePlaylistFormContextType = {
+    title,
+    step,
+    setStep,
+    data,
+    setData,
+    handleChange,
+    isFormValid,
+  }
+
+  return (
+    <CustomisePlaylistFormContext.Provider value={contextValue}>
+      {children}
+    </CustomisePlaylistFormContext.Provider>
+  )
+}
+
+export default CustomisePlaylistFormContext

@@ -2,7 +2,11 @@ import { Request, Response } from 'express'
 import { Configuration, OpenAIApi } from 'openai'
 import { spotifyApi } from '../apis/spotifyApi'
 import { OPENAI_API_KEY } from '../config'
-import { OpenAiResponse, PlaylistGenerationRequest, SpotifyTrackData } from '../types/playlistTypes'
+import {
+  OpenAiResponse,
+  PlaylistGenerationRequest,
+  SpotifyTrackData,
+} from '../types/playlistTypes'
 import { logLevels, logger } from '../utils/logger'
 
 const configuration = new Configuration({
@@ -13,9 +17,9 @@ const openai = new OpenAIApi(configuration)
 const generatePlaylist = async (req: Request, res: Response) => {
   try {
     if (!req.spotifyAuthData) {
-      throw new Error('Spotify authentication data is missing.');
+      throw new Error('Spotify authentication data is missing.')
     }
-    const accessToken: string = req.spotifyAuthData.accessToken;
+    const accessToken: string = req.spotifyAuthData.accessToken
     const { prompt } = req.body as PlaylistGenerationRequest
 
     const openAIResponse = await generateOpenAIResponse(prompt)
@@ -51,16 +55,17 @@ const generateOpenAIResponse = async (prompt: string) => {
     following format { "playlist": [ { "title":
     "Bohemian Rhapsody", "artist": "Queen"} ], "playlistTitles": ["First playlist name option", "Second playlist name option" ] }`
 
-  const aiCompletion  = await openai.createCompletion({
+  const aiCompletion = await openai.createCompletion({
     model: 'text-davinci-003',
     prompt: openaiPrompt,
     max_tokens: 200,
     temperature: 0.9,
   })
 
-  const text = aiCompletion.data.choices[0].text;
-  const openaiResponse = text !== undefined ? JSON.parse(text) as OpenAiResponse : null;
-  return openaiResponse;  
+  const text = aiCompletion.data.choices[0].text
+  const openaiResponse =
+    text !== undefined ? (JSON.parse(text) as OpenAiResponse) : null
+  return openaiResponse
 }
 
 const getSpotifyTracks = async (
@@ -78,35 +83,37 @@ const getSpotifyTracks = async (
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    });
-  });
+    })
+  })
 
-  const getSpotifyTrackData = await Promise.all(getSpotifyTrackDataPromises);
+  const getSpotifyTrackData = await Promise.all(getSpotifyTrackDataPromises)
 
-  const tracks = getSpotifyTrackData.map((item: { data: { tracks: { items: SpotifyTrackData[] } } }) => {
-    if (item && item.data.tracks.items.length > 0) {
-      const trackData = item.data.tracks.items[0];
+  const tracks = getSpotifyTrackData.map(
+    (item: { data: { tracks: { items: SpotifyTrackData[] } } }) => {
+      if (item && item.data.tracks.items.length > 0) {
+        const trackData = item.data.tracks.items[0]
 
-      return {
-        title: trackData.name,
-        uri: trackData.uri,
-        artist: trackData.artists[0].name,
-        album: trackData.album.name,
-        albumCover: trackData.album.images[1].url,
-      };
+        return {
+          title: trackData.name,
+          uri: trackData.uri,
+          artist: trackData.artists[0].name,
+          album: trackData.album.name,
+          albumCover: trackData.album.images[1].url,
+        }
+      }
+
+      return null
     }
+  )
 
-    return null;
-  });
-
-  const filteredTracks = tracks.filter((track) => track !== null);
+  const filteredTracks = tracks.filter((track) => track !== null)
   const playlistData = {
     success: true,
     playlist: filteredTracks,
     playlistTitles: playlistTitles,
-  };
+  }
 
-  return playlistData;
+  console.log(playlistData)
+  return playlistData
 }
 export { generatePlaylist }
-
