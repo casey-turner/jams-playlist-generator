@@ -3,9 +3,10 @@ import CustomisePlaylist from '@features/app/CustomisePlaylist'
 import GeneratePlaylist from '@features/app/GeneratePlaylist'
 import Landing from '@features/app/Landing'
 import { useRoutes } from 'react-router-dom'
+import { CustomisePlaylistFormProvider } from './features/playlist/context/CustomisePlaylistFormContext'
 
 function App() {
-  let element = useRoutes([
+  const element = useRoutes([
     {
       path: '/',
       element: <Landing />,
@@ -20,7 +21,11 @@ function App() {
     },
     {
       path: 'customise-playlist',
-      element: <CustomisePlaylist />,
+      element: (
+        <CustomisePlaylistFormProvider>
+          <CustomisePlaylist />
+        </CustomisePlaylistFormProvider>
+      ),
     },
   ])
   return element

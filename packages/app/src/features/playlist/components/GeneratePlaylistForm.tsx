@@ -1,4 +1,4 @@
-import authClient from '@api/authClient'
+import authClient from '@/utils/api'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
