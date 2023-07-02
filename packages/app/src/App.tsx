@@ -11,10 +11,10 @@ function App() {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/about" element={<About />} />
-      <Route path="/generate-playlist" element={<GeneratePlaylist />} />
       <Route path="/connect" element={<Connect />} />
+      <Route path="/generate-playlist" element={<GeneratePlaylist />} />
       <Route
-        path="/connect"
+        path="/customise-playlist"
         element={
           <CustomisePlaylistFormProvider>
             <CustomisePlaylist />
