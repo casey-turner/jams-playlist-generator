@@ -1,3 +1,6 @@
+import { Helmet } from 'react-helmet-async'
+import { useLocation } from 'react-router-dom'
+
 type HeadProps = {
   title?: string
   description?: string
@@ -9,14 +12,19 @@ export const Head = ({
   description = '',
   url = '',
 }: HeadProps = {}) => {
+  const location = useLocation()
+  const currentUrl = window.location.origin + location.pathname
+  console.log(location)
+
   return (
-    <head>
-      <title>
-        {title ? `${title} | JAMS - AI Playlist Generator` : undefined}
-      </title>
-      <meta name="description" content={description} />
-      <link rel="canonical" href={url} />
-    </head>
+    <Helmet
+      title={title ? `${title} | JAMS - AI Playlist Generator` : undefined}
+      defaultTitle="JAMS - AI Playlist Generator"
+    >
+      {description && <meta name="description" content={description} />}
+      {url && <link rel="canonical" href={url} />}
+      {!url && <link rel="canonical" href={currentUrl} />}
+    </Helmet>
   )
 }
 

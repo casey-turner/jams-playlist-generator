@@ -4,7 +4,7 @@ import CustomisePlaylistForm from '@features/playlist/components/CustomisePlayli
 const CustomisePlaylist = () => {
   return (
     <>
-      <Layout>
+      <Layout title="Customise Playlist">
         <div>Customise</div>
         <CustomisePlaylistForm />
       </Layout>

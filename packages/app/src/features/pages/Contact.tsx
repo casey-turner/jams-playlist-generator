@@ -3,7 +3,7 @@ import { Layout } from '@components/Layout'
 const Contact = () => {
   return (
     <>
-      <Layout>
+      <Layout title="Contact">
         <div>Contact</div>
       </Layout>
     </>

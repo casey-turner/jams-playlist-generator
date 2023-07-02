@@ -4,7 +4,7 @@ import GeneratePlaylistForm from '@features/playlist/components/GeneratePlaylist
 const GeneratePlaylist = () => {
   return (
     <>
-      <Layout>
+      <Layout title="Generate Playlist">
         <div>Generate</div>
         <GeneratePlaylistForm />
       </Layout>
