@@ -1,10 +1,5 @@
-import token from '@/utils/token'
+import token from '@utils/token'
 
-const isAuth = () => {
-  if (token.get()) {
-    return true
-  }
-  return false
-}
+const isAuth = () => !!token.get()
 
 export default isAuth

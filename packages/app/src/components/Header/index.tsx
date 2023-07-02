@@ -1,5 +1,6 @@
 import reactLogo from '@assets/react.svg'
 import { Container } from '@components/Container'
+import token from '@utils/token'
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
@@ -83,6 +84,23 @@ const Logo = () => {
   )
 }
 
+// add logout button
+const LogoutButton = () => {
+  const handleLogout = () => {
+    token.remove()
+    window.location.href = '/'
+  }
+
+  return (
+    <button
+      className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+      onClick={handleLogout}
+    >
+      Logout
+    </button>
+  )
+}
+
 export const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false)
   const handleMenu = () => {
@@ -94,6 +112,7 @@ export const Header = () => {
       <Container width="full">
         <div className="flex items-center justify-between py-2">
           <Logo />
+          {token.get() ? <LogoutButton /> : null}
           <NavButton isNavOpen={isNavOpen} handleMenu={handleMenu} />
         </div>
       </Container>
