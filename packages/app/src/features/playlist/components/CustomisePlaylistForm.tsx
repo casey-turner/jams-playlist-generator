@@ -14,7 +14,7 @@ const CustomisePlaylistForm = () => {
   }
 
   const location = useLocation()
-  const { playlist, playlistTitles } = location.state
+  const { playlist, playlistTitles } = location.state || {}
 
   return (
     <>

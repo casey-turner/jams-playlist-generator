@@ -1,34 +1,27 @@
-import Connect from '@features/app/Connect'
-import CustomisePlaylist from '@features/app/CustomisePlaylist'
-import GeneratePlaylist from '@features/app/GeneratePlaylist'
-import Landing from '@features/app/Landing'
-import { useRoutes } from 'react-router-dom'
+import About from '@/features/pages/About'
+import Connect from '@/features/pages/Connect'
+import CustomisePlaylist from '@/features/pages/CustomisePlaylist'
+import GeneratePlaylist from '@/features/pages/GeneratePlaylist'
+import Landing from '@/features/pages/Landing'
+import { Route, Routes } from 'react-router-dom'
 import { CustomisePlaylistFormProvider } from './features/playlist/context/CustomisePlaylistFormContext'
 
 function App() {
-  const element = useRoutes([
-    {
-      path: '/',
-      element: <Landing />,
-    },
-    {
-      path: 'connect',
-      element: <Connect />,
-    },
-    {
-      path: 'generate-playlist',
-      element: <GeneratePlaylist />,
-    },
-    {
-      path: 'customise-playlist',
-      element: (
-        <CustomisePlaylistFormProvider>
-          <CustomisePlaylist />
-        </CustomisePlaylistFormProvider>
-      ),
-    },
-  ])
-  return element
+  return (
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/generate-playlist" element={<Connect />} />
+      <Route path="/connect" element={<GeneratePlaylist />} />
+      <Route
+        path="/connect"
+        element={
+          <CustomisePlaylistFormProvider>
+            <CustomisePlaylist />
+          </CustomisePlaylistFormProvider>
+        }
+      />
+    </Routes>
+  )
 }
-
 export default App
