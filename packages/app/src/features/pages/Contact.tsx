@@ -1,10 +1,11 @@
-import { Head } from '@components/Head'
+import { Layout } from '@components/Layout'
 
 const Contact = () => {
   return (
     <>
-      <Head title="Contact" description="Contact" />
-      <div>Contact</div>
+      <Layout>
+        <div>Contact</div>
+      </Layout>
     </>
   )
 }

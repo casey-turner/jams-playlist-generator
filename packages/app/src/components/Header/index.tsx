@@ -1,7 +1,7 @@
 import reactLogo from '@assets/react.svg'
 import { Container } from '@components/Container'
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 type NavigationItem = {
   name: string
@@ -77,9 +77,9 @@ const NavButton = ({ isNavOpen, handleMenu }: NavProps) => {
 
 const Logo = () => {
   return (
-    <a href="/" className="h-10 w-10 bg-black">
+    <Link to="/" className="h-10 w-10 bg-black">
       <img src={reactLogo} className="logo react" alt="React logo" />
-    </a>
+    </Link>
   )
 }
 

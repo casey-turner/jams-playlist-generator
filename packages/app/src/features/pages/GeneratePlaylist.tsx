@@ -1,12 +1,13 @@
-import { Head } from '@components/Head'
+import { Layout } from '@components/Layout'
 import GeneratePlaylistForm from '@features/playlist/components/GeneratePlaylistForm'
 
 const GeneratePlaylist = () => {
   return (
     <>
-      <Head title="Generate Playlist" description="Generate Playlist" />
-      <div>Generate</div>
-      <GeneratePlaylistForm />
+      <Layout>
+        <div>Generate</div>
+        <GeneratePlaylistForm />
+      </Layout>
     </>
   )
 }

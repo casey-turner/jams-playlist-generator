@@ -10,17 +10,15 @@ const Landing = () => {
     if (!isAuth()) {
       navigate('/connect')
     } else {
-      navigate('/generate')
+      navigate('/generate-playlist')
     }
   }
 
   return (
     <>
       <Layout>
-        <div className="container mx-auto flex flex-col items-center justify-center px-4">
-          <h1 className="text-9xl">JAMS</h1>
-          <Button onClick={handleStart}>Get Started</Button>
-        </div>
+        <h1 className="text-9xl">JAMS</h1>
+        <Button onClick={handleStart}>Get Started</Button>
       </Layout>
     </>
   )

@@ -1,10 +1,11 @@
-import { Head } from '@components/Head'
+import { Layout } from '@components/Layout'
 
 const About = () => {
   return (
     <>
-      <Head title="About" description="About" />
-      <div>About</div>
+      <Layout>
+        <div>About</div>
+      </Layout>
     </>
   )
 }
