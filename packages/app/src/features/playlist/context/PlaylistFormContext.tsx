@@ -24,6 +24,11 @@ type CustomisePlaylistFormContextType = {
   }) => void
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   isFormValid: () => boolean
+  disablePrevious: boolean
+  disableNext: boolean
+  removePrevious: boolean
+  removeNext: boolean
+  removeSubmit: boolean
 }
 
 const CustomisePlaylistFormContext =
@@ -80,6 +85,16 @@ export const CustomisePlaylistFormProvider = ({
     return true
   }
 
+  const disablePrevious = step === 0
+
+  const disableNext = !isFormValid() || step === Object.keys(title).length - 1
+
+  const removePrevious = step !== 0
+
+  const removeNext = step !== Object.keys(title).length - 1
+
+  const removeSubmit = step === Object.keys(title).length - 1
+
   // const contextValue: CustomisePlaylistFormContextType = {
   //   title,
   //   step,
@@ -106,6 +121,11 @@ export const CustomisePlaylistFormProvider = ({
             setData,
             handleChange,
             isFormValid,
+            disablePrevious,
+            disableNext,
+            removePrevious,
+            removeNext,
+            removeSubmit,
           }}
         >
           {children}

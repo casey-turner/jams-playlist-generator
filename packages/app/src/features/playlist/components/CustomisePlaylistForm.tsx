@@ -1,11 +1,21 @@
-import useCustomisePlaylistFormContext from '../hooks/useCustomisePlaylistFormContext'
+import useCustomisePlaylistFormContext from '../hooks/usePlaylistFormContext'
 import CustomiseCoverImage from './CustomiseCoverImage'
 import CustomiseTitle from './CustomiseTitle'
 import CustomiseTracks from './CustomiseTracks'
 
 const CustomisePlaylistForm = () => {
-  const { step, setStep, data, title, isFormValid } =
-    useCustomisePlaylistFormContext()
+  const {
+    step,
+    setStep,
+    data,
+    title,
+    isFormValid,
+    disableNext,
+    disablePrevious,
+    removeNext,
+    removePrevious,
+    removeSubmit,
+  } = useCustomisePlaylistFormContext()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -23,15 +33,21 @@ const CustomisePlaylistForm = () => {
       <form action="" onSubmit={handleSubmit}>
         {displayStep[step]}
         <div>
-          <button type="button" onClick={() => setStep(step - 1)}>
-            Back
-          </button>
-          <button type="button" onClick={() => setStep(step + 1)}>
-            Next
-          </button>
-          <button type="submit" disabled={!isFormValid}>
-            Submit
-          </button>
+          {removePrevious && (
+            <button type="button" onClick={() => setStep(step - 1)}>
+              Back
+            </button>
+          )}
+          {removeNext && (
+            <button type="button" onClick={() => setStep(step + 1)}>
+              Next
+            </button>
+          )}
+          {removeSubmit && (
+            <button type="submit" disabled={!isFormValid}>
+              Submit
+            </button>
+          )}
         </div>
       </form>
     </>

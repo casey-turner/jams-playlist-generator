@@ -1,8 +1,12 @@
+import useCustomisePlaylistFormContext from '../hooks/usePlaylistFormContext'
+
 type CustomiseTitleProps = {
   playlistTitles: string[]
 }
 
 const CustomiseTitle = ({ playlistTitles }: CustomiseTitleProps) => {
+  const { data, setData, handleChange } = useCustomisePlaylistFormContext()
+
   return (
     <>
       {playlistTitles && playlistTitles.length > 0 && (
@@ -14,8 +18,9 @@ const CustomiseTitle = ({ playlistTitles }: CustomiseTitleProps) => {
                 <input
                   type="radio"
                   className="form-radio h-5 w-5 text-blue-600"
-                  name={`playlist-${title}`}
+                  name="playlistTitle"
                   value={title}
+                  onChange={handleChange}
                   // onChange={handlePlaylistTitleChange}
                   // checked={selectedPlaylistTitle === title}
                 />
