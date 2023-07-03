@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router-dom'
 import useCustomisePlaylistFormContext from '../hooks/useCustomisePlaylistFormContext'
 import CustomiseCoverImage from './CustomiseCoverImage'
 import CustomiseTitle from './CustomiseTitle'
@@ -13,16 +12,16 @@ const CustomisePlaylistForm = () => {
     console.log(JSON.stringify(data))
   }
 
-  const location = useLocation()
-  const { playlist, playlistTitles } = location.state || {}
+  const displayStep = {
+    0: <CustomiseTracks tracks={data.tracks} />,
+    1: <CustomiseTitle playlistTitles={data.title} />,
+    2: <CustomiseCoverImage />,
+  }
 
   return (
     <>
       <form action="" onSubmit={handleSubmit}>
-        {/* <header>{title[step]}</header> */}
-        <CustomiseTracks tracks={playlist} />
-        <CustomiseTitle playlistTitles={playlistTitles} />
-        <CustomiseCoverImage />
+        {displayStep[step]}
         <div>
           <button type="button" onClick={() => setStep(step - 1)}>
             Back
@@ -40,3 +39,17 @@ const CustomisePlaylistForm = () => {
 }
 
 export default CustomisePlaylistForm
+
+// import { useLocation } from 'react-router-dom'
+// import usePlaylistDataContext from '../hooks/usePlaylistDataContext'
+
+// const CustomisePlaylistForm = () => {
+//   const { tracks, playlistTitles } = usePlaylistDataContext()
+//   console.log(tracks)
+//   console.log(playlistTitles)
+//   const location = useLocation()
+
+//   return <></>
+// }
+
+// export default CustomisePlaylistForm

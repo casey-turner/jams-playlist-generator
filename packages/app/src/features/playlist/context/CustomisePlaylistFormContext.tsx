@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react'
+import { PlaylistDataContext } from './PlaylistDataContext'
 
 type Track = {
   title?: string
@@ -13,7 +14,7 @@ type CustomisePlaylistFormContextType = {
   setStep: (step: number) => void
   data: {
     tracks: Track[]
-    title: string
+    title: string[]
     coverImage: string
   }
   setData: (data: {
@@ -79,20 +80,38 @@ export const CustomisePlaylistFormProvider = ({
     return true
   }
 
-  const contextValue: CustomisePlaylistFormContextType = {
-    title,
-    step,
-    setStep,
-    data,
-    setData,
-    handleChange,
-    isFormValid,
-  }
+  // const contextValue: CustomisePlaylistFormContextType = {
+  //   title,
+  //   step,
+  //   setStep,
+  //   data,
+  //   setData,
+  //   handleChange,
+  //   isFormValid,
+  // }
 
   return (
-    <CustomisePlaylistFormContext.Provider value={contextValue}>
-      {children}
-    </CustomisePlaylistFormContext.Provider>
+    <PlaylistDataContext.Consumer>
+      {({ tracks, playlistTitles }) => (
+        <CustomisePlaylistFormContext.Provider
+          value={{
+            title,
+            step,
+            setStep,
+            data: {
+              tracks: tracks,
+              title: playlistTitles,
+              coverImage: data.coverImage,
+            },
+            setData,
+            handleChange,
+            isFormValid,
+          }}
+        >
+          {children}
+        </CustomisePlaylistFormContext.Provider>
+      )}
+    </PlaylistDataContext.Consumer>
   )
 }
 

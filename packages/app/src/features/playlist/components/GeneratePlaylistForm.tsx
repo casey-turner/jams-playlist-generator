@@ -1,12 +1,13 @@
-import authClient from '@/utils/api'
+import authClient from '@utils/api'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import usePlaylistDataContext from '../hooks/usePlaylistDataContext'
 
 const GeneratePlaylistForm = () => {
   const navigate = useNavigate()
   const [prompt, setPrompt] = useState('')
-  const [tracks, setTracks] = useState([])
-  const [playlistTitles, setPlaylistTitles] = useState([])
+
+  const { setTracks, setPlaylistTitles } = usePlaylistDataContext()
 
   const handleChange = (event) => {
     setPrompt(event.target.value)
@@ -19,11 +20,11 @@ const GeneratePlaylistForm = () => {
         if (response.data.success) {
           console.log(response.data)
           const { playlist, playlistTitles } = response.data
+          console.log('generate tracks playlist', playlist)
+
           setTracks(playlist)
           setPlaylistTitles(playlistTitles)
-          navigate('/customise-playlist', {
-            state: { playlist, playlistTitles },
-          })
+          navigate('/customise-playlist')
         } else {
           const error = response.data.error
             ? response.data.error
