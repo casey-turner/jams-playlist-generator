@@ -84,7 +84,6 @@ const Logo = () => {
   )
 }
 
-// add logout button
 const LogoutButton = () => {
   const handleLogout = () => {
     token.remove()
