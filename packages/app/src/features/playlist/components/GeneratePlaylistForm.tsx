@@ -20,8 +20,6 @@ const GeneratePlaylistForm = () => {
         if (response.data.success) {
           console.log(response.data)
           const { playlist, playlistTitles } = response.data
-          console.log('generate tracks playlist', playlist)
-
           setTracks(playlist)
           setPlaylistTitles(playlistTitles)
           navigate('/customise-playlist')

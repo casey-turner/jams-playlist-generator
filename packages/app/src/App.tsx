@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
 
-import { CustomisePlaylistFormProvider } from '@/features/playlist/context/PlaylistFormContext'
 import About from '@features/pages/About'
 import Connect from '@features/pages/Connect'
 import Contact from '@features/pages/Contact'
@@ -9,6 +8,7 @@ import Error404 from '@features/pages/Error404'
 import GeneratePlaylist from '@features/pages/GeneratePlaylist'
 import Landing from '@features/pages/Landing'
 import { PlaylistDataProvider } from '@features/playlist/context/PlaylistDataContext'
+import { PlaylistFormProvider } from '@features/playlist/context/PlaylistFormContext'
 
 import { HelmetProvider } from 'react-helmet-async'
 
@@ -21,17 +21,15 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/connect" element={<Connect />} />
-
           <Route path="/generate-playlist" element={<GeneratePlaylist />} />
           <Route
             path="/customise-playlist"
             element={
-              <CustomisePlaylistFormProvider>
+              <PlaylistFormProvider>
                 <CustomisePlaylist />
-              </CustomisePlaylistFormProvider>
+              </PlaylistFormProvider>
             }
           />
-
           <Route path="*" element={<Error404 />} />
         </Routes>
       </PlaylistDataProvider>

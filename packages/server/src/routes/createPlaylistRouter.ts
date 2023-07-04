@@ -15,8 +15,8 @@ router.post(
   '/create-playlist',
   authenticateUser,
   (req: Request, res: Response) => {
-    console.log(req.spotifyAuthData)
-    console.log(req.body)
+    // console.log(req.spotifyAuthData)
+    console.log('req', req.body)
 
     const { accessToken, userId } = req.spotifyAuthData ?? {}
     const { tracks, playlistTitle } = req.body as PlaylistCreationRequest

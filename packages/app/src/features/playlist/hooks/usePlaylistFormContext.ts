@@ -1,16 +1,16 @@
 import { useContext } from 'react'
-import CustomisePlaylistFormContext from '../context/PlaylistFormContext'
+import PlaylistFormContext from '../context/PlaylistFormContext'
 
-const useCustomisePlaylistFormContext = () => {
-  const context = useContext(CustomisePlaylistFormContext)
+const usePlaylistFormContext = () => {
+  const context = useContext(PlaylistFormContext)
 
   if (context === undefined) {
     throw new Error(
-      'useCustomisePlaylistFormContext must be used within a CustomisePlaylistFormProvider'
+      'usePlaylistFormContext must be used within a PlaylistFormProvider'
     )
   }
 
   return context
 }
 
-export default useCustomisePlaylistFormContext
+export default usePlaylistFormContext

@@ -113,7 +113,7 @@ const getSpotifyTracks = async (
     playlistTitles: playlistTitles,
   }
 
-  console.log(playlistData)
+  // console.log(playlistData)
   return playlistData
 }
 export { generatePlaylist }
