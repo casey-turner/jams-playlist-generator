@@ -2,7 +2,6 @@ import express, { Request, Response } from 'express'
 import {
   addTracksToPlaylist,
   createPlaylist,
-  getSongUris,
 } from '../controllers/createPlaylistController'
 import { authenticateUser } from '../middlewares/authenticateUser'
 import { PlaylistCreationRequest } from '../types/playlistTypes'
@@ -15,7 +14,6 @@ router.post(
   '/create-playlist',
   authenticateUser,
   (req: Request, res: Response) => {
-    // console.log(req.spotifyAuthData)
     console.log('req', req.body)
 
     const { accessToken, userId } = req.spotifyAuthData ?? {}
@@ -47,7 +45,6 @@ router.post(
     createPlaylist(accessToken, userId, playlistOptions)
       .then((playlist) => {
         const playlistId = playlist?.id
-        const uris = getSongUris(tracks)
 
         if (!playlistId) {
           logger(
@@ -60,7 +57,7 @@ router.post(
           return
         }
 
-        addTracksToPlaylist(accessToken, playlistId, uris)
+        addTracksToPlaylist(accessToken, playlistId, tracks)
           .then((response) => {
             logger(
               logLevels.info,

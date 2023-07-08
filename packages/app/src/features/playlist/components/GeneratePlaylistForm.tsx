@@ -7,7 +7,7 @@ const GeneratePlaylistForm = () => {
   const navigate = useNavigate()
   const [prompt, setPrompt] = useState('')
 
-  const { setTracks, setPlaylistTitles } = usePlaylistDataContext()
+  const { setAiTracks, setAiPlaylistTitles } = usePlaylistDataContext()
 
   const handleChange = (event) => {
     setPrompt(event.target.value)
@@ -18,10 +18,18 @@ const GeneratePlaylistForm = () => {
       try {
         const response = await authClient.post('/playlist', { prompt })
         if (response.data.success) {
-          console.log(response.data)
           const { playlist, playlistTitles } = response.data
-          setTracks(playlist)
-          setPlaylistTitles(playlistTitles)
+
+          // Add the new key to each track object in the playlist
+          const updatedPlaylist = playlist.map((track) => {
+            return {
+              ...track,
+              isSelected: true, // Add your new key-value pair here
+            }
+          })
+
+          setAiTracks(updatedPlaylist)
+          setAiPlaylistTitles(playlistTitles)
           navigate('/customise-playlist')
         } else {
           const error = response.data.error

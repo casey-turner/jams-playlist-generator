@@ -1,17 +1,11 @@
+import { Tracks } from '@/types'
 import { createContext, useState } from 'react'
 
-type Track = {
-  title?: string
-  artist?: string
-  album?: string
-  albumCover?: string
-}
-
 type playlistDataContextType = {
-  tracks: Track[]
-  setTracks: (tracks: Track[]) => void
-  playlistTitles: string[]
-  setPlaylistTitles: (playlistTitles: string[]) => void
+  aiTracks: Tracks[]
+  setAiTracks: (tracks: Tracks[]) => void
+  aiPlaylistTitles: string[]
+  setAiPlaylistTitles: (titles: string[]) => void
 }
 
 export const PlaylistDataContext = createContext<playlistDataContextType>(
@@ -23,12 +17,17 @@ export const PlaylistDataProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [tracks, setTracks] = useState<Track[]>([])
-  const [playlistTitles, setPlaylistTitles] = useState<string[]>([])
+  const [aiTracks, setAiTracks] = useState<Tracks[]>([])
+  const [aiPlaylistTitles, setAiPlaylistTitles] = useState<string[]>([])
 
   return (
     <PlaylistDataContext.Provider
-      value={{ tracks, setTracks, playlistTitles, setPlaylistTitles }}
+      value={{
+        aiTracks,
+        setAiTracks,
+        aiPlaylistTitles,
+        setAiPlaylistTitles,
+      }}
     >
       {children}
     </PlaylistDataContext.Provider>

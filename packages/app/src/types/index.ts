@@ -6,6 +6,9 @@ export type Track = {
   duration?: string
   uri?: string
   checked?: boolean
+  trackChecked?: boolean
 }
 
-export type Tracks = Track[]
+export type Tracks = {
+  tracks: Track
+}

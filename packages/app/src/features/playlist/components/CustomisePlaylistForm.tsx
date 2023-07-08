@@ -1,117 +1,61 @@
 // @ts-nocheck
-// import useCustomisePlaylistFormContext from '../hooks/usePlaylistFormContext'
-// import CustomiseCoverImage from './CustomiseCoverImage'
-// import CustomiseTitle from './CustomiseTitle'
-// import CustomiseTracks from './CustomiseTracks'
-
-// const CustomisePlaylistForm = () => {
-//   const {
-//     step,
-//     setStep,
-//     data,
-//     title,
-//     isFormValid,
-//     disableNext,
-//     disablePrevious,
-//     removeNext,
-//     removePrevious,
-//     removeSubmit,
-//   } = useCustomisePlaylistFormContext()
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault()
-//     console.log(JSON.stringify(data))
-//   }
-
-//   const displayStep = {
-//     0: <CustomiseTracks tracks={data.tracks} />,
-//     1: <CustomiseTitle playlistTitles={data.title} />,
-//     2: <CustomiseCoverImage />,
-//   }
-
-//   return (
-//     <>
-//       <form action="" onSubmit={handleSubmit}>
-//         {displayStep[step]}
-//         <div>
-//           {removePrevious && (
-//             <button type="button" onClick={() => setStep(step - 1)}>
-//               Back
-//             </button>
-//           )}
-//           {removeNext && (
-//             <button type="button" onClick={() => setStep(step + 1)}>
-//               Next
-//             </button>
-//           )}
-//           {removeSubmit && (
-//             <button type="submit" disabled={!isFormValid}>
-//               Submit
-//             </button>
-//           )}
-//         </div>
-//       </form>
-//     </>
-//   )
-// }
-
-// export default CustomisePlaylistForm
-
 import authClient from '@utils/api'
+import { FormProvider, useForm } from 'react-hook-form'
 import usePlaylistFormContext from '../hooks/usePlaylistFormContext'
-import CustomiseCoverImage from './CustomiseCoverImage'
 import CustomiseTitle from './CustomiseTitle'
 import CustomiseTracks from './CustomiseTracks'
 
 const CustomisePlaylistForm = () => {
-  const {
-    tracks,
-    selectedTracks,
-    setSelectedTracks,
-    playlistTitles,
-    selectedPlaylistTitle,
-    setSelectedPlaylistTitle,
-    step,
-    setStep,
-  } = usePlaylistFormContext()
+  const methods = useForm()
+  const { aiTracks, step, aiPlaylistTitles, setStep } = usePlaylistFormContext()
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    try {
-      const data = { selectedTracks, selectedPlaylistTitle }
-      const response = await authClient.post('/create-playlist', data)
-      console.log(response)
-    } catch (error) {
-      console.log(error)
-    }
+  // async arrow function
+  const onSubmit = async (data) => {
+    console.log('data', data)
+    const { playlistTitle, tracks } = data
+    const response = await authClient.post('/create-playlist', {
+      playlistTitle,
+      tracks,
+    })
+    console.log('response', response)
   }
 
-  const displayStep = {
-    0: <CustomiseTracks tracks={tracks} />,
-    1: <CustomiseTitle playlistTitles={playlistTitles} />,
-    2: <CustomiseCoverImage />,
+  const handleNext = () => {
+    setStep(step + 1)
   }
+
+  const handleBack = () => {
+    setStep(step - 1)
+  }
+
+  console.log('methods', methods)
 
   return (
-    <>
-      <form action="">
-        {displayStep[step]}
-        <div>
-          <button type="button" onClick={() => setStep(step - 1)}>
-            Back
-          </button>
-
-          <button type="button" onClick={() => setStep(step + 1)}>
-            Next
-          </button>
-
-          <button type="submit" onClick={handleSubmit}>
-            Submit
-          </button>
-        </div>
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        {step === 1 && (
+          <>
+            <CustomiseTracks tracks={aiTracks} />
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={methods.formState.isValid !== true}
+            >
+              Next
+            </button>
+          </>
+        )}
+        {step === 2 && (
+          <>
+            <CustomiseTitle playlistTitles={aiPlaylistTitles} />
+            <button type="button" onClick={handleBack}>
+              Back
+            </button>
+            <button type="submit">Submit</button>
+          </>
+        )}
       </form>
-    </>
+    </FormProvider>
   )
 }
 

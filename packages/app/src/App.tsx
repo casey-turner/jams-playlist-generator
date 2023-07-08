@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 
 import About from '@features/pages/About'
+import Complete from '@features/pages/Complete'
 import Connect from '@features/pages/Connect'
 import Contact from '@features/pages/Contact'
 import CustomisePlaylist from '@features/pages/CustomisePlaylist'
@@ -30,6 +31,7 @@ function App() {
               </PlaylistFormProvider>
             }
           />
+          <Route path="/complete" element={<Complete />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
       </PlaylistDataProvider>

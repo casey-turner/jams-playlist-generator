@@ -16,7 +16,7 @@ export type SpotifyTrackData = {
 }
 
 export type PlaylistCreationRequest = {
-  tracks: PlaylistTrack[]
+  tracks: string[]
   playlistTitle: string
 }
 
