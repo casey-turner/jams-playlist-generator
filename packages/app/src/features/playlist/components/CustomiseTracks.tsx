@@ -28,15 +28,11 @@ const CustomiseTracks = ({ tracks }) => {
     return index + 1 < 10 ? `0${index + 1}` : index + 1
   }
 
-  // const totalTracks = selectedTracks.length
-
-  console.log('selectedTracks', selectedTracks)
-
   return (
     <div>
       <div className="flex items-center justify-between">
         <h2 className="mb-4 text-2xl font-bold">Customise your playlist</h2>
-        <p>{tracks.length} songs</p>
+        {selectedTracks && <p>{selectedTracks.length} songs</p>}
       </div>
 
       {tracks.map((track) => (

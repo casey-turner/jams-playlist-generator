@@ -27,12 +27,13 @@ const CustomiseTitle = ({ playlistTitles }: CustomiseTitleProps) => {
           {title === '' ? (
             <>
               <input
+                id={`playlist-title-${index}`}
                 type="radio"
                 {...register('playlistTitle', { required: true })}
                 value={title}
                 checked={customTitleFocus && selectedPlaylistTitle === ''}
               />
-              <label>
+              <label htmlFor={`playlist-title-${index}`}>
                 <input
                   type="text"
                   {...register('customTitle')}
@@ -47,11 +48,12 @@ const CustomiseTitle = ({ playlistTitles }: CustomiseTitleProps) => {
           ) : (
             <>
               <input
+                id={`playlist-title-${index}`}
                 type="radio"
                 {...register('playlistTitle', { required: true })}
                 value={title}
               />
-              <label>{title}</label>
+              <label htmlFor={`playlist-title-${index}`}>{title}</label>
             </>
           )}
         </div>
