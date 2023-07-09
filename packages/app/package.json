@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
+    "@tailwindcss/forms": "^0.5.3",
     "@types/js-cookie": "^3.0.3",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
@@ -29,6 +30,8 @@
     "autoprefixer": "^10.4.14",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "install": "^0.13.0",
+    "npm": "^9.8.0",
     "postcss": "^8.4.24",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "tailwindcss": "^3.3.2",

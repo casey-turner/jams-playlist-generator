@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { Button } from '@components/Button'
 import authClient from '@utils/api'
 import { FormProvider, useForm } from 'react-hook-form'
 import usePlaylistFormContext from '../hooks/usePlaylistFormContext'
@@ -32,17 +33,20 @@ const CustomisePlaylistForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="flex w-full flex-col items-center justify-center"
+      >
         {step === 1 && (
           <>
             <CustomiseTracks tracks={aiTracks} />
-            <button
+            <Button
               type="button"
               onClick={handleNext}
               disabled={methods.formState.isValid !== true}
             >
               Next
-            </button>
+            </Button>
           </>
         )}
         {step === 2 && (
