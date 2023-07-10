@@ -2,9 +2,9 @@ import * as React from 'react'
 
 const theme = {
   primary:
-    'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded',
+    'bg-white hover:bg-transparent text-black font-bold py-2 px-4 rounded-full border border-white min-w-[200px]',
   secondary:
-    'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded',
+    'bg-transparent hover:bg-white text-black font-bold py-2 px-4 rounded-full border border-white min-w-[200px]',
 }
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
