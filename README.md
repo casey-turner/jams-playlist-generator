@@ -1,1 +1,1 @@
-# playlistify
+# JAMS - AI Playlist Generator
