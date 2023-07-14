@@ -1,24 +1,29 @@
 // @ts-nocheck
 import { Button } from '@components/Button'
-import authClient from '@utils/api'
 import { FormProvider, useForm } from 'react-hook-form'
 import usePlaylistFormContext from '../hooks/usePlaylistFormContext'
 import CustomiseTitle from './CustomiseTitle'
 import CustomiseTracks from './CustomiseTracks'
 
 const CustomisePlaylistForm = () => {
-  const methods = useForm()
   const { aiTracks, step, aiPlaylistTitles, setStep } = usePlaylistFormContext()
+
+  const methods = useForm({
+    defaultValues: {
+      tracks: aiTracks,
+      playlistTitles: aiPlaylistTitles,
+    },
+  })
 
   // async arrow function
   const onSubmit = async (data) => {
     console.log('data', data)
-    const { playlistTitle, tracks } = data
-    const response = await authClient.post('/create-playlist', {
-      playlistTitle,
-      tracks,
-    })
-    console.log('response', response)
+    // const { playlistTitle, tracks } = data
+    // const response = await authClient.post('/create-playlist', {
+    //   playlistTitle,
+    //   tracks,
+    // })
+    // console.log('response', response)
   }
 
   const handleNext = () => {
@@ -29,8 +34,7 @@ const CustomisePlaylistForm = () => {
     setStep(step - 1)
   }
 
-  console.log('methods', methods)
-
+  console.log('methods', methods.formState)
   return (
     <FormProvider {...methods}>
       <form
@@ -39,11 +43,11 @@ const CustomisePlaylistForm = () => {
       >
         {step === 1 && (
           <>
-            <CustomiseTracks tracks={aiTracks} />
+            <CustomiseTracks />
             <Button
               type="button"
               onClick={handleNext}
-              disabled={methods.formState.isValid !== true}
+              disabled={!methods.formState.isValid}
             >
               Next
             </Button>
@@ -51,11 +55,11 @@ const CustomisePlaylistForm = () => {
         )}
         {step === 2 && (
           <>
-            <CustomiseTitle playlistTitles={aiPlaylistTitles} />
-            <button type="button" onClick={handleBack}>
+            <CustomiseTitle />
+            <Button type="button" onClick={handleBack}>
               Back
-            </button>
-            <button type="submit">Submit</button>
+            </Button>
+            <Button type="submit">Submit</Button>
           </>
         )}
       </form>

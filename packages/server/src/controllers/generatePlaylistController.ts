@@ -48,7 +48,7 @@ const generatePlaylist = async (req: Request, res: Response) => {
 }
 
 const generateOpenAIResponse = async (prompt: string) => {
-  const openaiPrompt = `Create a 2 song ${prompt} playlist. 
+  const openaiPrompt = `Create a 5 song ${prompt} playlist. 
     All playlist songs should be available on Spotify
     and have the correct track title and artist. Also provide 5 creative / funny titles for the playlist. The
     playlist and titles must be returned as a JSON object in the
