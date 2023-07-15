@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { useState } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
 const CustomiseTitle = () => {
@@ -6,57 +7,72 @@ const CustomiseTitle = () => {
     register,
     formState: { errors },
     watch,
+    getValues,
     setValue,
   } = useFormContext()
+
+  const [customTitleSelected, setCustomTitleSelected] = useState(false)
 
   const { fields } = useFieldArray({
     name: 'playlistTitles',
   })
 
+  const selectedPlaylistTitle = watch('playlistTitles.title')
+  const customTitle = watch('playlistTitles.custom')
+
   return (
     <>
-      <div className="flex flex-col items-center justify-center">
-        <h2 className="mb-4 text-2xl font-bold">Customise Title</h2>
-        <p className="mb-4 text-sm">Choose a title for your playlist</p>
-        {fields.map((playlistTitle, index) => (
-          <div key={playlistTitle.id}>
-            <>
-              <input
-                id={`playlistTitles.${index}`}
-                className="peer"
-                type="radio"
-                {...register(`playlistTitles.title`)}
-              />
-              <label
-                htmlFor={`playlistTitles.${index}`}
-                className={`flex cursor-pointer items-center border-b border-l-2 border-gray-300 px-4 py-2 peer-checked:border-l-blue-900`}
-              >
-                <span className="mr-2 text-sm font-bold">{index + 1}</span>
-                <span className="text-sm">{playlistTitle.title}</span>
-              </label>
-            </>
+      <div className="flex flex-col items-center space-y-6">
+        {fields.map((title, index) => (
+          <div key={title.id}>
+            <input
+              id={`playlistTitles.${index}.title`}
+              className="peer hidden"
+              type="radio"
+              value={title.title}
+              {...register(`playlistTitles.title`)}
+              onChange={(e) => {
+                setCustomTitleSelected(false)
+              }}
+            />
+            <label
+              htmlFor={`playlistTitles.${index}.title`}
+              className={`peer-checked:underline-thickness-2 peer-checked:underline-gray-300 cursor-pointer text-3xl font-bold  peer-checked:text-blue-400 peer-checked:underline-offset-2`}
+            >
+              {`"${title.title}"`}
+            </label>
           </div>
         ))}
+        <div className="w-full max-w-[550px]">
+          <p className="mb-4 grid grid-cols-[minmax(20px,1fr)auto_minmax(20px,1fr)] items-center gap-4 text-center text-xl font-bold before:border-t-2 after:border-t-2">
+            OR
+          </p>
+        </div>
         <div>
           <input
-            id={`playlistTitles.custom`}
-            className="peer"
+            id="customPlaylistTitle"
+            className="peer hidden"
             type="radio"
-            value="custom"
-            onChange={handleCustomOptionChange}
-            {...register('customTitle')}
+            value={customTitle}
+            {...register(`playlistTitles.title`)}
+            checked={customTitleSelected}
+            onChange={(e) => {
+              setValue('playlistTitles.title', customTitle)
+            }}
           />
           <label
-            htmlFor={`playlistTitles.custom`}
-            className={`flex cursor-pointer items-center border-b border-l-2 border-gray-300 px-4 py-2 peer-checked:border-l-blue-900`}
+            htmlFor="customPlaylistTitle"
+            className="border-b-4 text-3xl peer-checked:text-blue-400"
           >
-            <span className="mr-2 text-sm font-bold">{fields.length + 1}</span>
-            <span className="text-sm">Custom Title:</span>
             <input
+              className="mx-auto w-full cursor-pointer border-0 border-transparent bg-transparent text-center text-3xl font-bold focus:ring-0"
               type="text"
-              className="ml-2 rounded border border-gray-300 px-2 py-1"
-              {...register(`playlistTitles.title`)}
-              disabled={!watch('customTitle')}
+              name="customPlaylistTitle"
+              placeholder="Enter your own title"
+              {...register(`playlistTitles.custom`)}
+              onFocus={(e) => {
+                setCustomTitleSelected(true)
+              }}
             />
           </label>
         </div>

@@ -34,32 +34,35 @@ const CustomisePlaylistForm = () => {
     setStep(step - 1)
   }
 
-  console.log('methods', methods.formState)
   return (
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="flex w-full flex-col items-center justify-center"
+        className="mx-auto max-w-[750px]"
       >
         {step === 1 && (
           <>
             <CustomiseTracks />
-            <Button
-              type="button"
-              onClick={handleNext}
-              disabled={!methods.formState.isValid}
-            >
-              Next
-            </Button>
+            <div className="mt-8 flex flex-row justify-center gap-4">
+              <Button
+                type="button"
+                onClick={handleNext}
+                disabled={!methods.formState.isValid}
+              >
+                Next
+              </Button>
+            </div>
           </>
         )}
         {step === 2 && (
           <>
             <CustomiseTitle />
-            <Button type="button" onClick={handleBack}>
-              Back
-            </Button>
-            <Button type="submit">Submit</Button>
+            <div className="mt-8 flex flex-row justify-center gap-4">
+              <Button type="button" onClick={handleBack}>
+                Back
+              </Button>
+              <Button type="submit">Submit</Button>
+            </div>
           </>
         )}
       </form>

@@ -5,7 +5,6 @@ const CustomisePlaylist = () => {
   return (
     <>
       <Layout title="Customise Playlist">
-        <div>Customise</div>
         <CustomisePlaylistForm />
       </Layout>
     </>

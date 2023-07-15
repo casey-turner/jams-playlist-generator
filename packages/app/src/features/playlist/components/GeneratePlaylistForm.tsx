@@ -22,11 +22,11 @@ const GeneratePlaylistForm = () => {
         // if (response.data.success) {
         //   const { playlist, playlistTitles } = response.data
 
-        // Add the new key to each track object in the playlist
+        // Add 'checked' key to each track object in the playlist
         // const updatedPlaylist = playlist.map((track) => {
         //   return {
         //     ...track,
-        //     checked: true, // Add your new key-value pair here
+        //     checked: true,
         //   }
         // })
 
@@ -86,7 +86,6 @@ const GeneratePlaylistForm = () => {
         const updatedPlaylistTitles = playlistTitles.map((title, index) => ({
           title: title,
         }))
-        updatedPlaylistTitles.push({ title: 'Create a new title' })
 
         setAiTracks(updatedPlaylist)
         setAiPlaylistTitles(updatedPlaylistTitles)

@@ -29,12 +29,13 @@ const CustomiseTracks = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center">
-        <h2 className="mb-4 text-2xl font-bold">Customise Tracks</h2>
-        <p className="mb-4 text-sm">{selectedTracksCount} tracks selected</p>
-
+      <div>
+        <div className="flex items-center justify-between">
+          <h2 className="mb-4 text-2xl font-bold">Customise Playlist</h2>
+          <p className="mb-4 text-sm">{selectedTracksCount} songs selected</p>
+        </div>
         {fields.map((track, index) => (
-          <div key={track.uri}>
+          <div key={track.id} className="w-full">
             <input
               id={`tracks.${index}`}
               className="peer hidden"
