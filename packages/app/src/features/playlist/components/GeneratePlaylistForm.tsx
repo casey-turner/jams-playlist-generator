@@ -1,6 +1,7 @@
 // @ts-nocheck
 // import authClient from '@utils/api'
 import { Tracks } from '@/types'
+import { useAutocomplete } from '@mui/base'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import usePlaylistDataContext from '../hooks/usePlaylistDataContext'
@@ -102,9 +103,79 @@ const GeneratePlaylistForm = () => {
     }
   }
 
+  const slotProps = {
+    root: {
+      className: 'w-full bg-cyan-500',
+    },
+  }
+
+  const {
+    getRootProps,
+    getInputLabelProps,
+    getInputProps,
+    getTagProps,
+    getListboxProps,
+    getOptionProps,
+    groupedOptions,
+    value,
+    focused,
+    setAnchorEl,
+  } = useAutocomplete({
+    multiple: true,
+    options: [
+      { label: 'Metal' },
+      { label: 'Post-Punk' },
+      { label: 'Pop-Punk' },
+      { label: 'Pop' },
+      { label: 'Rock' },
+      { label: 'Indie' },
+      { label: 'Hip-Hop' },
+    ],
+    getOptionLabel: (option) => option.label,
+  })
+
   return (
     <>
       <form onSubmit={handleSubmit} className="mb-4 w-full">
+        <div className="relative">
+          <div {...getRootProps()}>
+            <label {...getInputLabelProps()}>Select Playlist Genres</label>
+            <div
+              ref={setAnchorEl}
+              className={`border ${
+                focused ? 'border-blue-400' : 'border-gray-300'
+              } flex flex-wrap gap-2 rounded-md p-2 focus-within:ring-2 focus-within:ring-blue-400`}
+            >
+              {value.map((option, index) => (
+                <span
+                  className="rounded-md bg-blue-500 px-2 py-1 text-white"
+                  label={option.label}
+                  {...getTagProps({ index })}
+                >
+                  {option.label}
+                </span>
+              ))}
+              <input {...getInputProps()} />
+            </div>
+          </div>
+          {groupedOptions.length > 0 ? (
+            <ul
+              className="mt-2 rounded-md border border-gray-300 bg-white py-2 shadow-lg"
+              {...getListboxProps()}
+            >
+              {groupedOptions.map((option, index) => (
+                <li
+                  className={`cursor-pointer px-4 py-2 ${
+                    option === focused ? 'bg-blue-100' : ''
+                  }`}
+                  {...getOptionProps({ option, index })}
+                >
+                  <span>{option.label}</span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
         <label
           htmlFor="prompt"
           className="mb-2 block text-sm font-medium text-gray-900"

@@ -16,7 +16,6 @@ const CustomiseTitle = () => {
   const { fields } = useFieldArray({
     name: 'playlistTitles',
   })
-
   const selectedPlaylistTitle = watch('playlistTitles.title')
   const customTitle = watch('playlistTitles.custom')
 
@@ -51,14 +50,11 @@ const CustomiseTitle = () => {
         <div>
           <input
             id="customPlaylistTitle"
-            className="peer hidden"
+            className="peer"
             type="radio"
             value={customTitle}
             {...register(`playlistTitles.title`)}
             checked={customTitleSelected}
-            onChange={(e) => {
-              setValue('playlistTitles.title', customTitle)
-            }}
           />
           <label
             htmlFor="customPlaylistTitle"
