@@ -7,6 +7,8 @@ const CustomiseTracks = () => {
     register,
     formState: { errors },
     watch,
+    getValues,
+    setValue,
   } = useFormContext()
 
   const { fields } = useFieldArray({
@@ -14,7 +16,7 @@ const CustomiseTracks = () => {
     rules: {
       validate: (value) => {
         const checkedTracks = value.filter((track) => track.checked)
-        return checkedTracks.length >= 2
+        return checkedTracks.length >= 2 || 'Select at least 2 tracks'
       },
     },
   })

@@ -27,7 +27,7 @@ const CustomiseTitle = () => {
           <div key={title.id}>
             <input
               id={`playlistTitles.${index}.title`}
-              className="peer hidden"
+              className="peer"
               type="radio"
               value={title.title}
               {...register(`playlistTitles.title`)}
@@ -50,8 +50,7 @@ const CustomiseTitle = () => {
         </div>
         <div>
           <input
-            id="customPlaylistTitle"
-            className="peer hidden"
+            className="peer"
             type="radio"
             value={customTitle}
             {...register(`playlistTitles.title`)}

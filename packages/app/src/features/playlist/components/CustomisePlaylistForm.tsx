@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { Button } from '@components/Button'
 import { FormProvider, useForm } from 'react-hook-form'
+import useLocalStorage from '../hooks/useLocalStorage'
 import usePlaylistFormContext from '../hooks/usePlaylistFormContext'
 import CustomiseTitle from './CustomiseTitle'
 import CustomiseTracks from './CustomiseTracks'
@@ -8,10 +9,16 @@ import CustomiseTracks from './CustomiseTracks'
 const CustomisePlaylistForm = () => {
   const { aiTracks, step, aiPlaylistTitles, setStep } = usePlaylistFormContext()
 
+  const [tracks, setTracks] = useLocalStorage('tracks', aiTracks)
+  const [playlistTitles, setPlaylistTitles] = useLocalStorage(
+    'playlistTitles',
+    aiPlaylistTitles
+  )
+
   const methods = useForm({
     defaultValues: {
-      tracks: aiTracks,
-      playlistTitles: aiPlaylistTitles,
+      tracks: tracks,
+      playlistTitles: playlistTitles,
     },
   })
 
