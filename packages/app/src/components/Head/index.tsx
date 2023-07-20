@@ -14,7 +14,6 @@ export const Head = ({
 }: HeadProps = {}) => {
   const location = useLocation()
   const currentUrl = window.location.origin + location.pathname
-  console.log(location)
 
   return (
     <Helmet

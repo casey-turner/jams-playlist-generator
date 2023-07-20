@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
 const CustomiseTitle = () => {
@@ -16,6 +16,27 @@ const CustomiseTitle = () => {
   const { fields } = useFieldArray({
     name: 'playlistTitles',
   })
+
+  useEffect(() => {
+    watch((value, { name, type }) => console.log(value, name, type))
+  }, [watch])
+
+  useEffect(() => {
+    const tracks = localStorage.getItem('JAMS_playlist_titles')
+    if (tracks) {
+      setValue('playlistTitles', JSON.parse(tracks))
+    }
+  }, [])
+
+  useEffect(() => {
+    watch((value, { name, type }) =>
+      localStorage.setItem(
+        'JAMS_playlist_titles',
+        JSON.stringify(value.playlistTitles)
+      )
+    )
+    watch((value, { name, type }) => console.log(value, name, type))
+  }, [watch])
 
   const selectedPlaylistTitle = watch('playlistTitles.title')
   const customTitle = watch('playlistTitles.custom')
@@ -69,8 +90,12 @@ const CustomiseTitle = () => {
               name="customPlaylistTitle"
               placeholder="Enter your own title"
               {...register(`playlistTitles.custom`)}
+              onChange={(e) => {
+                setValue('playlistTitles.title', e.target.value)
+              }}
               onFocus={(e) => {
                 setCustomTitleSelected(true)
+                setValue('playlistTitles.title', e.target.value)
               }}
             />
           </label>

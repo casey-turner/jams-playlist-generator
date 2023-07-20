@@ -85,6 +85,7 @@ const GeneratePlaylistForm = () => {
 
         const updatedPlaylistTitles = playlistTitles.map((title, index) => ({
           title: title,
+          checked: false,
         }))
 
         setAiTracks(updatedPlaylist)
