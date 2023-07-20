@@ -1,11 +1,12 @@
 // @ts-nocheck
 import albumCoverFallback from '@assets/album-cover-fallback.png'
+import { useEffect } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
 const CustomiseTracks = () => {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
     getValues,
     setValue,
@@ -16,10 +17,25 @@ const CustomiseTracks = () => {
     rules: {
       validate: (value) => {
         const checkedTracks = value.filter((track) => track.checked)
-        return checkedTracks.length >= 2 || 'Select at least 2 tracks'
+        return checkedTracks.length >= 2
       },
     },
   })
+
+  useEffect(() => {
+    const tracks = localStorage.getItem('JAMS_tracks')
+    if (tracks) {
+      setValue('tracks', JSON.parse(tracks))
+    }
+  }, [])
+
+  console.log(isValid)
+
+  useEffect(() => {
+    watch((value, { name, type }) =>
+      localStorage.setItem('JAMS_tracks', JSON.stringify(value.tracks))
+    )
+  }, [watch])
 
   const trackNumber = (index) => {
     return index + 1 < 10 ? `0${index + 1}` : index + 1
