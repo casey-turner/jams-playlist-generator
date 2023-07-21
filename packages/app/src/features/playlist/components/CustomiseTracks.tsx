@@ -10,6 +10,8 @@ const CustomiseTracks = () => {
     watch,
     getValues,
     setValue,
+    setError,
+    clearErrors,
   } = useFormContext()
 
   const { fields } = useFieldArray({
@@ -29,8 +31,6 @@ const CustomiseTracks = () => {
     }
   }, [])
 
-  console.log(isValid)
-
   useEffect(() => {
     watch((value, { name, type }) =>
       localStorage.setItem('JAMS_tracks', JSON.stringify(value.tracks))
@@ -44,6 +44,17 @@ const CustomiseTracks = () => {
   const selectedTracksCount = watch('tracks').filter(
     (track) => track.checked
   ).length
+
+  useEffect(() => {
+    if (selectedTracksCount < 2) {
+      setError('tracks', {
+        type: 'manual',
+        message: 'Please select at least 2 songs for your playlist.',
+      })
+    } else {
+      clearErrors('tracks')
+    }
+  }, [selectedTracksCount, setError, clearErrors])
 
   return (
     <>
@@ -80,6 +91,9 @@ const CustomiseTracks = () => {
             </label>
           </div>
         ))}
+        {errors.tracks && (
+          <p className="mt-4 text-sm text-red-500">{errors.tracks.message}</p>
+        )}
       </div>
     </>
   )
