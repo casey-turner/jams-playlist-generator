@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { Button } from '@components/Button'
+import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import usePlaylistFormContext from '../hooks/usePlaylistFormContext'
 import CustomiseTitle from './CustomiseTitle'
@@ -14,6 +15,8 @@ const CustomisePlaylistForm = () => {
       playlistTitles: aiPlaylistTitles,
     },
   })
+
+  const { watch, setValue } = methods
 
   const onSubmit = async (data) => {
     console.log('data', data)
@@ -32,6 +35,20 @@ const CustomisePlaylistForm = () => {
   const handleBack = () => {
     setStep(step - 1)
   }
+
+  useEffect(() => {
+    const titles = localStorage.getItem('JAMS_playlist_titles')
+    if (titles) {
+      setValue('playlistTitles', JSON.parse(titles))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem(
+      'JAMS_playlist_titles',
+      JSON.stringify(watch('playlistTitles'))
+    )
+  }, [watch])
 
   return (
     <FormProvider {...methods}>

@@ -32,7 +32,7 @@ const CustomiseTracks = () => {
   }, [])
 
   useEffect(() => {
-    watch((value, { name, type }) =>
+    watch((value) =>
       localStorage.setItem('JAMS_tracks', JSON.stringify(value.tracks))
     )
   }, [watch])

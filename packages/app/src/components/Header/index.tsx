@@ -87,6 +87,7 @@ const Logo = () => {
 const LogoutButton = () => {
   const handleLogout = () => {
     token.remove()
+    localStorage.clear()
     window.location.href = '/'
   }
 

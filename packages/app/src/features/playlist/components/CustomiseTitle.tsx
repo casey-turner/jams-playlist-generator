@@ -18,28 +18,23 @@ const CustomiseTitle = () => {
   })
 
   useEffect(() => {
-    watch((value, { name, type }) => console.log(value, name, type))
-  }, [watch])
-
-  useEffect(() => {
-    const tracks = localStorage.getItem('JAMS_playlist_titles')
-    if (tracks) {
-      setValue('playlistTitles', JSON.parse(tracks))
+    const customTitle = localStorage.getItem('JAMS_custom_title')
+    if (customTitle) {
+      setValue('customPlaylistTitle', JSON.parse(customTitle))
     }
   }, [])
 
   useEffect(() => {
-    watch((value, { name, type }) =>
-      localStorage.setItem(
-        'JAMS_playlist_titles',
-        JSON.stringify(value.playlistTitles)
-      )
-    )
-    watch((value, { name, type }) => console.log(value, name, type))
+    watch((value, { customPlaylistTitle }) => {
+      console.log('value', customPlaylistTitle)
+      // localStorage.setItem(
+      //   'JAMS_custom_title',
+      //   JSON.stringify(value.customPlaylistTitle)
+      // )
+    })
   }, [watch])
 
-  const selectedPlaylistTitle = watch('playlistTitles.title')
-  const customTitle = watch('playlistTitles.custom')
+  console.log('watch', watch('playlistTitles'))
 
   return (
     <>
@@ -47,17 +42,17 @@ const CustomiseTitle = () => {
         {fields.map((title, index) => (
           <div key={title.id}>
             <input
-              id={`playlistTitles.${index}.title`}
+              id={title.id}
               className="peer"
               type="radio"
+              {...register(`playlistTitles`)}
               value={title.title}
-              {...register(`playlistTitles.title`)}
               onChange={(e) => {
                 setCustomTitleSelected(false)
               }}
             />
             <label
-              htmlFor={`playlistTitles.${index}.title`}
+              htmlFor={title.id}
               className={`peer-checked:underline-thickness-2 peer-checked:underline-gray-300 cursor-pointer text-3xl font-bold  peer-checked:text-blue-400 peer-checked:underline-offset-2`}
             >
               {`"${title.title}"`}
@@ -71,34 +66,33 @@ const CustomiseTitle = () => {
         </div>
         <div>
           <input
+            id="playlistTitles-custom"
             className="peer"
             type="radio"
-            value={customTitle}
-            {...register(`playlistTitles.title`)}
+            {...register(`playlistTitles`)}
             checked={customTitleSelected}
-            onChange={(e) => {
-              setValue('playlistTitles.title', customTitle)
-            }}
           />
           <label
             htmlFor="customPlaylistTitle"
-            className="border-b-4 text-3xl peer-checked:text-blue-400"
+            className="sr-only border-b-4 text-3xl peer-checked:text-blue-400"
           >
-            <input
-              className="mx-auto w-full cursor-pointer border-0 border-transparent bg-transparent text-center text-3xl font-bold focus:ring-0"
-              type="text"
-              name="customPlaylistTitle"
-              placeholder="Enter your own title"
-              {...register(`playlistTitles.custom`)}
-              onChange={(e) => {
-                setValue('playlistTitles.title', e.target.value)
-              }}
-              onFocus={(e) => {
-                setCustomTitleSelected(true)
-                setValue('playlistTitles.title', e.target.value)
-              }}
-            />
+            Enter your own title
           </label>
+          <input
+            id="customPlaylistTitle"
+            className="mx-auto w-full cursor-pointer border-0 border-transparent bg-transparent text-center text-3xl font-bold focus:ring-0"
+            type="text"
+            name="customPlaylistTitle"
+            placeholder="Enter your own title"
+            {...register(`customPlaylistTitle`)}
+            onChange={(e) => {
+              setValue('playlistTitles', e.target.value)
+            }}
+            onFocus={(e) => {
+              setValue('playlistTitles', e.target.value)
+              setCustomTitleSelected(true)
+            }}
+          />
         </div>
       </div>
     </>
