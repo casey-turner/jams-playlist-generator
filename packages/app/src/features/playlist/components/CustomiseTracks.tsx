@@ -1,12 +1,17 @@
 // @ts-nocheck
 import albumCoverFallback from '@assets/album-cover-fallback.png'
+import { useEffect } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
 const CustomiseTracks = () => {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
+    getValues,
+    setValue,
+    setError,
+    clearErrors,
   } = useFormContext()
 
   const { fields } = useFieldArray({
@@ -19,6 +24,19 @@ const CustomiseTracks = () => {
     },
   })
 
+  useEffect(() => {
+    const tracks = localStorage.getItem('JAMS_tracks')
+    if (tracks) {
+      setValue('tracks', JSON.parse(tracks))
+    }
+  }, [])
+
+  useEffect(() => {
+    watch((value) =>
+      localStorage.setItem('JAMS_tracks', JSON.stringify(value.tracks))
+    )
+  }, [watch])
+
   const trackNumber = (index) => {
     return index + 1 < 10 ? `0${index + 1}` : index + 1
   }
@@ -26,6 +44,17 @@ const CustomiseTracks = () => {
   const selectedTracksCount = watch('tracks').filter(
     (track) => track.checked
   ).length
+
+  useEffect(() => {
+    if (selectedTracksCount < 2) {
+      setError('tracks', {
+        type: 'manual',
+        message: 'Please select at least 2 songs for your playlist.',
+      })
+    } else {
+      clearErrors('tracks')
+    }
+  }, [selectedTracksCount, setError, clearErrors])
 
   return (
     <>
@@ -62,6 +91,9 @@ const CustomiseTracks = () => {
             </label>
           </div>
         ))}
+        {errors.tracks && (
+          <p className="mt-4 text-sm text-red-500">{errors.tracks.message}</p>
+        )}
       </div>
     </>
   )

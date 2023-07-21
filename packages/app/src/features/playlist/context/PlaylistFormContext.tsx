@@ -1,5 +1,6 @@
 import { Tracks } from '@/types'
-import { createContext, useState } from 'react'
+import { createContext } from 'react'
+import useLocalStorage from '../hooks/useLocalStorage'
 import usePlaylistDataContext from '../hooks/usePlaylistDataContext'
 
 type playlistFromContextType = {
@@ -26,7 +27,7 @@ export const PlaylistFormProvider = ({
   const { aiTracks, setAiTracks, aiPlaylistTitles, setAiPlaylistTitles } =
     usePlaylistDataContext()
 
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useLocalStorage('customise_playlist', 1)
 
   const contextValue = {
     aiTracks,
@@ -37,7 +38,6 @@ export const PlaylistFormProvider = ({
     setStep,
   }
 
-  console.log('contextValue', contextValue)
   return (
     <PlaylistFormContext.Provider value={contextValue}>
       {children}
