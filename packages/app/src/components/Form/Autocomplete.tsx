@@ -1,5 +1,7 @@
 // @ts-nocheck
+import { genreOptions } from '@data/genres'
 import { useAutocomplete } from '@mui/base'
+import * as React from 'react'
 
 const Tag = (props) => {
   const { label, onDelete, ...other } = props
@@ -14,8 +16,9 @@ const Tag = (props) => {
   )
 }
 
-export const Autocomplete = () => {
+const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
   const {
+    handleDelete,
     getRootProps,
     getInputLabelProps,
     getInputProps,
@@ -23,22 +26,20 @@ export const Autocomplete = () => {
     getListboxProps,
     getOptionProps,
     groupedOptions,
-    value,
     focused,
+    value,
     setAnchorEl,
   } = useAutocomplete({
+    id: 'autocomplete',
+    defaultValue: [],
     multiple: true,
-    options: [
-      { label: 'Metal' },
-      { label: 'Post-Punk' },
-      { label: 'Pop-Punk' },
-      { label: 'Pop' },
-      { label: 'Rock' },
-      { label: 'Indie' },
-      { label: 'Hip-Hop' },
-    ],
-    getOptionLabel: (option) => option.label,
-    isOptionEqualToValue: (option, value) => option.label === value.label,
+    options: genreOptions,
+    // getOptionLabel: (option) => option.label,
+    // isOptionEqualToValue: (option, value) => option.label === value.label,
+    isOptionEqualToValue: (option, value) => option === value,
+    onChange: (e, v) => {
+      props.onChange(v)
+    },
   })
 
   return (
@@ -55,7 +56,7 @@ export const Autocomplete = () => {
             {value.map((option, index) => (
               <Tag
                 key={index}
-                label={option.label}
+                label={option}
                 onDelete={() => handleDelete(index)}
                 {...getTagProps({ index })}
               />
@@ -75,7 +76,7 @@ export const Autocomplete = () => {
                 }`}
                 {...getOptionProps({ option, index })}
               >
-                <span>{option.label}</span>
+                <span>{option}</span>
               </li>
             ))}
           </ul>
@@ -83,4 +84,6 @@ export const Autocomplete = () => {
       </div>
     </>
   )
-}
+})
+
+export default Autocomplete
