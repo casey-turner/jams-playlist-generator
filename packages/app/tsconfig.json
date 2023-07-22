@@ -24,6 +24,7 @@
       "@api/*": ["./src/api/*"],
       "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/components/*"],
+      "@data/*": ["./src/data/*"],
       "@features/*": ["./src/features/*"],
       "@types/*": ["./src/types/*"],
       "@utils/*": ["./src/utils/*"]
