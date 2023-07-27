@@ -1,3 +1,4 @@
+import Cassette from '@assets/cassette-tape-001-poster.avif'
 import { Button } from '@components/Button'
 import { Layout } from '@components/Layout'
 import isAuth from '@utils/auth'
@@ -17,8 +18,17 @@ const Landing = () => {
   return (
     <>
       <Layout>
-        <h1 className="text-9xl">JAMS</h1>
-        <Button onClick={handleStart}>Get Started</Button>
+        <div>
+          <h1 className="text-6xl font-this uppercase">Discover Your Perfect Playlist</h1>
+          <p>Unleash the power of JAMS, where music meets AI technology! No more struggling to find the perfect playlist for your mood or favorite genre. With JAMS, simply input your desired music genre, and let AI curate a personalised playlist just for you, filled with handpicked tracks that match your taste.
+          </p>
+
+          <Button onClick={handleStart}>Get Started</Button>
+
+        </div>
+ 
+        <img src={Cassette} alt="" />
+      
       </Layout>
     </>
   )
