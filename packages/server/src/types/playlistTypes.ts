@@ -1,6 +1,7 @@
 export type PlaylistGenerationRequest = {
-  prompt: string // Music genre supplied by the user
-  // TODO add other properties related to playlist generation
+  genres: string[]
+  numberOfSongs: number
+  repeatArtist: boolean
 }
 
 export type OpenAiResponse = {

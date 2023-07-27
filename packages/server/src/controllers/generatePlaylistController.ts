@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Request, Response } from 'express'
 import { Configuration, OpenAIApi } from 'openai'
 import { spotifyApi } from '../apis/spotifyApi'
@@ -19,10 +20,11 @@ const generatePlaylist = async (req: Request, res: Response) => {
     if (!req.spotifyAuthData) {
       throw new Error('Spotify authentication data is missing.')
     }
+    console.log(req.body)
     const accessToken: string = req.spotifyAuthData.accessToken
-    const { prompt } = req.body as PlaylistGenerationRequest
+    const { data } = req.body as PlaylistGenerationRequest
 
-    const openAIResponse = await generateOpenAIResponse(prompt)
+    const openAIResponse = await generateOpenAIResponse(data)
 
     if (!openAIResponse) {
       throw new Error('OpenAI response is missing.')
@@ -47,44 +49,59 @@ const generatePlaylist = async (req: Request, res: Response) => {
   }
 }
 
-const generateOpenAIResponse = async (prompt: string) => {
-  const openaiPrompt = `Create a 5 song ${prompt} playlist. 
-    All playlist songs should be available on Spotify
-    and have the correct track title and artist. Also provide 5 creative / funny titles for the playlist. The
-    playlist and titles must be returned as a JSON object in the
-    following format { "playlist": [ { "title":
-    "Bohemian Rhapsody", "artist": "Queen"} ], "playlistTitles": ["First playlist name option", "Second playlist name option" ] }`
+const generateOpenAIResponse = async (data: PlaylistGenerationRequest) => {
+  const { genres, numberOfSongs, repeatArtist } = data
+
+  // Sometimes the OpenAI API will return less than number of artists requested so we need to account for that
+  const requestBands = repeatArtist ? numberOfSongs / 2 : numberOfSongs + 5
+
+  // const openaiPrompt = `Create a ${numberOfSongs} song ${genres.join(
+  //   ', '
+  // )} playlist.
+  //   ${repeatArtist ? 'Do not repeat artists.' : 'Repeat artists.'}
+  //   All playlist songs should be available on Spotify
+  //   and have the correct track title and artist. Also provide 5 creative / funny titles for the playlist. The
+  //   playlist and titles must be returned as a JSON object in the
+  //   following format { "playlist": [ { "title":
+  //   "Bohemian Rhapsody", "artist": "Queen"} ], "playlistTitles": ["First playlist name option", "Second playlist name option" ] }`
+
+  const openaiPrompt = `You are an incredible Playlist Generation Tool, here to help users discover some awesome bands or singers based on their favorite music genres. Please provide a list of ${requestBands} bands and/or singers of the following genres: ${genres.join(
+    ', '
+  )}. Do not repeat artists. All bands/artists should be available on Spotify. Also provide 5 creative / funny titles for the playlist. The playlist and titles must be returned as a JSON object in the following format { "playlist": [ {"artist": "Queen"}, {"artist": "AC/DC"} ], "playlistTitles": ["First playlist name option", "Second playlist name option" ] }`
 
   const aiCompletion = await openai.createCompletion({
     model: 'text-davinci-003',
     prompt: openaiPrompt,
-    max_tokens: 200,
+    max_tokens: 3000,
     temperature: 0.9,
   })
 
   const text = aiCompletion.data.choices[0].text
   const openaiResponse =
     text !== undefined ? (JSON.parse(text) as OpenAiResponse) : null
+  console.log(openaiResponse)
   return openaiResponse
 }
 
 const getSpotifyTracks = async (
   accessToken: string,
-  playlist: Array<{ title: string; artist: string }>,
+  playlist: Array<{ artist: string }>,
   playlistTitles: string[]
 ) => {
   const getSpotifyTrackDataPromises = playlist.map((item) => {
     return spotifyApi.get('/search', {
       params: {
-        q: `track:${item.title} artist:${item.artist}`,
+        q: `artist:${item.artist}`,
         type: 'track',
-        limit: 1,
+        limit: 10,
       },
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     })
   })
+
+  console.log(getSpotifyTrackDataPromises)
 
   const getSpotifyTrackData = await Promise.all(getSpotifyTrackDataPromises)
 
@@ -113,7 +130,8 @@ const getSpotifyTracks = async (
     playlistTitles: playlistTitles,
   }
 
-  // console.log(playlistData)
+  console.log(playlistData)
   return playlistData
 }
 export { generatePlaylist }
+
