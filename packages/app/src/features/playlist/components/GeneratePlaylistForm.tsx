@@ -1,20 +1,52 @@
 // @ts-nocheck
-// import authClient from '@utils/api'
 import Autocomplete from '@components/Form/Autocomplete'
 import Slider from '@components/Form/Slider'
 import Switch from '@components/Form/Switch'
+import authClient from '@utils/api'
+import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import usePlaylistDataContext from '../hooks/usePlaylistDataContext'
 
 const GeneratePlaylistForm = () => {
   const { handleSubmit, control } = useForm()
+  const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useNavigate()
   const { setAiTracks, setAiPlaylistTitles } = usePlaylistDataContext()
 
-  const onSubmit = (data) => {
-    console.log('data', data)
+  const onSubmit = async (data) => {
+    setIsLoading(true)
+    const response = await authClient.post('/playlist', { data })
+
+    if (response.data.success) {
+      const { playlist, playlistTitles } = response.data
+
+      // Add 'checked' key to each track object in the playlist
+      const updatedPlaylist = playlist.map((track) => {
+        return {
+          ...track,
+          checked: true,
+        }
+      })
+
+      const updatedPlaylistTitles = playlistTitles.map((title) => {
+        return {
+          ...title,
+          checked: true,
+        }
+      })
+      setAiTracks(updatedPlaylist)
+      setAiPlaylistTitles(updatedPlaylistTitles)
+
+      navigate('/customise-playlist')
+    } else {
+      console.log('error')
+    }
+  }
+
+  if (isLoading) {
+    return <p>Loading...</p>
   }
 
   return (
@@ -27,13 +59,13 @@ const GeneratePlaylistForm = () => {
         render={({ field }) => <Autocomplete {...field} />}
       />
       <Controller
-        name="number-of-songs"
+        name="numberOfSongs"
         control={control}
         defaultValue={20}
         render={({ field }) => <Slider {...field} min={15} max={40} />}
       />
       <Controller
-        name="repeat-artist"
+        name="repeatArtist"
         control={control}
         defaultValue={false}
         render={({ field }) => <Switch {...field} />}
