@@ -1,8 +1,10 @@
+import { ArrowUndo } from '@/assets/icons/backward-sharp-light'
 import reactLogo from '@assets/react.svg'
+import { Button } from '@components/Button'
 import { Container } from '@components/Container'
 import token from '@utils/token'
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 
 type NavigationItem = {
   name: string
@@ -49,30 +51,18 @@ const Nav = ({ isNavOpen }: NavProps) => {
 
 const NavButton = ({ isNavOpen, handleMenu }: NavProps) => {
   return (
-    <button
+    <div
+      className={`hamburger relative z-50 flex h-[13px] w-5 cursor-pointer ${
+        isNavOpen ? 'is-active' : ''
+      }`}
       onClick={handleMenu}
-      className="ease-cubic-bezier relative z-50 flex h-[100px] w-[100px] items-center justify-end overflow-visible bg-black"
     >
       <div
-        className={`ease-cubic-bezie absolute block h-[3px] w-full bg-white transition-transform duration-300  
-            ${
-              isNavOpen
-                ? 'translate-z-0 translate-x-0 translate-y-0 rotate-45 transform'
-                : 'translate-y-[-40px] transform'
-            }`}
-      ></div>
-      <div
-        className={`h-[3px] w-3/4 transform rounded bg-white transition-all duration-300
-            ${isNavOpen ? 'opacity-0' : 'opacity-100'}`}
-      ></div>
-      <div
-        className={`ease-cubic-bezie absolute block h-[3px] w-full bg-white transition-transform duration-300 ${
-          isNavOpen
-            ? 'translate-z-0 translate-x-0 translate-y-0 -rotate-45 transform'
-            : 'translate-y-[40px] transform'
+        className={`hamburger-inner absolute bottom-0 h-px w-5 bg-black before:absolute before:-top-1.5 before:h-px before:w-5 before:bg-black after:absolute after:-top-3 after:h-px after:w-5 after:bg-black ${
+          isNavOpen ? 'after:top-0 after:opacity-0' : ''
         }`}
       ></div>
-    </button>
+    </div>
   )
 }
 
@@ -90,19 +80,30 @@ const LogoutButton = () => {
     localStorage.clear()
     window.location.href = '/'
   }
-
   return (
-    <button
-      className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-      onClick={handleLogout}
-    >
+    <Button theme="text" startIcon={<ArrowUndo />} onClick={handleLogout}>
       Logout
-    </button>
+    </Button>
+  )
+}
+
+const RestartButton = () => {
+  const navigate = useNavigate()
+  const handleRestart = () => {
+    localStorage.clear()
+    navigate('/generate-playlist')
+  }
+  return (
+    <Button theme="text" startIcon={<ArrowUndo />} onClick={handleRestart}>
+      Start Over
+    </Button>
   )
 }
 
 export const Header = () => {
+  const location = useLocation()
   const [isNavOpen, setIsNavOpen] = useState(false)
+  console.log('location', location)
   const handleMenu = () => {
     setIsNavOpen(!isNavOpen)
   }
@@ -112,8 +113,14 @@ export const Header = () => {
       <Container width="full">
         <div className="flex items-center justify-between py-2">
           <Logo />
-          {token.get() ? <LogoutButton /> : null}
-          <NavButton isNavOpen={isNavOpen} handleMenu={handleMenu} />
+          <div className="flex items-center gap-6">
+            {token.get() && location.pathname != '/generate-playlist' ? (
+              <RestartButton />
+            ) : null}
+            {token.get() ? <LogoutButton /> : null}
+
+            <NavButton isNavOpen={isNavOpen} handleMenu={handleMenu} />
+          </div>
         </div>
       </Container>
       <Nav isNavOpen={isNavOpen} />
