@@ -35,7 +35,9 @@ const CustomiseTitle = () => {
   }, [watch])
 
   console.log('watch', watch('playlistTitles'))
+  console.log('getValues', getValues('playlistTitles'))
 
+  console.log('fields', fields)
   return (
     <>
       <div className="flex flex-col items-center space-y-6">
@@ -55,7 +57,7 @@ const CustomiseTitle = () => {
               htmlFor={title.id}
               className={`peer-checked:underline-thickness-2 peer-checked:underline-gray-300 cursor-pointer text-3xl font-bold  peer-checked:text-blue-400 peer-checked:underline-offset-2`}
             >
-              {`"${title.title}"`}
+              {`"${title.index}"`}
             </label>
           </div>
         ))}

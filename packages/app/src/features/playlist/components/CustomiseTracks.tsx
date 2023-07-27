@@ -1,5 +1,5 @@
 // @ts-nocheck
-import albumCoverFallback from '@assets/album-cover-fallback.png'
+import albumCoverFallback from '@assets/album-cover-fallback.svg'
 import { useEffect } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
