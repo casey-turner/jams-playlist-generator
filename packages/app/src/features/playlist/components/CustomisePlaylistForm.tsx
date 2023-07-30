@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { Button } from '@components/Button'
+import authClient from '@utils/api'
 import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import usePlaylistFormContext from '../hooks/usePlaylistFormContext'
@@ -12,7 +13,7 @@ const CustomisePlaylistForm = () => {
   const methods = useForm({
     defaultValues: {
       tracks: aiTracks,
-      playlistTitles: aiPlaylistTitles,
+      playlistTitle: aiPlaylistTitles,
     },
   })
 
@@ -20,12 +21,18 @@ const CustomisePlaylistForm = () => {
 
   const onSubmit = async (data) => {
     console.log('data', data)
-    // const { playlistTitle, tracks } = data
-    // const response = await authClient.post('/create-playlist', {
-    //   playlistTitle,
-    //   tracks,
-    // })
-    // console.log('response', response)
+    const { playlistTitle, tracks } = data
+    const selectedTrackURIs = tracks
+      .filter((track) => track.checked)
+      .map((track) => track.uri)
+
+    console.log('selectedTrackURIs', selectedTrackURIs)
+
+    const response = await authClient.post('/create-playlist', {
+      playlistTitle,
+      tracks: selectedTrackURIs,
+    })
+    console.log('response', response)
   }
 
   const handleNext = () => {
@@ -39,14 +46,14 @@ const CustomisePlaylistForm = () => {
   useEffect(() => {
     const titles = localStorage.getItem('JAMS_playlist_titles')
     if (titles) {
-      setValue('playlistTitles', JSON.parse(titles))
+      setValue('playlistTitle', JSON.parse(titles))
     }
   }, [])
 
   useEffect(() => {
     localStorage.setItem(
       'JAMS_playlist_titles',
-      JSON.stringify(watch('playlistTitles'))
+      JSON.stringify(watch('playlistTitle'))
     )
   }, [watch])
 

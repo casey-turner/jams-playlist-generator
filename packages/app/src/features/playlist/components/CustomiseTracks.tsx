@@ -22,6 +22,7 @@ const CustomiseTracks = () => {
         return checkedTracks.length >= 2
       },
     },
+    shouldUnregister: false,
   })
 
   useEffect(() => {

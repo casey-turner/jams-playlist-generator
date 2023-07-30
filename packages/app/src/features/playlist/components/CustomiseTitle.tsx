@@ -14,7 +14,7 @@ const CustomiseTitle = () => {
   const [customTitleSelected, setCustomTitleSelected] = useState(false)
 
   const { fields } = useFieldArray({
-    name: 'playlistTitles',
+    name: 'playlistTitle',
   })
 
   useEffect(() => {
@@ -34,8 +34,8 @@ const CustomiseTitle = () => {
     })
   }, [watch])
 
-  console.log('watch', watch('playlistTitles'))
-  console.log('getValues', getValues('playlistTitles'))
+  console.log('watch', watch('playlistTitle'))
+  console.log('getValues', getValues('playlistTitle'))
 
   console.log('fields', fields)
   return (
@@ -47,7 +47,7 @@ const CustomiseTitle = () => {
               id={title.id}
               className="peer"
               type="radio"
-              {...register(`playlistTitles`)}
+              {...register(`playlistTitle`)}
               value={title.title}
               onChange={(e) => {
                 setCustomTitleSelected(false)
@@ -57,7 +57,7 @@ const CustomiseTitle = () => {
               htmlFor={title.id}
               className={`peer-checked:underline-thickness-2 peer-checked:underline-gray-300 cursor-pointer text-3xl font-bold  peer-checked:text-blue-400 peer-checked:underline-offset-2`}
             >
-              {`"${title.index}"`}
+              {`"${title.title}"`}
             </label>
           </div>
         ))}
@@ -68,10 +68,10 @@ const CustomiseTitle = () => {
         </div>
         <div>
           <input
-            id="playlistTitles-custom"
+            id="playlistTitle-custom"
             className="peer"
             type="radio"
-            {...register(`playlistTitles`)}
+            {...register(`playlistTitle`)}
             checked={customTitleSelected}
           />
           <label
@@ -88,10 +88,10 @@ const CustomiseTitle = () => {
             placeholder="Enter your own title"
             {...register(`customPlaylistTitle`)}
             onChange={(e) => {
-              setValue('playlistTitles', e.target.value)
+              setValue('playlistTitle', e.target.value)
             }}
             onFocus={(e) => {
-              setValue('playlistTitles', e.target.value)
+              setValue('playlistTitle', e.target.value)
               setCustomTitleSelected(true)
             }}
           />

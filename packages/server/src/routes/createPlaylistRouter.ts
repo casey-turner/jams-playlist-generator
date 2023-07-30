@@ -21,7 +21,7 @@ router.post(
 
     const playlistOptions = {
       name: playlistTitle,
-      description: 'A playlist created with the Spotify API!',
+      description: 'Made with 💙 by JAMS Playlist Generator',
       public: false,
     }
 

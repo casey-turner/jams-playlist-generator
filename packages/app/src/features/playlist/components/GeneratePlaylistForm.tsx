@@ -18,7 +18,7 @@ const GeneratePlaylistForm = () => {
   const onSubmit = async (data) => {
     setIsLoading(true)
     const response = await authClient.post('/playlist', { data })
-
+    console.log('response', response)
     if (response.data.success) {
       const { playlist, playlistTitles } = response.data
 
