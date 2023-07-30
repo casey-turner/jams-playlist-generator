@@ -15,6 +15,8 @@ export default {
         'alice-blue': '#D8E9F7',
         'dark-moss-green': '#5C6131',
         'flame': '#DE541E',
+        'oxford-blue': '#0A1F38',
+        'peach': '#F1D3C7',
       },
       fontFamily: {
         'this': ['this', 'sans-serif']
