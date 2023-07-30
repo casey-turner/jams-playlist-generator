@@ -121,8 +121,8 @@ export const Header = () => {
   ]
 
   const handleMenu = () => {
-    setIsNavOpen(!isNavOpen)
-    if (isNavOpen) {
+    setIsNavOpen((prevIsNavOpen) => !prevIsNavOpen)
+    if (!isNavOpen) {
       const randomLink =
         spotifyLinks[Math.floor(Math.random() * spotifyLinks.length)]
       setRandomSpotifyLink(randomLink)
