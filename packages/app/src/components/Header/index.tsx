@@ -29,22 +29,32 @@ const navigationItems: NavigationItem[] = [
 type NavProps = {
   isNavOpen: boolean
   handleMenu?: () => void
+  getSpotifyLink?: string
 }
 
-const Nav = ({ isNavOpen }: NavProps) => {
+const Nav = ({ isNavOpen, getSpotifyLink }: NavProps) => {
   return (
     <nav
       className={`${
         isNavOpen ? 'translate-x-0' : 'translate-x-full'
-      } fixed right-0 top-0 z-40 h-screen w-full transform bg-blue-900 px-8 py-20 transition duration-1000 ease-in-out md:w-64`}
+      } bg-oxford-blue text-peach fixed right-0 top-0 z-40 flex h-screen w-full transform flex-col px-8 pb-4 pt-20 transition duration-700 ease-in-out md:w-1/2`}
     >
       <ul>
         {navigationItems.map((item) => (
-          <li key={item.name}>
+          <li key={item.name} className="mb-4 text-3xl font-bold uppercase">
             <NavLink to={item.to}>{item.name}</NavLink>
           </li>
         ))}
       </ul>
+      <p className="mt-auto text-sm">
+        JAMS was made with 💖 while listening to this{' '}
+        {getSpotifyLink && (
+          <span
+            className="underline"
+            dangerouslySetInnerHTML={{ __html: getSpotifyLink }}
+          />
+        )}
+      </p>
     </nav>
   )
 }
@@ -58,7 +68,7 @@ const NavButton = ({ isNavOpen, handleMenu }: NavProps) => {
       onClick={handleMenu}
     >
       <div
-        className={`hamburger-inner absolute bottom-0 h-px w-5 bg-black before:absolute before:-top-1.5 before:h-px before:w-5 before:bg-black after:absolute after:-top-3 after:h-px after:w-5 after:bg-black ${
+        className={`hamburger-inner bg-alice-blue before:bg-alice-blue after:bg-alice-blue absolute bottom-0 h-px w-5 before:absolute before:-top-1.5 before:h-px before:w-5 after:absolute after:-top-3 after:h-px after:w-5 ${
           isNavOpen ? 'after:top-0 after:opacity-0' : ''
         }`}
       ></div>
@@ -103,9 +113,20 @@ const RestartButton = () => {
 export const Header = () => {
   const location = useLocation()
   const [isNavOpen, setIsNavOpen] = useState(false)
-  console.log('location', location)
+  const [randomSpotifyLink, setRandomSpotifyLink] = useState('')
+
+  const spotifyLinks = [
+    '<a href="https://open.spotify.com/playlist/75USLqe4N3RsMtFvPZfOhM?si=895d78082ce64abb"> classic Aussie dad rock playlist</a>',
+    '<a href="https://open.spotify.com/playlist/7p36TIjl8d7v9LXUuuTBg8?si=9f335ffd65fc4488&pt=d8e1e8318c3fcb53fb185c1ffa7e9cff"> magnificent Misfits playlist </a>',
+  ]
+
   const handleMenu = () => {
     setIsNavOpen(!isNavOpen)
+    if (isNavOpen) {
+      const randomLink =
+        spotifyLinks[Math.floor(Math.random() * spotifyLinks.length)]
+      setRandomSpotifyLink(randomLink)
+    }
   }
 
   return (
@@ -123,7 +144,7 @@ export const Header = () => {
           </div>
         </div>
       </Container>
-      <Nav isNavOpen={isNavOpen} />
+      <Nav isNavOpen={isNavOpen} getSpotifyLink={randomSpotifyLink} />
     </header>
   )
 }
