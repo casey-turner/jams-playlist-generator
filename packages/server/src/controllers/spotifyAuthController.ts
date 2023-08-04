@@ -72,7 +72,7 @@ const callbackController = async (
       res.status(500).send()
     }
   } catch (error) {
-    logger(logLevels.error, 'error', '/callback', 'error')
+    logger(logLevels.error, 'error', '/callback', tokenResponse)
     res.status(500).send()
   }
 }
