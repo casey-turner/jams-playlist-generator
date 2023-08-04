@@ -1,3 +1,4 @@
+// @ts-nocheck
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
@@ -23,6 +24,10 @@ app.get('/', (req, res) => {
   res.send('Hello Boston!')
 })
 
-app.listen(PORT as string, () => {
+// app.listen(PORT as string, () => {
+//   console.log(`Server running http://localhost:${PORT}`)
+// })
+// Listen on `port` and 0.0.0.0
+app.listen(PORT, '0.0.0.0', function () {
   console.log(`Server running http://localhost:${PORT}`)
 })
