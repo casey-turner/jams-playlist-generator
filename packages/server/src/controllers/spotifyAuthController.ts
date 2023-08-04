@@ -70,7 +70,18 @@ const callbackController = async (
       res.status(500).send()
     }
   } catch (error) {
-    logger(logLevels.error, 'error', '/callback', error)
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      console.error('Status Code:', error.response.status)
+      console.error('Response Data:', error.response.data)
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error('No Response:', error.request)
+    } else {
+      // Something else happened while setting up the request
+      console.error('Error:', error.message)
+    }
+    console.error('Config:', error.config)
     res.status(500).send()
   }
 }
