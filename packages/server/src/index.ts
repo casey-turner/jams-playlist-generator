@@ -13,8 +13,8 @@ const corsOptions = {
   credentials: true,
 }
 const app = Express()
-
-app.use(cors(corsOptions))
+app.use(cors())
+// app.use(cors(corsOptions))
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(spotifyAuthRouter)
