@@ -3,8 +3,10 @@ import { Button } from '@components/Button'
 import { Layout } from '@components/Layout'
 
 const Connect = () => {
+  const apiURL = import.meta.env.VITE_API_URL as string
   const handleConnectClick = () => {
-    window.location.href = 'http://localhost:3000/connect'
+    // window.location.href = 'http://localhost:3000/connect'
+    window.location.href = `${apiURL}/connect`
   }
 
   return (

@@ -28,7 +28,8 @@
       "@features/*": ["./src/features/*"],
       "@types/*": ["./src/types/*"],
       "@utils/*": ["./src/utils/*"]
-    }
+    },
+    "types": ["vite/client"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
