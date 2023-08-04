@@ -2,13 +2,13 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import Express from 'express'
-import { PORT } from './config'
+import { CLIENT_URL, PORT } from './config'
 import createPlaylistRouter from './routes/createPlaylistRouter'
 import generatePlaylistRouter from './routes/generatePlaylistRouter'
 import spotifyAuthRouter from './routes/spotifyAuthRouter'
 
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: CLIENT_URL,
   credentials: true,
 }
 const app = Express()
