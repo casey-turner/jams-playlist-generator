@@ -1,9 +1,9 @@
+// @ts-nocheck
 import { Request, Response } from 'express'
 import querystring from 'querystring'
 import { spotifyApi, spotifyTokenApi } from '../apis/spotifyApi'
-import { JWT_SECRET, SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI } from '../config'
+import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI } from '../config'
 import { generateRandomString } from '../utils/generateRandomString'
-import { generateToken } from '../utils/generateToken'
 import { logLevels, logger } from '../utils/logger'
 
 const connectController = (req: Request, res: Response): void => {
@@ -42,10 +42,14 @@ const callbackController = async (
       grant_type: 'authorization_code',
     })
 
+    console.log(tokenResponse)
+
     if (tokenResponse.status === 200) {
       const accessToken: string = tokenResponse.data.access_token
       const refreshToken: string = tokenResponse.data.refresh_token
       const expiresIn: number = tokenResponse.data.expires_in
+
+      console.log(accessToken, refreshToken, expiresIn)
 
       const userInfoResponse = await spotifyApi.get('/me', {
         headers: {
@@ -53,14 +57,15 @@ const callbackController = async (
         },
       })
 
+      console.log(userInfoResponse)
       const userId: string = userInfoResponse.data.id
       const timestamp = Date.now()
-      const token = generateToken(
-        { accessToken, refreshToken, expiresIn, timestamp, userId },
-        JWT_SECRET as string
-      )
+      // const token = generateToken(
+      //   { accessToken, refreshToken, expiresIn, timestamp, userId },
+      //   JWT_SECRET as string
+      // )
 
-      res.cookie('jams_token', token)
+      // res.cookie('jams_token', token)
       res.redirect(`https://boston-good-dog.up.railway.app/generate-playlist`)
     } else {
       logger(logLevels.error, 'something', '/callback', 'something')
