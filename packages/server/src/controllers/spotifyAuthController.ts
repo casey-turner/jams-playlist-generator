@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { Request, Response } from 'express'
 import querystring from 'querystring'
-import { spotifyApi, spotifyTokenApi } from '../apis/spotifyApi'
+import { spotifyTokenApi } from '../apis/spotifyApi'
 import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI } from '../config'
 import { generateRandomString } from '../utils/generateRandomString'
 import { logLevels, logger } from '../utils/logger'
@@ -51,15 +51,15 @@ const callbackController = async (
 
       console.log(accessToken, refreshToken, expiresIn)
 
-      const userInfoResponse = await spotifyApi.get('/me', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
+      // const userInfoResponse = await spotifyApi.get('/me', {
+      //   headers: {
+      //     Authorization: `Bearer ${accessToken}`,
+      //   },
+      // })
 
-      console.log(userInfoResponse)
-      const userId: string = userInfoResponse.data.id
-      const timestamp = Date.now()
+      // console.log(userInfoResponse)
+      // const userId: string = userInfoResponse.data.id
+      // const timestamp = Date.now()
       // const token = generateToken(
       //   { accessToken, refreshToken, expiresIn, timestamp, userId },
       //   JWT_SECRET as string
