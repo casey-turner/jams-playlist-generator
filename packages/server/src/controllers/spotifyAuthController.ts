@@ -42,8 +42,6 @@ const callbackController = async (
       grant_type: 'authorization_code',
     })
 
-    console.log(tokenResponse)
-
     if (tokenResponse.status === 200) {
       const accessToken: string = tokenResponse.data.access_token
       const refreshToken: string = tokenResponse.data.refresh_token
@@ -72,7 +70,7 @@ const callbackController = async (
       res.status(500).send()
     }
   } catch (error) {
-    logger(logLevels.error, 'error', '/callback', tokenResponse)
+    logger(logLevels.error, 'error', '/callback', error)
     res.status(500).send()
   }
 }
