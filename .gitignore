@@ -48,6 +48,17 @@ jspm_packages/
 .env.production.local
 .env.local
 
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
 ### react ###
 .DS_*
 **/*.backup.*
@@ -60,3 +71,7 @@ node_modules
 psd
 thumb
 sketch
+
+dist
+dist-ssr
+*.local

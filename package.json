@@ -7,7 +7,8 @@
   "scripts": {
     "dev:app": "npm run -w @playlistify/app dev",
     "dev:server": "npm run -w @playlistify/server dev",
-    "build:app": "npm run -w @playlistify/app build"
+    "build:app": "npm run -w @playlistify/app build", 
+    "build:server": "npm run -w @playlistify/server build"
   },
   "keywords": [],
   "author": "",
