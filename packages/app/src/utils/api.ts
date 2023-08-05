@@ -11,10 +11,10 @@ const authClient = axios.create({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': true,
-    Authorization: `Bearer ${token.get()}`,
     Accept: 'application/json',
   },
 })
+
 authClient.interceptors.request.use(
   (config) => {
     const authToken = token.get()
