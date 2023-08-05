@@ -36,11 +36,20 @@ const callbackController = async (
   try {
     const code = req.query.code || null
 
-    const tokenResponse = await spotifyTokenApi.post('', {
+    const data = querystring.stringify({
+      grant_type: 'authorization_code',
       code: code,
       redirect_uri: SPOTIFY_REDIRECT_URI,
-      grant_type: 'authorization_code',
     })
+
+    // const formData = qs.stringify(data)
+    const tokenResponse = await spotifyTokenApi.post('', data)
+
+    // const tokenResponse = await spotifyTokenApi.post('', {
+    //   code: code,
+    //   redirect_uri: SPOTIFY_REDIRECT_URI,
+    //   grant_type: 'authorization_code',
+    // })
 
     if (tokenResponse.status === 200) {
       const accessToken: string = tokenResponse.data.access_token
@@ -49,21 +58,21 @@ const callbackController = async (
 
       console.log(accessToken, refreshToken, expiresIn)
 
-      // const userInfoResponse = await spotifyApi.get('/me', {
-      //   headers: {
-      //     Authorization: `Bearer ${accessToken}`,
-      //   },
-      // })
+      const userInfoResponse = await spotifyApi.get('/me', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
 
-      // console.log(userInfoResponse)
-      // const userId: string = userInfoResponse.data.id
-      // const timestamp = Date.now()
-      // const token = generateToken(
-      //   { accessToken, refreshToken, expiresIn, timestamp, userId },
-      //   JWT_SECRET as string
-      // )
+      console.log(userInfoResponse)
+      const userId: string = userInfoResponse.data.id
+      const timestamp = Date.now()
+      const token = generateToken(
+        { accessToken, refreshToken, expiresIn, timestamp, userId },
+        JWT_SECRET as string
+      )
 
-      // res.cookie('jams_token', token)
+      res.cookie('jams_token', token)
       res.redirect(`https://boston-good-dog.up.railway.app/generate-playlist`)
     } else {
       logger(logLevels.error, 'something', '/callback', 'something')
