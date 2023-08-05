@@ -10,7 +10,7 @@ export default defineConfig({
         // target: 'http://localhost:3000',
         target: 'https://jams-playlist-generator-production.up.railway.app',
         changeOrigin: true,
-        secure: true,
+        secure: false,
         rewrite: (path) => path.replace('/api', ''),
       },
     },
