@@ -15,5 +15,17 @@ const authClient = axios.create({
     Accept: 'application/json',
   },
 })
+authClient.interceptors.request.use(
+  (config) => {
+    const authToken = token.get()
+    if (authToken) {
+      config.headers['Authorization'] = `Bearer ${authToken}`
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
 export default authClient
