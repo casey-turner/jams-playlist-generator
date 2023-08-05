@@ -1,4 +1,5 @@
 // @ts-nocheck
+import token from '@/utils/token'
 import Autocomplete from '@components/Form/Autocomplete'
 import Slider from '@components/Form/Slider'
 import Switch from '@components/Form/Switch'
@@ -16,6 +17,7 @@ const GeneratePlaylistForm = () => {
   const { setAiTracks, setAiPlaylistTitles } = usePlaylistDataContext()
 
   const onSubmit = async (data) => {
+    console.log('token: ', token.get())
     setIsLoading(true)
     const response = await authClient.post('/playlist', { data })
     console.log('response', response)
