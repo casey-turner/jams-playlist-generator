@@ -23,10 +23,6 @@ app.get('/', (req, res) => {
   res.send('Hello Boston!')
 })
 
-// app.listen(PORT as string, () => {
-//   console.log(`Server running http://localhost:${PORT}`)
-// })
-// Listen on `port` and 0.0.0.0
 app.listen(PORT, '0.0.0.0', function () {
   console.log(`Server running http://localhost:${PORT}`)
 })

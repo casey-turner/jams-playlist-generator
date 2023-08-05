@@ -43,14 +43,7 @@ const callbackController = async (
       redirect_uri: SPOTIFY_REDIRECT_URI,
     })
 
-    // const formData = qs.stringify(data)
     const tokenResponse = await spotifyTokenApi.post('', data)
-
-    // const tokenResponse = await spotifyTokenApi.post('', {
-    //   code: code,
-    //   redirect_uri: SPOTIFY_REDIRECT_URI,
-    //   grant_type: 'authorization_code',
-    // })
 
     if (tokenResponse.status === 200) {
       const accessToken: string = tokenResponse.data.access_token
@@ -73,7 +66,13 @@ const callbackController = async (
         JWT_SECRET as string
       )
 
-      res.cookie('jams_token', token)
+      res.cookie('jams_token', token, {
+        path: '/',
+        domain: '.up.railway.app',
+        secure: true,
+        httpOnly: true,
+        sameSite: 'none',
+      })
       res.redirect(`https://boston-good-dog.up.railway.app/generate-playlist`)
     } else {
       logger(logLevels.error, 'something', '/callback', 'something')
