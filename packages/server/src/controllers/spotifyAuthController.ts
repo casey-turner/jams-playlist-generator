@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { Request, Response } from 'express'
 import querystring from 'querystring'
-import { spotifyTokenApi } from '../apis/spotifyApi'
+import { spotifyApi, spotifyTokenApi } from '../apis/spotifyApi'
 import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI } from '../config'
 import { generateRandomString } from '../utils/generateRandomString'
 import { logLevels, logger } from '../utils/logger'
