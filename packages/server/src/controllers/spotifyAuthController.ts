@@ -60,7 +60,7 @@ const callbackController = async (
         JWT_SECRET as string
       )
 
-      res.cookie('jams_token', token)
+      res.cookie('jams_token', token, { httpOnly: true })
       res.redirect('http://localhost:5173/generate-playlist')
     } else {
       logger(logLevels.error, 'something', '/callback', 'something')
