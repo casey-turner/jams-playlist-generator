@@ -4,6 +4,8 @@
     "types": [
       "express",
     ],
-    "typeRoots" : ["./node_modules/@types", "./src/types"]
+    "typeRoots" : ["./node_modules/@types", "./src/types"],
+    "outDir": "./dist", 
+    "rootDir": "./src"
   },
 }
