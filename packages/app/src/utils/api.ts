@@ -1,5 +1,8 @@
 import token from '@utils/token'
 import axios from 'axios'
+// Get the token value
+const authToken = token.get()
+console.log('Token value:', authToken)
 
 const authClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL as string,
