@@ -2,8 +2,9 @@
 import { Request, Response } from 'express'
 import querystring from 'querystring'
 import { spotifyApi, spotifyTokenApi } from '../apis/spotifyApi'
-import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI } from '../config'
+import { JWT_SECRET, SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI } from '../config'
 import { generateRandomString } from '../utils/generateRandomString'
+import { generateToken } from '../utils/generateToken'
 import { logLevels, logger } from '../utils/logger'
 
 const connectController = (req: Request, res: Response): void => {
