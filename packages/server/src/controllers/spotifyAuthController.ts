@@ -1,7 +1,13 @@
 import { Request, Response } from 'express'
 import querystring from 'querystring'
 import { spotifyApi, spotifyTokenApi } from '../apis/spotifyApi'
-import { JWT_SECRET, SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI } from '../config'
+import {
+  ENV,
+  ENVIRONMENTS,
+  JWT_SECRET,
+  SPOTIFY_CLIENT_ID,
+  SPOTIFY_REDIRECT_URI,
+} from '../config'
 import { generateRandomString } from '../utils/generateRandomString'
 import { generateToken } from '../utils/generateToken'
 import { logLevels, logger } from '../utils/logger'
@@ -60,7 +66,7 @@ const callbackController = async (
         JWT_SECRET as string
       )
 
-      res.cookie('jams_token', token, { httpOnly: true })
+      res.cookie('jams_token', token, ENVIRONMENTS[ENV].cookieSettings)
       res.redirect('http://localhost:5173/generate-playlist')
     } else {
       logger(logLevels.error, 'something', '/callback', 'something')
