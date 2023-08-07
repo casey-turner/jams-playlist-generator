@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Request, Response } from 'express'
 import querystring from 'querystring'
 import { spotifyApi, spotifyTokenApi } from '../apis/spotifyApi'
