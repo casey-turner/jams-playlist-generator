@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import querystring from 'querystring'
 import { spotifyApi, spotifyTokenApi } from '../apis/spotifyApi'
 import {
+  CLIENT_URL,
   ENV,
   ENVIRONMENTS,
   JWT_SECRET,
@@ -70,7 +71,7 @@ const callbackController = async (
       )
 
       res.cookie('jams_token', token, ENVIRONMENTS[ENV].cookieSettings)
-      res.redirect('http://localhost:5173/generate-playlist')
+      res.redirect(`${CLIENT_URL}/generate-playlist`)
     } else {
       logger(logLevels.error, 'something', '/callback', 'something')
       res.status(500).send()
