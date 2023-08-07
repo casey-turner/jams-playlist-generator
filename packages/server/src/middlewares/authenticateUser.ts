@@ -1,7 +1,13 @@
 import axios from 'axios'
 import { NextFunction, Request, Response } from 'express'
 import jwt, { JwtPayload, Secret } from 'jsonwebtoken'
-import { JWT_SECRET, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from '../config'
+import {
+  ENV,
+  ENVIRONMENTS,
+  JWT_SECRET,
+  SPOTIFY_CLIENT_ID,
+  SPOTIFY_CLIENT_SECRET,
+} from '../config'
 import { RefreshTokenResult } from '../types/spotifyTypes'
 import { generateToken } from '../utils/generateToken'
 import { logLevels, logger } from '../utils/logger'
@@ -14,7 +20,7 @@ const isAccessTokenExpired = (
   if (timestamp && expiresIn && accessToken) {
     const now = Date.now()
     const expiresAt = timestamp + expiresIn * 1000
-    return expiresAt > now
+    return expiresAt < now
   }
   return true
 }
@@ -135,6 +141,7 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
       }
 
       if (newToken) {
+        console.log('newToken:', newToken)
         const newTimestamp = Date.now()
         const token = generateToken(
           {
@@ -147,7 +154,7 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
           JWT_SECRET as string
         )
 
-        res.cookie('jams_token', token)
+        res.cookie('jams_token', token, ENVIRONMENTS[ENV].cookieSettings)
         req.spotifyAuthData = {
           accessToken: newToken.accessToken,
           refreshToken: decodedToken.refreshToken as string,
