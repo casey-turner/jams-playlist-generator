@@ -105,14 +105,11 @@ const refreshAccessToken = (
 }
 
 const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
-  const jamsToken = req.cookies.jams_token
-  console.log('jamsToken:', jamsToken)
-
-  if (!jamsToken) {
+  const authHeader = req.headers.authorization
+  if (!authHeader) {
     return res.status(401).json({ message: 'Authorization header missing' })
   }
-  // const token = jamsToken.split(' ')[1]
-  // const token = authHeader.split(' ')[1]
+  const jamsToken = authHeader.split(' ')[1]
 
   const handleAuthentication = async () => {
     try {
@@ -121,7 +118,6 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
         JWT_SECRET as Secret
       ) as JwtPayload
 
-      console.log('decoded token:', decodedToken)
       if (!decodedToken) {
         return res.status(401).json({ message: 'Invalid or expired token' })
       }

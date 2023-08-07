@@ -31,7 +31,7 @@ const ENVIRONMENTS: Record<string, EnvironmentSettings> = {
     cookieSettings: {
       path: '/',
       domain: DOMAIN,
-      httpOnly: true,
+      httpOnly: false,
     },
     corsOrigin: { origin: CLIENT_URL, credentials: true },
   },
@@ -40,7 +40,7 @@ const ENVIRONMENTS: Record<string, EnvironmentSettings> = {
       path: '/',
       domain: DOMAIN,
       secure: true,
-      httpOnly: true,
+      httpOnly: false,
       sameSite: 'none',
     },
     corsOrigin: { origin: CLIENT_URL, credentials: true },
