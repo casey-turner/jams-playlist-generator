@@ -4,7 +4,7 @@ import reactLogo from '@assets/react.svg'
 import { Button } from '@components/Button'
 import { Container } from '@components/Container'
 import { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 type NavigationItem = {
   name: string
@@ -119,7 +119,6 @@ const RestartButton = () => {
 }
 
 export const Header = () => {
-  const location = useLocation()
   const [isNavOpen, setIsNavOpen] = useState(false)
   const [randomSpotifyLink, setRandomSpotifyLink] = useState('')
   const [isRestart, setIsRestart] = useState(false)
