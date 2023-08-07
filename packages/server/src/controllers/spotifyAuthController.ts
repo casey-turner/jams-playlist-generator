@@ -42,11 +42,13 @@ const callbackController = async (
   try {
     const code = req.query.code || null
 
-    const tokenResponse = await spotifyTokenApi.post('', {
+    const data = querystring.stringify({
+      grant_type: 'authorization_code',
       code: code,
       redirect_uri: SPOTIFY_REDIRECT_URI,
-      grant_type: 'authorization_code',
     })
+
+    const tokenResponse = await spotifyTokenApi.post('', data)
 
     if (tokenResponse.status === 200) {
       const accessToken: string = tokenResponse.data.access_token
