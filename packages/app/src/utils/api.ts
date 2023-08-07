@@ -2,7 +2,7 @@ import token from '@utils/token'
 import axios from 'axios'
 
 const authClient = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: import.meta.env.VITE_API_URL as string,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',

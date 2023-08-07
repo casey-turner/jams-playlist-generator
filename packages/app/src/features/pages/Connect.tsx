@@ -4,7 +4,7 @@ import { Layout } from '@components/Layout'
 
 const Connect = () => {
   const handleConnectClick = () => {
-    window.location.href = 'http://localhost:3000/connect'
+    window.location.href = `${import.meta.env.VITE_API_URL}/connect`
   }
 
   return (
