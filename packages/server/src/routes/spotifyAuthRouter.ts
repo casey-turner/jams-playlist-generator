@@ -13,12 +13,8 @@ router.get('/connect', connectController)
 router.get('/callback', callbackController)
 
 router.get('/logout', (req, res) => {
-  console.log('logout')
-  res.cookie('jams_token', '', {
-    ...ENVIRONMENTS[ENV].cookieSettings,
-    expires: new Date(Date.now()),
-  })
-  console.log('after logout')
+  res.clearCookie('jams_token', ENVIRONMENTS[ENV].cookieSetting)
+  res.status(200)
 })
 
 router.get('/check-auth', (req, res) => {

@@ -87,8 +87,11 @@ const Logo = () => {
 const logout = async () => {
   try {
     const response = await authClient.get('/logout')
-    console.log('logout')
-    console.log(response)
+    if (response.status === 200) {
+      localStorage.removeItem('JAMS_tracks')
+      localStorage.removeItem('JAMS_playlist_titles')
+      window.location.href = '/'
+    }
   } catch (error) {
     console.log(error)
   }
