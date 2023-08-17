@@ -2,24 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@font-face {
-  font-family: 'This';
-  font-style: normal;
-  src: local('this'), url(@assets/fonts/Sohne-Schmal-Fett.woff2) format('woff2');
-}
-
-html {
-  background-color: rgb(92,97,49);
-}
-
-#root {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-}
-
 .hamburger {
   transition: opacity .15s linear, filter .15s linear;
 }

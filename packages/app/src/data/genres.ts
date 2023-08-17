@@ -68,6 +68,7 @@ export const genreOptions = [
   'Old School Hip-Hop',
   'Oi!',
   'P-Funk',
+  'Pop Punk',
   'Pop Rock',
   'Post-Punk',
   'Post-Rock',

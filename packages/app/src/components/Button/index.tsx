@@ -2,10 +2,10 @@ import * as React from 'react'
 
 const theme = {
   primary:
-    'bg-alice-blue hover:bg-transparent text-dark-moss-green hover:text-alice-blue font-bold py-2 px-4 rounded-full border-2 border-alice-blue min-w-[200px] uppercase',
+    'tracking-wide bg-alice-blue hover:bg-transparent text-dark-moss-green hover:text-alice-blue font-poppins font-semibold py-2 px-4 rounded-full border-2 border-alice-blue min-w-[200px]',
   secondary:
-    'bg-transparent hover:bg-alice-blue text-alice-blue font-bold py-2 px-4 rounded-full border border-alice-blue min-w-[200px] uppercase',
-  text: 'text-black uppercase',
+    'tracking-wide bg-transparent hover:bg-alice-blue text-alice-blue font-poppins font-semibold py-2 px-4 rounded-full border border-alice-blue min-w-[200px]',
+  text: 'text-alice-blue font-poppins font-semibold',
 }
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -22,7 +22,7 @@ export const Button = ({
     <button className={theme[themeKey]} {...props}>
       {startIcon && (
         <span className="flex items-center">
-          <span className="mr-2 block h-4 w-4">{startIcon}</span>
+          <span className="mr-2 block h-3 w-3">{startIcon}</span>
           {props.children}
         </span>
       )}
