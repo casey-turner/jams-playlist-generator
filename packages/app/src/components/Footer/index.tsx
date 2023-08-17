@@ -5,7 +5,9 @@ export const Footer = () => {
     <footer>
       <Container width="full">
         <div className="flex flex-col items-center py-8">
-          <p>© 2023 JAMS - AI Playlist Generator</p>
+          <p className="text-alice-blue font-poppins text-sm font-light">
+            © 2023 Jams - AI Playlist Generator
+          </p>
         </div>
       </Container>
     </footer>

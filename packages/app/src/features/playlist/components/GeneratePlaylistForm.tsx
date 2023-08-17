@@ -50,7 +50,7 @@ const GeneratePlaylistForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="mx-auto max-w-[750px]">
       <Controller
         name="genres"
         control={control}

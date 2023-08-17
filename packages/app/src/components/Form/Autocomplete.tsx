@@ -45,7 +45,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
   return (
     <>
       <div className="relative">
-        <div className="w-[500px]" {...getRootProps()}>
+        <div className="" {...getRootProps()}>
           <label {...getInputLabelProps()}>Select Playlist Genres</label>
           <div
             ref={setAnchorEl}
@@ -61,12 +61,16 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
                 {...getTagProps({ index })}
               />
             ))}
-            <input {...getInputProps()} />
+            <input
+              {...getInputProps()}
+              placeholder="What do you want to listen to?"
+              className="grow-1 w-0 min-w-[240px] bg-transparent outline-none"
+            />
           </div>
         </div>
         {groupedOptions.length > 0 ? (
           <ul
-            className="absolute mt-2 w-[500px] max-w-[500px] rounded-md border border-gray-300 bg-white py-2 shadow-lg"
+            className="absolute left-5 mt-2 max-h-80  w-[700px] overflow-y-auto rounded-md border border-gray-300 bg-white py-2 shadow-lg"
             {...getListboxProps()}
           >
             {groupedOptions.map((option, index) => (

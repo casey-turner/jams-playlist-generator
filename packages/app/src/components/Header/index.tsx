@@ -1,4 +1,4 @@
-import { ArrowUndo } from '@assets/icons/backward-sharp-light'
+import { BackwardIcon, EjectIcon } from '@assets/icons'
 import reactLogo from '@assets/react.svg'
 import { Button } from '@components/Button'
 import { Container } from '@components/Container'
@@ -41,13 +41,13 @@ const Nav = ({ isNavOpen, getSpotifyLink }: NavProps) => {
     >
       <ul>
         {navigationItems.map((item) => (
-          <li key={item.name} className="mb-4 text-3xl font-bold uppercase">
+          <li key={item.name} className="font-poppins mb-4 text-3xl font-black">
             <NavLink to={item.to}>{item.name}</NavLink>
           </li>
         ))}
       </ul>
-      <p className="mt-auto text-sm">
-        JAMS was made with 💖 while listening to this{' '}
+      <p className="font-poppins mt-auto text-sm font-light">
+        Jams was made with 💖 while listening to this{' '}
         {getSpotifyLink && (
           <span
             className="underline"
@@ -68,7 +68,7 @@ const NavButton = ({ isNavOpen, handleMenu }: NavProps) => {
       onClick={handleMenu}
     >
       <div
-        className={`hamburger-inner bg-alice-blue before:bg-alice-blue after:bg-alice-blue absolute bottom-0 h-px w-5 before:absolute before:-top-1.5 before:h-px before:w-5 after:absolute after:-top-3 after:h-px after:w-5 ${
+        className={`hamburger-inner bg-alice-blue before:bg-alice-blue after:bg-alice-blue absolute bottom-0 h-0.5 w-6 before:absolute before:-top-1.5 before:h-0.5 before:w-6 after:absolute after:-top-3 after:h-0.5 after:w-6 ${
           isNavOpen ? 'after:top-0 after:opacity-0' : ''
         }`}
       ></div>
@@ -92,7 +92,7 @@ const LogoutButton = () => {
   }
 
   return (
-    <Button theme="text" startIcon={<ArrowUndo />} onClick={handleLogout}>
+    <Button theme="text" startIcon={<EjectIcon />} onClick={handleLogout}>
       Logout
     </Button>
   )
@@ -105,7 +105,7 @@ const RestartButton = () => {
     navigate('/generate-playlist')
   }
   return (
-    <Button theme="text" startIcon={<ArrowUndo />} onClick={handleRestart}>
+    <Button theme="text" startIcon={<BackwardIcon />} onClick={handleRestart}>
       Start Over
     </Button>
   )
