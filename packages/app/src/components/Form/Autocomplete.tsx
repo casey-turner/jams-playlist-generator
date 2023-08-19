@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { CancelIcon } from '@assets/icons'
 import { genreOptions } from '@data/genres'
 import { useAutocomplete } from '@mui/base'
 import * as React from 'react'
@@ -8,19 +9,33 @@ const Tag = (props) => {
   return (
     <div
       {...other}
-      className="flex items-center gap-1 rounded-md bg-blue-500 px-2 py-1 text-white"
+      className="flex items-center gap-1 rounded-full bg-blue-500 px-2 py-0.5 text-xs text-white sm:text-sm"
     >
       <span>{label}</span>
-      <div onClick={onDelete} className="h-4 w-4 cursor-pointer bg-black" />
+      <span
+        onClick={onDelete}
+        className="text-alice-blue h-3 w-3 cursor-pointer sm:h-4 sm:w-4"
+      >
+        <CancelIcon />
+      </span>
     </div>
   )
 }
 
 const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
   const {
-    handleDelete,
+    disableClearable = false,
+    disabled = false,
+    readOnly = false,
+    options,
+    ...other
+  } = props
+
+  const {
+    getClearProps,
     getRootProps,
     getInputLabelProps,
+    getPopupIndicatorProps,
     getInputProps,
     getTagProps,
     getListboxProps,
@@ -29,18 +44,26 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
     focused,
     value,
     setAnchorEl,
+    getToggleButtonProps,
+    popupOpen,
+    open,
+    dirty,
   } = useAutocomplete({
+    ...props,
     id: 'autocomplete',
     defaultValue: [],
     multiple: true,
     options: genreOptions,
-    // getOptionLabel: (option) => option.label,
-    // isOptionEqualToValue: (option, value) => option.label === value.label,
     isOptionEqualToValue: (option, value) => option === value,
     onChange: (e, v) => {
       props.onChange(v)
     },
+    onOpen: (e) => {
+      console.log('open', e)
+    },
   })
+
+  const hasClearIcon = !disableClearable && !disabled && dirty && !readOnly
 
   return (
     <>
@@ -54,18 +77,29 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
             } flex flex-wrap gap-2 rounded-full border-2 px-4 py-2 focus-within:ring-2 focus-within:ring-blue-400`}
           >
             {value.map((option, index) => (
-              <Tag
-                key={index}
-                label={option}
-                onDelete={() => handleDelete(index)}
-                {...getTagProps({ index })}
-              />
+              <Tag key={index} label={option} {...getTagProps({ index })} />
             ))}
             <input
               {...getInputProps()}
               placeholder="What do you want to listen to?"
               className="grow-1 w-0 min-w-[240px] bg-transparent outline-none"
             />
+            <span className="flex h-5 gap-x-3">
+              {hasClearIcon && (
+                <button
+                  {...getClearProps()}
+                  className="text-alice-blue block h-5 w-5 rounded-full bg-blue-500 hover:bg-blue-600 sm:h-6 sm:w-6"
+                >
+                  <CancelIcon />
+                </button>
+              )}
+              <button
+                {...getPopupIndicatorProps()}
+                className="text-alice-blue block h-5 w-5 rounded-full bg-blue-500 hover:bg-blue-600 sm:h-6 sm:w-6"
+              >
+                <CancelIcon />
+              </button>
+            </span>
           </div>
         </div>
         {groupedOptions.length > 0 ? (
@@ -75,8 +109,9 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
           >
             {groupedOptions.map((option, index) => (
               <li
-                className={`cursor-pointer px-4 py-2 ${
-                  option === focused ? 'bg-blue-100' : ''
+                className={`cursor-pointer px-4 py-2 hover:bg-gray-100 ${
+                  (index === focused ? 'bg-gray-100' : '',
+                  value.indexOf(option) > -1 ? 'bg-gray-100' : '')
                 }`}
                 {...getOptionProps({ option, index })}
               >
