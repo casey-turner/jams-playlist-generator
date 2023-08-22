@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { CancelIcon } from '@assets/icons'
+import { CancelIcon, ChevronDownIcon, ChevronUpIcon } from '@assets/icons'
 import { genreOptions } from '@data/genres'
 import { useAutocomplete } from '@mui/base'
 import * as React from 'react'
@@ -48,6 +48,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
     popupOpen,
     open,
     dirty,
+    expanded,
   } = useAutocomplete({
     ...props,
     id: 'autocomplete',
@@ -58,9 +59,6 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
     onChange: (e, v) => {
       props.onChange(v)
     },
-    onOpen: (e) => {
-      console.log('open', e)
-    },
   })
 
   const hasClearIcon = !disableClearable && !disabled && dirty && !readOnly
@@ -68,8 +66,10 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
   return (
     <>
       <div className="relative">
-        <div className="" {...getRootProps()}>
-          <label {...getInputLabelProps()}>Select Playlist Genres</label>
+        <div {...getRootProps()}>
+          <label className="mb-2 block font-bold" {...getInputLabelProps()}>
+            Select Playlist Genres
+          </label>
           <div
             ref={setAnchorEl}
             className={`border ${
@@ -84,10 +84,11 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
               placeholder="What do you want to listen to?"
               className="grow-1 w-0 min-w-[240px] bg-transparent outline-none"
             />
-            <span className="flex h-5 gap-x-3">
+            <span className="ml-auto flex h-5 gap-x-3">
               {hasClearIcon && (
                 <button
                   {...getClearProps()}
+                  type="button"
                   className="text-alice-blue block h-5 w-5 rounded-full bg-blue-500 hover:bg-blue-600 sm:h-6 sm:w-6"
                 >
                   <CancelIcon />
@@ -95,16 +96,17 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
               )}
               <button
                 {...getPopupIndicatorProps()}
+                type="button"
                 className="text-alice-blue block h-5 w-5 rounded-full bg-blue-500 hover:bg-blue-600 sm:h-6 sm:w-6"
               >
-                <CancelIcon />
+                {expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
               </button>
             </span>
           </div>
         </div>
         {groupedOptions.length > 0 ? (
           <ul
-            className="absolute left-5 mt-2 max-h-80  w-[700px] overflow-y-auto rounded-md border border-gray-300 bg-white py-2 shadow-lg"
+            className="absolute left-5 z-10 mt-2 max-h-80  w-[700px] overflow-y-auto rounded-md border border-gray-300 bg-white py-2 shadow-lg"
             {...getListboxProps()}
           >
             {groupedOptions.map((option, index) => (
