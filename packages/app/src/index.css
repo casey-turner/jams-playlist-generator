@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  font-family: 'Poppins', sans-serif;
+}
+
 .hamburger {
   transition: opacity .15s linear, filter .15s linear;
 }
