@@ -1,7 +1,9 @@
 // @ts-nocheck
+import { Button } from '@components/Button'
 import Autocomplete from '@components/Form/Autocomplete'
 import Slider from '@components/Form/Slider'
 import Switch from '@components/Form/Switch'
+import { Loading } from '@components/Loading'
 import authClient from '@utils/api'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -46,7 +48,12 @@ const GeneratePlaylistForm = () => {
   }
 
   if (isLoading) {
-    return <p>Loading...</p>
+    return (
+      <Loading
+        title="Brb, making music magic"
+        copy="Your perfect personalised playlist is just seconds away..."
+      />
+    )
   }
 
   return (
@@ -70,7 +77,9 @@ const GeneratePlaylistForm = () => {
         defaultValue={false}
         render={({ field }) => <Switch {...field} />}
       />
-      <input type="submit" />
+      <div className="mt-5 flex justify-end">
+        <Button type="submit">Generate Playlist</Button>
+      </div>
     </form>
   )
 }
