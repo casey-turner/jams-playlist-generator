@@ -6,7 +6,7 @@ import GeneratePlaylistForm from '@features/playlist/components/GeneratePlaylist
 const GeneratePlaylist = () => {
   return (
     <>
-      <Layout title="Generate Playlist">
+      <Layout title="Generate Playlist" background="light">
         <Section sectionStyle="contentTop">
           <Container>
             <GeneratePlaylistForm />

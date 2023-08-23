@@ -20,7 +20,6 @@ const generatePlaylist = async (req: Request, res: Response) => {
     if (!req.spotifyAuthData) {
       throw new Error('Spotify authentication data is missing.')
     }
-    console.log(req.body)
     const accessToken: string = req.spotifyAuthData.accessToken
     const { data } = req.body as PlaylistGenerationRequest
 
@@ -69,7 +68,6 @@ const generateOpenAIResponse = async (data: PlaylistGenerationRequest) => {
   const text = aiCompletion.data.choices[0].text
   const openaiResponse =
     text !== undefined ? (JSON.parse(text) as OpenAiResponse) : null
-  console.log(openaiResponse)
   return openaiResponse
 }
 
@@ -120,7 +118,6 @@ const getSpotifyTracks = async (
     playlistTitles: playlistTitles,
   }
 
-  console.log(playlistData)
   return playlistData
 }
 export { generatePlaylist }
