@@ -1,13 +1,106 @@
+import successAnimation from '@assets/animations/success.json'
+import { Button } from '@components/Button'
+import { Container } from '@components/Container'
 import { Layout } from '@components/Layout'
+import { Loading } from '@components/Loading'
+import { Section } from '@components/Section'
+import Lottie from 'lottie-react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const About = () => {
+const Complete = () => {
+  const [playlistId, setPlaylistId] = useState('')
+  const [animationComplete, setAnimationComplete] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isFade, setIsFade] = useState(false)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const storedPlaylistId = localStorage.getItem('JAMS_playlist_id')
+    if (storedPlaylistId) {
+      // time out to simulate loading
+      setIsLoading(true)
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 5000)
+
+      // time out to simulate fade in
+      setTimeout(() => {
+        setIsFade(true)
+      }, 5800)
+
+      setPlaylistId(storedPlaylistId)
+    }
+  }, [])
+
   return (
     <>
-      <Layout title="About">
-        <div>Complete</div>
+      <Layout title="Complete" background="light">
+        <Section sectionStyle="contentTop">
+          <Container>
+            {isLoading && (
+              <Loading
+                title="Brb, making music magic"
+                copy="Your perfect personalised playlist is just seconds away..."
+              />
+            )}
+            {playlistId && !isLoading && (
+              <>
+                <div className="relative">
+                  {!animationComplete && (
+                    <Lottie
+                      style={{
+                        zIndex: 10,
+                        position: 'absolute',
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -50%)',
+                      }}
+                      animationData={successAnimation}
+                      loop={false}
+                      onComplete={() => {
+                        setAnimationComplete(true)
+                      }}
+                    />
+                  )}
+                  <div
+                    className={`duration-1000, flex flex-col items-center transition-opacity ${
+                      !isFade ? 'opacity-0' : 'opacity-100'
+                    } `}
+                  >
+                    <iframe
+                      src={`https://open.spotify.com/embed/playlist/${playlistId}`}
+                      width="500"
+                      height="380"
+                      allow="encrypted-media"
+                    ></iframe>
+                    <div className="mt-5 flex gap-x-4">
+                      <Button>
+                        <a
+                          href={`https://open.spotify.com/playlist/${playlistId}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Listen on Spotify
+                        </a>
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          navigate('/generate-playlist')
+                        }}
+                      >
+                        Make Another
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </Container>
+        </Section>
       </Layout>
     </>
   )
 }
 
-export default About
+export default Complete

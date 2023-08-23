@@ -3,12 +3,14 @@ import { Button } from '@components/Button'
 import authClient from '@utils/api'
 import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import usePlaylistFormContext from '../hooks/usePlaylistFormContext'
 import CustomiseTitle from './CustomiseTitle'
 import CustomiseTracks from './CustomiseTracks'
 
 const CustomisePlaylistForm = () => {
   const { aiTracks, step, aiPlaylistTitles, setStep } = usePlaylistFormContext()
+  const navigate = useNavigate()
 
   const methods = useForm({
     defaultValues: {
@@ -20,19 +22,26 @@ const CustomisePlaylistForm = () => {
   const { watch, setValue } = methods
 
   const onSubmit = async (data) => {
-    console.log('data', data)
     const { playlistTitle, tracks } = data
     const selectedTrackURIs = tracks
       .filter((track) => track.checked)
       .map((track) => track.uri)
 
-    console.log('selectedTrackURIs', selectedTrackURIs)
+    try {
+      const { status, data } = await authClient.post('/create-playlist', {
+        playlistTitle,
+        tracks: selectedTrackURIs,
+      })
 
-    const response = await authClient.post('/create-playlist', {
-      playlistTitle,
-      tracks: selectedTrackURIs,
-    })
-    console.log('response', response)
+      if (status === 200 && data.playlistId) {
+        localStorage.setItem('JAMS_playlist_id', data.playlistId)
+        navigate('/complete')
+      } else {
+        console.log(data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const handleNext = () => {
