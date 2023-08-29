@@ -32,7 +32,9 @@ const Landing = () => {
                 genre, and let AI curate a personalised playlist just for you,
                 filled with handpicked tracks that match your taste.
               </p>
-              <Button onClick={handleStart}>Get Started</Button>
+              <Button onClick={handleStart} colour="secondary">
+                Get Started
+              </Button>
             </div>
           </Container>
         </Section>

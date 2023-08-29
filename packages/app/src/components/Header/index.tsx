@@ -4,7 +4,7 @@ import { Button } from '@components/Button'
 import { Container } from '@components/Container'
 import token from '@utils/token'
 import { useEffect, useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 
 type NavigationItem = {
   name: string
@@ -28,6 +28,7 @@ const navigationItems: NavigationItem[] = [
 
 type NavProps = {
   isNavOpen: boolean
+  isHome?: boolean
   handleMenu?: () => void
   getSpotifyLink?: string
 }
@@ -59,7 +60,7 @@ const Nav = ({ isNavOpen, getSpotifyLink }: NavProps) => {
   )
 }
 
-const NavButton = ({ isNavOpen, handleMenu }: NavProps) => {
+const NavButton = ({ isNavOpen, handleMenu, isHome }: NavProps) => {
   return (
     <div
       className={`hamburger relative z-50 flex h-[13px] w-5 cursor-pointer ${
@@ -68,8 +69,12 @@ const NavButton = ({ isNavOpen, handleMenu }: NavProps) => {
       onClick={handleMenu}
     >
       <div
-        className={`hamburger-inner bg-alice-blue before:bg-alice-blue after:bg-alice-blue absolute bottom-0 h-0.5 w-6 before:absolute before:-top-1.5 before:h-0.5 before:w-6 after:absolute after:-top-3 after:h-0.5 after:w-6 ${
+        className={`hamburger-inner  absolute bottom-0 h-0.5 w-6 before:absolute before:-top-1.5 before:h-0.5 before:w-6 after:absolute after:-top-3 after:h-0.5 after:w-6 ${
           isNavOpen ? 'after:top-0 after:opacity-0' : ''
+        } ${
+          isHome
+            ? 'bg-alice-blue before:bg-alice-blue after:bg-alice-blue'
+            : 'bg-dark-moss-green before:bg-dark-moss-green after:bg-dark-moss-green'
         }`}
       ></div>
     </div>
@@ -84,7 +89,7 @@ const Logo = () => {
   )
 }
 
-const LogoutButton = () => {
+const LogoutButton = ({ isHome }: { isHome: boolean }) => {
   const handleLogout = () => {
     localStorage.clear()
     token.remove()
@@ -92,26 +97,39 @@ const LogoutButton = () => {
   }
 
   return (
-    <Button theme="text" startIcon={<EjectIcon />} onClick={handleLogout}>
+    <Button
+      style="text"
+      colour={isHome ? 'secondary' : 'primary'}
+      startIcon={<EjectIcon />}
+      onClick={handleLogout}
+    >
       Logout
     </Button>
   )
 }
 
-const RestartButton = () => {
+const RestartButton = ({ isHome }: { isHome: boolean }) => {
   const navigate = useNavigate()
   const handleRestart = () => {
     localStorage.clear()
     navigate('/generate-playlist')
   }
   return (
-    <Button theme="text" startIcon={<BackwardIcon />} onClick={handleRestart}>
+    <Button
+      style="text"
+      colour={isHome ? 'secondary' : 'primary'}
+      startIcon={<BackwardIcon />}
+      onClick={handleRestart}
+    >
       Start Over
     </Button>
   )
 }
 
 export const Header = () => {
+  const location = useLocation()
+  const isHome = location.pathname === '/'
+
   const [isNavOpen, setIsNavOpen] = useState(false)
   const [randomSpotifyLink, setRandomSpotifyLink] = useState('')
   const [isRestart, setIsRestart] = useState(false)
@@ -126,7 +144,7 @@ export const Header = () => {
   }, [])
 
   const spotifyLinks = [
-    '<a href="https://open.spotify.com/playlist/75USLqe4N3RsMtFvPZfOhM?si=895d78082ce64abb"> classic Aussie dad rock playlist</a>',
+    '<a href="https://open.spotify.com/playlist/75USLqe4N3RsMtFvPZfOhM?si=895d78082ce64abb"> ultimate Aussie dad rock playlist</a>',
     '<a href="https://open.spotify.com/playlist/7p36TIjl8d7v9LXUuuTBg8?si=9f335ffd65fc4488&pt=d8e1e8318c3fcb53fb185c1ffa7e9cff"> magnificent Misfits playlist </a>',
   ]
 
@@ -145,9 +163,13 @@ export const Header = () => {
         <div className="flex items-center justify-between py-2">
           <Logo />
           <div className="flex items-center gap-6">
-            {isRestart ? <RestartButton /> : null}
-            {token.get() ? <LogoutButton /> : null}
-            <NavButton isNavOpen={isNavOpen} handleMenu={handleMenu} />
+            {isRestart ? <RestartButton isHome={isHome} /> : null}
+            {token.get() ? <LogoutButton isHome={isHome} /> : null}
+            <NavButton
+              isNavOpen={isNavOpen}
+              handleMenu={handleMenu}
+              isHome={isHome}
+            />
           </div>
         </div>
       </Container>
