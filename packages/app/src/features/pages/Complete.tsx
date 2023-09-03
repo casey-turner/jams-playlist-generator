@@ -35,7 +35,7 @@ const Complete = () => {
 
   return (
     <>
-      <Layout title="Complete" background="light">
+      <Layout title="Complete">
         <Section sectionStyle="contentTop">
           <Container>
             {isLoading && (

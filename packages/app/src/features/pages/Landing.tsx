@@ -22,10 +22,10 @@ const Landing = () => {
         <Section>
           <Container>
             <div className="text-center lg:px-10  xl:px-40">
-              <h1 className="font-poppins text-alice-blue mb-5 text-5xl font-extrabold">
+              <h1 className="font-poppins text-yale-blue mb-5 text-5xl font-extrabold">
                 Your AI Powered Playlist Wizard
               </h1>
-              <p className="font-poppins text-alice-blue mb-10">
+              <p className="font-poppins text-gunmetal mb-10">
                 Unleash the power of JAMS, where music meets AI technology! No
                 more struggling to find the perfect playlist for your mood or
                 favorite genre. With JAMS, simply input your desired music

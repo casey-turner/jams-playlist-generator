@@ -67,14 +67,14 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
     <>
       <div className="relative">
         <div {...getRootProps()}>
-          <label className="mb-2 block font-bold" {...getInputLabelProps()}>
+          <label className="mb-2 block font-bold text-gunmetal" {...getInputLabelProps()}>
             Select Playlist Genres
           </label>
           <div
             ref={setAnchorEl}
             className={`border ${
-              focused ? 'border-blue-400' : 'border-alice-blue '
-            } flex flex-wrap gap-2 rounded-full border-2 px-4 py-2 focus-within:ring-2 focus-within:ring-blue-400`}
+              focused ? 'border-paynes-gray' : 'border-yale-blue '
+            } flex flex-wrap gap-2 rounded-full border-2 px-4 py-2`}
           >
             {value.map((option, index) => (
               <Tag key={index} label={option} {...getTagProps({ index })} />

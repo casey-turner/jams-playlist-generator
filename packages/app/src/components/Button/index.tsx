@@ -14,8 +14,8 @@ const colour = {
   },
   secondary: {
     button:
-      'bg-transparent hover:bg-alice-blue text-alice-blue border-alice-blue',
-    text: 'text-alice-blue',
+      'bg-pear hover:bg-transparent hover:border-pear hover:text-pear text-anti-flash-white border-pear',
+    text: 'text-paynes-gray',
   },
 }
 

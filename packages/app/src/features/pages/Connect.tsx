@@ -19,16 +19,16 @@ const Connect = () => {
               alt="Spotify Logo"
               className="mb-4 h-32 w-32"
             />
-            <h1 className="font-poppins mb-4 text-4xl font-extrabold">
+            <h1 className="font-poppins mb-4 text-4xl font-extrabold text-yale-blue">
               Connect your Spotify
             </h1>
-            <p className="font-poppins mb-5 text-center text-lg">
+            <p className="font-poppins mb-5 text-center text-lg text-gunmetal">
               Amplify your playlist creating experience by connecting your
               Spotify account, enabling JAMS to seamlessly save your custom
               curated playlists direcly to your account.
             </p>
-            <Button onClick={handleConnectClick}>Connect to Spotify</Button>
-            <p className="font-poppins mt-10 text-center text-xs">
+            <Button onClick={handleConnectClick} colour='secondary'>Connect to Spotify</Button>
+            <p className="font-poppins mt-10 text-center text-xs text-gunmetal">
               By connecting you acknowledge that you have read and understood
               the Privacy and Cookie Policy, and consent to the processing of
               your data and the use of cookies in accordance with its terms.

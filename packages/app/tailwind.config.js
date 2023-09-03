@@ -7,7 +7,7 @@ export default {
   theme: {
     container: {
       screens: {
-          '2xl': '1280px',
+        '2xl': '1280px',
       }
     },
     extend: {
@@ -18,6 +18,21 @@ export default {
         'oxford-blue': '#0A1F38',
         'peach': '#F1D3C7',
         'platinum': '#E8E7E2',
+
+        'ghost-white': '#F8F8FF',
+        'cadet-gray': '#88A5AB',
+        'light-blue': '#b8dbd9',
+        'paynes-gray': '#586f7c',
+        'gunmetal': '#2c383e',
+        'dark-spring-green': '#04724D',
+        'yale-blue': '#043A6B',
+        'pear': '#c2e812',
+        'battleship-gray': '#82816D',
+        'mindaro': '#D8EC82',
+        'anti-flash-white': '#eef0f2',
+
+
+
       },
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif'],
@@ -25,6 +40,6 @@ export default {
     },
   },
   plugins: [
-   require("@tailwindcss/forms")
- ],
+    require("@tailwindcss/forms")
+  ],
 }

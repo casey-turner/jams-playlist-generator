@@ -6,7 +6,7 @@ import CustomisePlaylistForm from '@features/playlist/components/CustomisePlayli
 const CustomisePlaylist = () => {
   return (
     <>
-      <Layout title="Customise Playlist" background="light">
+      <Layout title="Customise Playlist">
         <Section sectionStyle="contentTop">
           <Container>
             <CustomisePlaylistForm />

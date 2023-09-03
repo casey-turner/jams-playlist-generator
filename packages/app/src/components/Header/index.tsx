@@ -28,7 +28,6 @@ const navigationItems: NavigationItem[] = [
 
 type NavProps = {
   isNavOpen: boolean
-  isHome?: boolean
   handleMenu?: () => void
   getSpotifyLink?: string
 }
@@ -42,7 +41,7 @@ const Nav = ({ isNavOpen, getSpotifyLink }: NavProps) => {
     >
       <ul>
         {navigationItems.map((item) => (
-          <li key={item.name} className="font-poppins mb-4 text-3xl font-black">
+          <li key={item.name} className="font-poppins mb-4 text-3xl font-bold">
             <NavLink to={item.to}>{item.name}</NavLink>
           </li>
         ))}
@@ -60,7 +59,7 @@ const Nav = ({ isNavOpen, getSpotifyLink }: NavProps) => {
   )
 }
 
-const NavButton = ({ isNavOpen, handleMenu, isHome }: NavProps) => {
+const NavButton = ({ isNavOpen, handleMenu }: NavProps) => {
   return (
     <div
       className={`hamburger relative z-50 flex h-[13px] w-5 cursor-pointer ${
@@ -69,12 +68,8 @@ const NavButton = ({ isNavOpen, handleMenu, isHome }: NavProps) => {
       onClick={handleMenu}
     >
       <div
-        className={`hamburger-inner  absolute bottom-0 h-0.5 w-6 before:absolute before:-top-1.5 before:h-0.5 before:w-6 after:absolute after:-top-3 after:h-0.5 after:w-6 ${
+        className={`bg-paynes-gray before:bg-paynes-gray after:bg-paynes-gray hamburger-inner  absolute bottom-0 h-0.5 w-6 before:absolute before:-top-1.5 before:h-0.5 before:w-6 after:absolute after:-top-3 after:h-0.5 after:w-6 ${
           isNavOpen ? 'after:top-0 after:opacity-0' : ''
-        } ${
-          isHome
-            ? 'bg-alice-blue before:bg-alice-blue after:bg-alice-blue'
-            : 'bg-dark-moss-green before:bg-dark-moss-green after:bg-dark-moss-green'
         }`}
       ></div>
     </div>
@@ -89,7 +84,7 @@ const Logo = () => {
   )
 }
 
-const LogoutButton = ({ isHome }: { isHome: boolean }) => {
+const LogoutButton = () => {
   const handleLogout = () => {
     localStorage.clear()
     token.remove()
@@ -99,7 +94,7 @@ const LogoutButton = ({ isHome }: { isHome: boolean }) => {
   return (
     <Button
       style="text"
-      colour={isHome ? 'secondary' : 'primary'}
+      colour="secondary"
       startIcon={<EjectIcon />}
       onClick={handleLogout}
     >
@@ -108,7 +103,7 @@ const LogoutButton = ({ isHome }: { isHome: boolean }) => {
   )
 }
 
-const RestartButton = ({ isHome }: { isHome: boolean }) => {
+const RestartButton = () => {
   const navigate = useNavigate()
   const handleRestart = () => {
     localStorage.clear()
@@ -117,7 +112,7 @@ const RestartButton = ({ isHome }: { isHome: boolean }) => {
   return (
     <Button
       style="text"
-      colour={isHome ? 'secondary' : 'primary'}
+      colour="secondary"
       startIcon={<BackwardIcon />}
       onClick={handleRestart}
     >
@@ -128,7 +123,6 @@ const RestartButton = ({ isHome }: { isHome: boolean }) => {
 
 export const Header = () => {
   const location = useLocation()
-  const isHome = location.pathname === '/'
 
   const [isNavOpen, setIsNavOpen] = useState(false)
   const [randomSpotifyLink, setRandomSpotifyLink] = useState('')
@@ -163,12 +157,11 @@ export const Header = () => {
         <div className="flex items-center justify-between py-2">
           <Logo />
           <div className="flex items-center gap-6">
-            {isRestart ? <RestartButton isHome={isHome} /> : null}
-            {token.get() ? <LogoutButton isHome={isHome} /> : null}
+            {isRestart ? <RestartButton /> : null}
+            {token.get() ? <LogoutButton /> : null}
             <NavButton
               isNavOpen={isNavOpen}
               handleMenu={handleMenu}
-              isHome={isHome}
             />
           </div>
         </div>
