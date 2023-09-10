@@ -9,12 +9,12 @@ const Tag = (props) => {
   return (
     <div
       {...other}
-      className="flex items-center gap-1 rounded-full bg-blue-500 px-2 py-0.5 text-xs text-white sm:text-sm"
+      className="flex items-center gap-1 rounded-full bg-yale-blue px-2 py-0.5 text-xs text-white sm:text-sm"
     >
       <span>{label}</span>
       <span
         onClick={onDelete}
-        className="text-alice-blue h-3 w-3 cursor-pointer sm:h-4 sm:w-4"
+        className="text-anti-flash-white h-3 w-3 cursor-pointer sm:h-4 sm:w-4"
       >
         <CancelIcon />
       </span>
