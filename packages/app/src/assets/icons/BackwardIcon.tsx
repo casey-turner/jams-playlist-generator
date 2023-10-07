@@ -2,10 +2,10 @@ export const BackwardIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 512 512"
+      viewBox="0 -960 960 960"
       fill="currentColor"
     >
-      <path d="M0 256L256 448V64L0 256zM512 448V64L288 232v48L512 448z" />
+      <path d="M913-202 495-480l418-278v556Zm-448 0L47-480l418-278v556Z" />{' '}
     </svg>
   )
 }

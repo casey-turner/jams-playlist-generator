@@ -20,16 +20,17 @@ export default {
         'platinum': '#E8E7E2',
 
         'ghost-white': '#F8F8FF',
+        'silver': '#C2CFD3',
         'cadet-gray': '#88A5AB',
-        'light-blue': '#b8dbd9',
-        'paynes-gray': '#586f7c',
-        'gunmetal': '#2c383e',
+        'light-blue': '#B8DBD9',
+        'paynes-gray': '#586F7C',
+        'gunmetal': '#2C383E',
         'dark-spring-green': '#04724D',
         'yale-blue': '#043A6B',
-        'pear': '#c2e812',
+        'pear': '#C2E812',
         'battleship-gray': '#82816D',
         'mindaro': '#D8EC82',
-        'anti-flash-white': '#eef0f2',
+        'anti-flash-white': '#EEF0F2',
 
 
 

@@ -60,9 +60,11 @@ const CustomiseTracks = () => {
   return (
     <>
       <div>
-        <div className="flex items-center justify-between">
-          <h2 className="mb-4 text-2xl font-bold">Customise Playlist</h2>
-          <p className="mb-4 text-sm">{selectedTracksCount} songs selected</p>
+        <div className="mb-4 flex flex-wrap items-center md:justify-between">
+          <h2 className="text-yale-blue basis-full text-2xl font-bold md:basis-auto">
+            Customise Playlist
+          </h2>
+          <p className="text-sm">{selectedTracksCount} songs selected</p>
         </div>
         {fields.map((track, index) => (
           <div key={track.id} className="w-full">
@@ -75,19 +77,21 @@ const CustomiseTracks = () => {
             />
             <label
               htmlFor={`tracks.${index}`}
-              className={`flex cursor-pointer items-center border-b border-l-2 border-gray-300 px-4 py-2 peer-checked:border-l-blue-900`}
+              className={`flex cursor-pointer items-center border-b border-l-2 border-gray-300 px-2 py-2 text-sm peer-checked:border-l-blue-900 md:px-4 md:text-base`}
             >
-              <span className="mr-2 text-sm font-bold">
+              <span className="text-xs font-bold md:mr-2 md:text-sm">
                 {trackNumber(index)}
               </span>
               <img
                 src={track.albumCover ? track.albumCover : albumCoverFallback}
                 alt={track.album}
-                className="mx-4 h-12 w-12 rounded"
+                className="mx-3 h-12 w-12 rounded md:mx-4"
               />
               <span className="flex flex-col">
-                <span className="font-bold">{track.title}</span>
-                <span className="text-sm">{track.artist}</span>
+                <span className="text-sm font-bold md:text-base">
+                  {track.title}
+                </span>
+                <span className="text-xs md:text-sm">{track.artist}</span>
               </span>
             </label>
           </div>

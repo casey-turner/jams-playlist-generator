@@ -33,6 +33,13 @@ const Complete = () => {
     }
   }, [])
 
+  const handleMakeAnother = () => {
+    localStorage.removeItem('JAMS_playlist_id')
+    localStorage.removeItem('JAMS_tracks')
+    localStorage.removeItem('JAMS_playlist_titles')
+    navigate('/generate-playlist')
+  }
+
   return (
     <>
       <Layout title="Complete">
@@ -69,9 +76,8 @@ const Complete = () => {
                     } `}
                   >
                     <iframe
+                      className="h-[380px] md:w-[500px]"
                       src={`https://open.spotify.com/embed/playlist/${playlistId}`}
-                      width="500"
-                      height="380"
                       allow="encrypted-media"
                     ></iframe>
                     <div className="mt-5 flex gap-x-4">
@@ -84,13 +90,7 @@ const Complete = () => {
                           Listen on Spotify
                         </a>
                       </Button>
-                      <Button
-                        onClick={() => {
-                          navigate('/generate-playlist')
-                        }}
-                      >
-                        Make Another
-                      </Button>
+                      <Button onClick={handleMakeAnother}>Make Another</Button>
                     </div>
                   </div>
                 </div>

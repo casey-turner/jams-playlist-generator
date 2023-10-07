@@ -2,10 +2,10 @@ export const EjectIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 448 512"
+      viewBox="0 -960 960 960"
       fill="currentColor"
     >
-      <path d="M0 320V272L224 32 448 272v48H0zM448 480H0V384H448v96z" />
+      <path d="M170-162v-106h620v106H170Zm6-188 304-458 304 458H176Z" />{' '}
     </svg>
   )
 }
