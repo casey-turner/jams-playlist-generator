@@ -7,7 +7,7 @@
   "scripts": {
     "dev:app": "npm run -w @playlistify/app dev",
     "dev:server": "npm run -w @playlistify/server dev",
-    "build:app": "npm run -w @playlistify/app build", 
+    "build:app": "npm run -w @playlistify/app build",
     "build:server": "npm run -w @playlistify/server build",
     "start:app": "npm run -w @playlistify/app start"
   },
@@ -25,8 +25,6 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "@playlistify/server": "^1.0.0",
-    "axios": "^1.4.0",
-    "body-parser": "^1.20.2"
+    "axios": "^1.4.0"
   }
 }

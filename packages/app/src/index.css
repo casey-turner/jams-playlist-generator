@@ -2,22 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@font-face {
-  font-family: 'This';
-  font-style: normal;
-  src: local('this'), url(@assets/fonts/Sohne-Schmal-Fett.woff2) format('woff2');
-}
-
 html {
-  background-color: rgb(92,97,49);
-}
-
-#root {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
 }
 
 .hamburger {
@@ -35,6 +21,7 @@ html {
   transform: translate3d(0, -6px, 0) rotate(-45deg);
   transition-delay: .32s;
   transition-timing-function: cubic-bezier(.215, .61, .355, 1);
+  background-color: #eef0f2;
 }
 
 .hamburger-inner:after {
@@ -43,14 +30,16 @@ html {
 
 .is-active .hamburger-inner:after {
   transition: top .3s cubic-bezier(.33333, 0, .66667, .33333), opacity .1s linear .27s;
+
 }
 
 .hamburger-inner:before {
-  transition: top .12s cubic-bezier(.33333, .66667, .66667, 1) .3s, transform .15s cubic-bezier(.55, .055, .675, .19);
+  transition: top .12s cubic-bezier(.33333, .66667, .66667, 1) .3s, transform .15s cubic-bezier(.55, .055, .675, .19), background-color .1s linear;
 }
 
 .is-active .hamburger-inner:before {
+  background-color: #eef0f2;
   top: 0;
   transform: rotate(-90deg);
-  transition: top .12s cubic-bezier(.33333, 0, .66667, .33333) .18s, transform .15s cubic-bezier(.215, .61, .355, 1) .42s;
+  transition: top .12s cubic-bezier(.33333, 0, .66667, .33333) .18s, transform .15s cubic-bezier(.215, .61, .355, 1) .42s, background-color .1s linear .42s;
 }

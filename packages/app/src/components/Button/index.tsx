@@ -1,32 +1,23 @@
 import * as React from 'react'
 
-const theme = {
+const colours = {
   primary:
-    'bg-alice-blue hover:bg-transparent text-dark-moss-green hover:text-alice-blue font-bold py-2 px-4 rounded-full border-2 border-alice-blue min-w-[200px] uppercase',
+    'bg-pear hover:bg-yale-blue hover:border-yale-blue hover:text-pear text-yale-blue border-pear transition-colors duration-500',
   secondary:
-    'bg-transparent hover:bg-alice-blue text-alice-blue font-bold py-2 px-4 rounded-full border border-alice-blue min-w-[200px] uppercase',
-  text: 'text-black uppercase',
+    'bg-pear hover:bg-yale-blue hover:border-yale-blue hover:text-pear text-yale-blue border-pear transition-colors duration-500',
 }
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  theme?: keyof typeof theme
-  startIcon?: React.ReactNode
+  colour?: keyof typeof colours
 }
 
-export const Button = ({
-  theme: themeKey = 'primary',
-  startIcon,
-  ...props
-}: ButtonProps) => {
+export const Button = ({ colour = 'primary', ...props }: ButtonProps) => {
   return (
-    <button className={theme[themeKey]} {...props}>
-      {startIcon && (
-        <span className="flex items-center">
-          <span className="mr-2 block h-4 w-4">{startIcon}</span>
-          {props.children}
-        </span>
-      )}
-      {!startIcon && props.children}
+    <button
+      {...props}
+      className={`min-w-[160px] rounded-full px-4 py-2 text-sm font-semibold tracking-wide md:min-w-[200px] md:text-base ${colours[colour]}`}
+    >
+      {props.children}
     </button>
   )
 }

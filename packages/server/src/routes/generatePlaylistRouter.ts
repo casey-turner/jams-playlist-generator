@@ -4,10 +4,6 @@ import { authenticateUser } from '../middlewares/authenticateUser'
 
 const router = express.Router()
 
-router.post(
-  '/playlist',
-  authenticateUser,
-  generatePlaylist
-)
+router.post('/playlist', authenticateUser, generatePlaylist)
 
 export default router

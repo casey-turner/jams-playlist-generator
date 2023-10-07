@@ -1,4 +1,3 @@
-import { Container } from '@components/Container'
 import { Footer } from '@components/Footer'
 import { Head } from '@components/Head'
 import { Header } from '@components/Header'
@@ -10,15 +9,20 @@ type LayoutProps = {
   description?: string
 }
 
-export const Layout = ({ children, title, url, description }: LayoutProps) => {
+export const Layout = ({
+  children,
+  title,
+  url,
+  description,
+}: LayoutProps) => {
   return (
     <>
       <Head title={title} url={url} description={description} />
-      <Header />
-      <main>
-        <Container width="contained">{children}</Container>
-      </main>
-      <Footer />
+      <div className="bg-anti-flash-white">
+        <Header />
+        <main>{children}</main>
+        <Footer />
+      </div>
     </>
   )
 }

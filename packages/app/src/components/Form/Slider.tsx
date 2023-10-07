@@ -1,47 +1,53 @@
-// @ts-nocheck
-
-import MuiSlider, { SliderProps as MuiSliderProps } from '@mui/base/Slider'
+import BaseSlider, { SliderProps as BaseSliderProps } from '@mui/base/Slider'
 import * as React from 'react'
 
-function SliderValueLabel({ children }) {
+function SliderValueLabel({ children }: { children: string }) {
   return (
-    <span className="label">
-      <div className="value">{children}</div>
+    <span className="bg-yale-blue absolute -top-10 flex h-6 w-8 items-center justify-center rounded-sm text-xs font-medium text-white before:absolute before:bottom-0 before:left-1/2 before:h-2 before:w-2 before:-translate-x-1/2 before:translate-y-1/2 before:rotate-45 before:transform before:bg-inherit md:text-sm">
+      <div>{children}</div>
     </span>
   )
 }
 
 const Slider = React.forwardRef(function Slider(
-  props: MuiSliderProps,
+  props: BaseSliderProps,
   ref: React.ForwardedRef<HTMLSpanElement>
 ) {
   const { min, max } = props
   return (
-    <div className="flex max-w-[450px] items-center justify-between">
-      <span className="text-sm font-bold text-gray-500">{min}</span>
-      <MuiSlider
+    <>
+      <label className="text-gunmetal mb-12 block text-sm font-bold md:text-base">
+        Number Of Tracks
+      </label>
+      <BaseSlider
         {...props}
         ref={ref}
         slotProps={{
           thumb: {
             className:
-              'ring-cyan-500 dark:ring-cyan-400 ring-2 w-4 h-4 -mt-1 -ml-2 flex items-center justify-center bg-white rounded-full shadow absolute',
+              'ring-yale-blue ring-2 w-4 h-4 -mt-0.5 -ml-2 flex items-center justify-center bg-ghost-white rounded-full shadow absolute',
           },
           root: {
             className: 'w-full relative inline-block h-2 cursor-pointer',
           },
           rail: {
-            className:
-              'bg-slate-100 dark:bg-slate-700 h-2 w-full rounded-full block absolute',
+            className: 'bg-silver h-3 w-full rounded-full block absolute',
           },
           track: {
-            className: 'bg-cyan-500 dark:bg-cyan-400 h-2 absolute rounded-full',
+            className: 'bg-yale-blue h-3 absolute rounded-full',
           },
         }}
         slots={{ valueLabel: SliderValueLabel }}
       />
-      <span className="text-sm font-bold text-gray-500">{max}</span>
-    </div>
+      <div className="flex justify-between">
+        <span className="text-gunmetal text-xs font-bold md:text-sm">
+          {min}
+        </span>
+        <span className="text-gunmetal text-xs font-bold md:text-sm">
+          {max}
+        </span>
+      </div>
+    </>
   )
 })
 

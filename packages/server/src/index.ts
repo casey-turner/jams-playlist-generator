@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import Express from 'express'
-import { CLIENT_URL, PORT } from './config'
+import { CLIENT_URL, ENV, ENVIRONMENTS, PORT } from './config'
 import createPlaylistRouter from './routes/createPlaylistRouter'
 import generatePlaylistRouter from './routes/generatePlaylistRouter'
 import spotifyAuthRouter from './routes/spotifyAuthRouter'
@@ -14,6 +14,9 @@ const corsOptions = {
 }
 const app = Express()
 app.use(cors(corsOptions))
+const app = Express()
+
+app.use(cors(ENVIRONMENTS[ENV].corsOrigin))
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(spotifyAuthRouter)

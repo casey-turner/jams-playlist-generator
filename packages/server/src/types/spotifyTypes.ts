@@ -13,10 +13,12 @@ export type RefreshTokenResult = {
 }
 
 export type CreatePlaylistResponse = {
+  status: number
   id: string
   href: string
 }
 
 export type AddTracksToPlaylistResponse = {
+  status: number
   snapshot_id: string
 }

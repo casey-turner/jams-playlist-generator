@@ -28,7 +28,7 @@ export const PlaylistFormProvider = ({
   const { aiTracks, setAiTracks, aiPlaylistTitles, setAiPlaylistTitles } =
     usePlaylistDataContext()
 
-  const [step, setStep] = useLocalStorage('customise_playlist', 1)
+  const [step, setStep] = useLocalStorage('JAMS_step', 1)
 
   const contextValue = {
     aiTracks,

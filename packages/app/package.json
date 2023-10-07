@@ -7,12 +7,13 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "start": "serve dist -s -n -L -p $PORT",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "serve dist -s -n -L -p $PORT"
   },
   "dependencies": {
     "@mui/base": "^5.0.0-beta.7",
     "js-cookie": "^3.0.5",
+    "lottie-react": "^2.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^1.3.0",

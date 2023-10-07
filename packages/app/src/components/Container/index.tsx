@@ -1,21 +1,21 @@
 import * as React from 'react'
 
-const width = {
+const widths = {
   full: 'mx-auto px-4 sm:px-6 lg:px-8',
   contained: 'container mx-auto px-4 sm:px-6 lg:px-8 ',
 }
 
 export type ContainerProps = React.HTMLAttributes<HTMLDivElement> & {
-  width?: keyof typeof width
+  width?: keyof typeof widths
 }
 
 export const Container = ({
-  width: widthKey = 'contained',
+  width = 'contained',
   children,
   ...props
 }: ContainerProps) => {
   return (
-    <div className={width[widthKey]} {...props}>
+    <div className={widths[width]} {...props}>
       {children}
     </div>
   )

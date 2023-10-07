@@ -66,13 +66,22 @@ jspm_packages/
 **/*.back.*
 
 node_modules
-
+dist
+dist-ssr
+*.local
 *.sublime*
 
 psd
 thumb
 sketch
 
-dist
-dist-ssr
-*.local
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
