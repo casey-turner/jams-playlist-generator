@@ -1,5 +1,4 @@
 // @ts-nocheck
-import token from '@/utils/token'
 import { Button } from '@components/Button'
 import Autocomplete from '@components/Form/Autocomplete'
 import Slider from '@components/Form/Slider'
@@ -11,14 +10,13 @@ import { useNavigate } from 'react-router-dom'
 import usePlaylistDataContext from '../hooks/usePlaylistDataContext'
 
 const GeneratePlaylistForm = () => {
-  const { handleSubmit, control } = useForm()
+  const { handleSubmit, control } = useForm<PlaylistData>()
   const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useNavigate()
   const { setAiTracks, setAiPlaylistTitles } = usePlaylistDataContext()
 
   const onSubmit = async (data) => {
-    console.log('token: ', token.get())
     setIsLoading(true)
     const response = await authClient.post('/playlist', { data })
     console.log('response', response)
@@ -26,25 +24,28 @@ const GeneratePlaylistForm = () => {
       const { playlist, playlistTitles } = response.data
 
       // Add 'checked' key to each track object in the playlist
-      const updatedPlaylist = playlist.map((track) => {
+      const updatedPlaylist = playlist.map((track: Track) => {
         return {
           ...track,
           checked: true,
         }
       })
 
-      const updatedPlaylistTitles = playlistTitles.map((title) => {
-        return {
-          ...title,
-          checked: true,
+      const updatedPlaylistTitles = playlistTitles.map(
+        (title: PlaylistTitle) => {
+          console.log('title', title)
+          return {
+            ...title,
+            checked: true,
+          }
         }
-      })
+      )
       setAiTracks(updatedPlaylist)
       setAiPlaylistTitles(updatedPlaylistTitles)
 
       navigate('/customise-playlist')
     } else {
-      console.log('error')
+      console.log('error', response.data.error)
     }
   }
 
@@ -80,7 +81,19 @@ const GeneratePlaylistForm = () => {
             name="numberOfSongs"
             control={control}
             defaultValue={20}
-            render={({ field }) => <Slider {...field} min={15} max={40} />}
+            render={({ field }) => (
+              <Slider
+                {...field}
+                min={15}
+                max={40}
+                onChange={(_, value) => {
+                  if (typeof value === 'number') {
+                    field.onChange(value)
+                  }
+                }}
+                value={typeof field.value === 'number' ? field.value : 15}
+              />
+            )}
           />
         </div>
 

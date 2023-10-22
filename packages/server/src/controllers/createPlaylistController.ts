@@ -20,6 +20,9 @@ const createPlaylist = async (req: Request, res: Response) => {
     const { accessToken, userId } = req.spotifyAuthData
     const { tracks, playlistTitle } = req.body as PlaylistCreationRequest
 
+    console.log('tracks', tracks)
+    console.log('playlistTitle', playlistTitle)
+
     // VALIDATE - validate input data
     if (!accessToken || !userId || !tracks) {
       logger(
