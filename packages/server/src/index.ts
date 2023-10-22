@@ -14,7 +14,6 @@ const corsOptions = {
 }
 const app = Express()
 app.use(cors(corsOptions))
-const app = Express()
 
 app.use(cors(ENVIRONMENTS[ENV].corsOrigin))
 app.use(cookieParser())
