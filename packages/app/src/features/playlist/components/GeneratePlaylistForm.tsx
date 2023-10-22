@@ -60,7 +60,7 @@ const GeneratePlaylistForm = () => {
 
   return (
     <>
-      <h1 className="font-poppins text-yale-blue mb-10 text-center text-4xl font-extrabold">
+      <h1 className="text-yale-blue mb-10 text-center text-4xl font-extrabold">
         Generate Playlist
       </h1>
       <form
