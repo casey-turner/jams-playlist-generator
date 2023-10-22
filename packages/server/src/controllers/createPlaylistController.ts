@@ -35,8 +35,8 @@ const createPlaylist = async (req: Request, res: Response) => {
 
     // PLAYLIST OPTIONS - set options for playlist creation
     const playlistOptions = {
-      name: playlistTitle || 'JAMS Playlist',
-      description: 'Made with 💙 by JAMS Playlist Generator',
+      name: playlistTitle || 'Jams Playlist',
+      description: 'Made with 💙 by Jams Playlist Generator',
       public: false,
     }
 
