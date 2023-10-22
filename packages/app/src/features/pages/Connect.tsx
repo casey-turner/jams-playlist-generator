@@ -5,7 +5,6 @@ import { Layout } from '@components/Layout'
 import { Section } from '@components/Section'
 
 const Connect = () => {
-  const apiURL = import.meta.env.VITE_API_URL as string
   const handleConnectClick = () => {
     window.location.href = `${import.meta.env.VITE_API_URL}/connect`
   }
