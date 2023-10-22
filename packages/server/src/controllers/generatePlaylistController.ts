@@ -56,7 +56,7 @@ const generateOpenAIResponse = async (data: PlaylistGenerationRequest) => {
 
   const openaiPrompt = `You are an incredible Playlist Generation Tool, here to help users discover some awesome bands or singers based on their favorite music genres. Please provide a list of ${requestBands} bands and/or singers of the following genres: ${genres.join(
     ', '
-  )}. Do not repeat artists. All bands/artists should be available on Spotify. Also provide 5 creative / funny titles for the playlist. The playlist and titles must be returned as a JSON object in the following format { "playlist": [ {"artist": "Queen"}, {"artist": "AC/DC"} ], "playlistTitles": [ {"title":"First playlist name option"}, {"title":"Second playlist name option"} ] }`
+  )}. Include well-known and lesser-known artists in order to create a comprehensive list. Do not repeat artists. All bands/artists should be available on Spotify. Additionally, suggest 5 playlist titles that are humorous but maintain a non-offensive tone for these afrobeat artists. The titles should reflect the unique characteristics or themes associated with the genre/s. The playlist and titles must be returned as a JSON object in the following format { "playlist": [ {"artist": "Queen"}, {"artist": "AC/DC"} ], "playlistTitles": [ {"title":"First playlist name option"}, {"title":"Second playlist name option"} ] }`
 
   const aiCompletion = await openai.createCompletion({
     model: 'text-davinci-003',
