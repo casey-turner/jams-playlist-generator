@@ -40,12 +40,17 @@ const CustomiseTitle = () => {
   console.log('fields', fields)
   return (
     <>
-      <div className="flex flex-col items-center space-y-6">
+      <div className="flex flex-col items-center space-y-3 md:space-y-6">
+        <div className="mb-4 flex flex-wrap items-center md:justify-between">
+          <h2 className="text-yale-blue basis-full text-2xl font-bold md:basis-auto">
+            Customise Title
+          </h2>
+        </div>
         {fields.map((title, index) => (
-          <div key={title.id}>
+          <div className="text-center" key={title.id}>
             <input
               id={title.id}
-              className="peer"
+              className="peer hidden"
               type="radio"
               {...register(`playlistTitle`)}
               value={title.title}
@@ -55,34 +60,37 @@ const CustomiseTitle = () => {
             />
             <label
               htmlFor={title.id}
-              className={`peer-checked:underline-thickness-2 peer-checked:underline-gray-300 cursor-pointer text-3xl font-bold  peer-checked:text-blue-400 peer-checked:underline-offset-2`}
+              className={`peer-checked:underline-thickness-2 peer-checked:underline-yale-blue peer-checked:text-yale-blue text-paynes-gray cursor-pointer text-xl font-bold peer-checked:underline peer-checked:underline-offset-2 md:text-2xl lg:text-3xl`}
             >
               {`"${title.title}"`}
             </label>
           </div>
         ))}
         <div className="w-full max-w-[550px]">
-          <p className="mb-4 grid grid-cols-[minmax(20px,1fr)auto_minmax(20px,1fr)] items-center gap-4 text-center text-xl font-bold before:border-t-2 after:border-t-2">
+          <p className="mb-4 grid grid-cols-[minmax(20px,1fr)auto_minmax(20px,1fr)] items-center gap-4 text-center text-base font-bold before:border-t-2 after:border-t-2 md:text-xl">
             OR
           </p>
         </div>
         <div>
           <input
             id="playlistTitle-custom"
-            className="peer"
+            className="peer hidden"
             type="radio"
             {...register(`playlistTitle`)}
             checked={customTitleSelected}
           />
           <label
             htmlFor="customPlaylistTitle"
-            className="sr-only border-b-4 text-3xl peer-checked:text-blue-400"
+            className="sr-only border-b-4 text-3xl"
           >
             Enter your own title
           </label>
           <input
             id="customPlaylistTitle"
-            className="mx-auto w-full cursor-pointer border-0 border-transparent bg-transparent text-center text-3xl font-bold focus:ring-0"
+            className={
+              'placeholder:text-paynes-gray mx-auto w-full cursor-pointer border-0 border-transparent bg-transparent text-center text-xl font-bold focus:ring-0 md:text-2xl lg:text-3xl' +
+              (customTitleSelected ? 'text-yale-blue underline' : 'no-underline text-paynes-gray')
+            }
             type="text"
             name="customPlaylistTitle"
             placeholder="Enter your own title"

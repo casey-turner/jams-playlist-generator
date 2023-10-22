@@ -1,8 +1,6 @@
-// @ts-nocheck
 import { Button } from '@components/Button'
 import Autocomplete from '@components/Form/Autocomplete'
 import Slider from '@components/Form/Slider'
-import Switch from '@components/Form/Switch'
 import { Loading } from '@components/Loading'
 import authClient from '@utils/api'
 import { useState } from 'react'
@@ -57,30 +55,37 @@ const GeneratePlaylistForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mx-auto max-w-[750px]">
-      <Controller
-        name="genres"
-        control={control}
-        rules={{ required: true }}
-        defaultValue={[]}
-        render={({ field }) => <Autocomplete {...field} />}
-      />
-      <Controller
-        name="numberOfSongs"
-        control={control}
-        defaultValue={20}
-        render={({ field }) => <Slider {...field} min={15} max={40} />}
-      />
-      <Controller
-        name="repeatArtist"
-        control={control}
-        defaultValue={false}
-        render={({ field }) => <Switch {...field} />}
-      />
-      <div className="mt-5 flex justify-end">
-        <Button type="submit">Generate Playlist</Button>
-      </div>
-    </form>
+    <>
+      <h1 className="font-poppins text-yale-blue mb-10 text-center text-4xl font-extrabold">
+        Generate Playlist
+      </h1>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mx-auto flex max-w-[700px] flex-col gap-12"
+      >
+        <div>
+          <Controller
+            name="genres"
+            control={control}
+            rules={{ required: true }}
+            defaultValue={[]}
+            render={({ field }) => <Autocomplete {...field} />}
+          />
+        </div>
+        <div>
+          <Controller
+            name="numberOfSongs"
+            control={control}
+            defaultValue={20}
+            render={({ field }) => <Slider {...field} min={15} max={40} />}
+          />
+        </div>
+
+        <div className="flex justify-center">
+          <Button type="submit">Generate Playlist</Button>
+        </div>
+      </form>
+    </>
   )
 }
 

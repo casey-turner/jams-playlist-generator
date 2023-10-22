@@ -1,20 +1,24 @@
-// @ts-nocheck
 import { CancelIcon, ChevronDownIcon, ChevronUpIcon } from '@assets/icons'
 import { genreOptions } from '@data/genres'
 import { useAutocomplete } from '@mui/base'
 import * as React from 'react'
 
-const Tag = (props) => {
+type TagProps = {
+  label: string
+  onDelete: () => void
+}
+
+const Tag = (props: TagProps) => {
   const { label, onDelete, ...other } = props
   return (
     <div
       {...other}
-      className="flex items-center gap-1 rounded-full bg-yale-blue px-2 py-0.5 text-xs text-white sm:text-sm"
+      className="bg-yale-blue text-anti-flash-white flex items-center gap-1 rounded-full px-2 py-0.5 text-xs sm:text-sm"
     >
       <span>{label}</span>
       <span
         onClick={onDelete}
-        className="text-anti-flash-white h-3 w-3 cursor-pointer sm:h-4 sm:w-4"
+        className="text-anti-flash-white bg-yale-blue block h-3.5 w-3.5 cursor-pointer rounded-full"
       >
         <CancelIcon />
       </span>
@@ -22,15 +26,7 @@ const Tag = (props) => {
   )
 }
 
-const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
-  const {
-    disableClearable = false,
-    disabled = false,
-    readOnly = false,
-    options,
-    ...other
-  } = props
-
+const Autocomplete = React.forwardRef(function Autocomplete(props) {
   const {
     getClearProps,
     getRootProps,
@@ -44,9 +40,6 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
     focused,
     value,
     setAnchorEl,
-    getToggleButtonProps,
-    popupOpen,
-    open,
     dirty,
     expanded,
   } = useAutocomplete({
@@ -61,35 +54,40 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
     },
   })
 
-  const hasClearIcon = !disableClearable && !disabled && dirty && !readOnly
+  const hasClearIcon = dirty && value.length > 0
+
+  // if screen width is greater than 768px show a placeholder
+  const placeholder = window.innerWidth > 768 ? 'Search for a genre' : ''
 
   return (
     <>
       <div className="relative">
         <div {...getRootProps()}>
-          <label className="mb-2 block font-bold text-gunmetal" {...getInputLabelProps()}>
+          <label
+            className="text-gunmetal mb-4 block text-sm font-bold md:text-base"
+            {...getInputLabelProps()}
+          >
             Select Playlist Genres
           </label>
           <div
             ref={setAnchorEl}
             className={`border ${
-              focused ? 'border-paynes-gray' : 'border-yale-blue '
+              focused ? 'border-pear' : 'border-yale-blue '
             } flex flex-wrap gap-2 rounded-full border-2 px-4 py-2`}
           >
             {value.map((option, index) => (
-              <Tag key={index} label={option} {...getTagProps({ index })} />
+              <Tag label={option} {...getTagProps({ index })} />
             ))}
             <input
               {...getInputProps()}
-              placeholder="What do you want to listen to?"
-              className="grow-1 w-0 min-w-[240px] bg-transparent outline-none"
+              className="grow-1 w-0 flex-grow bg-transparent text-xs outline-none md:text-sm"
             />
-            <span className="ml-auto flex h-5 gap-x-3">
+            <span className="ml-auto flex gap-1 md:gap-x-3">
               {hasClearIcon && (
                 <button
                   {...getClearProps()}
                   type="button"
-                  className="text-alice-blue block h-5 w-5 rounded-full bg-blue-500 hover:bg-blue-600 sm:h-6 sm:w-6"
+                  className="text-yale-blue block h-5 w-5 rounded-full sm:h-6 sm:w-6"
                 >
                   <CancelIcon />
                 </button>
@@ -97,7 +95,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
               <button
                 {...getPopupIndicatorProps()}
                 type="button"
-                className="text-alice-blue block h-5 w-5 rounded-full bg-blue-500 hover:bg-blue-600 sm:h-6 sm:w-6"
+                className="text-yale-blue block h-5 w-5 rounded-full sm:h-6 sm:w-6"
               >
                 {expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
               </button>
@@ -106,18 +104,19 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
         </div>
         {groupedOptions.length > 0 ? (
           <ul
-            className="absolute left-5 z-10 mt-2 max-h-80  w-[700px] overflow-y-auto rounded-md border border-gray-300 bg-white py-2 shadow-lg"
+            className="absolute left-3 z-10 mt-2 max-h-80 w-[calc(100vw-75px)]  overflow-y-auto rounded-md border border-gray-300 bg-white py-2 text-sm shadow-lg md:w-[670px]"
             {...getListboxProps()}
           >
             {groupedOptions.map((option, index) => (
               <li
-                className={`cursor-pointer px-4 py-2 hover:bg-gray-100 ${
-                  (index === focused ? 'bg-gray-100' : '',
-                  value.indexOf(option) > -1 ? 'bg-gray-100' : '')
+                className={`hover:bg-silver cursor-pointer px-4 py-2 ${
+                  value.indexOf(option as string) > -1
+                    ? 'bg-silver text-yale-blue'
+                    : ''
                 }`}
-                {...getOptionProps({ option, index })}
+                {...getOptionProps({ option: option as string, index })}
               >
-                <span>{option}</span>
+                <span>{option as string}</span>
               </li>
             ))}
           </ul>

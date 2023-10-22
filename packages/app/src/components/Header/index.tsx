@@ -1,10 +1,9 @@
 import { BackwardIcon, EjectIcon } from '@assets/icons'
-import reactLogo from '@assets/react.svg'
-import { Button } from '@components/Button'
 import { Container } from '@components/Container'
+import { TextLink } from '@components/TextLink'
 import token from '@utils/token'
 import { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 
 type NavigationItem = {
   name: string
@@ -41,13 +40,13 @@ const Nav = ({ isNavOpen, getSpotifyLink }: NavProps) => {
     >
       <ul>
         {navigationItems.map((item) => (
-          <li key={item.name} className="font-poppins mb-4 text-3xl font-bold">
+          <li key={item.name} className="text-pear mb-4 text-3xl font-semibold">
             <NavLink to={item.to}>{item.name}</NavLink>
           </li>
         ))}
       </ul>
-      <p className="font-poppins mt-auto text-sm font-light">
-        Jams was made with 💖 while listening to this{' '}
+      <p className="text-anti-flash-white mt-auto text-sm font-light">
+        Jams was made with 💖 while listening to{' '}
         {getSpotifyLink && (
           <span
             className="underline"
@@ -78,8 +77,8 @@ const NavButton = ({ isNavOpen, handleMenu }: NavProps) => {
 
 const Logo = () => {
   return (
-    <Link to="/" className="h-10 w-10 bg-black">
-      <img src={reactLogo} className="logo react" alt="React logo" />
+    <Link to="/" className="">
+      Jams
     </Link>
   )
 }
@@ -88,36 +87,27 @@ const LogoutButton = () => {
   const handleLogout = () => {
     localStorage.clear()
     token.remove()
-    window.location.href = '/'
   }
 
   return (
-    <Button
-      style="text"
-      colour="secondary"
-      startIcon={<EjectIcon />}
-      onClick={handleLogout}
-    >
+    <TextLink to="/" onClick={handleLogout} startIcon={<EjectIcon />}>
       Logout
-    </Button>
+    </TextLink>
   )
 }
 
 const RestartButton = () => {
-  const navigate = useNavigate()
   const handleRestart = () => {
     localStorage.clear()
-    navigate('/generate-playlist')
   }
   return (
-    <Button
-      style="text"
-      colour="secondary"
-      startIcon={<BackwardIcon />}
+    <TextLink
+      to="/generate-playlist"
       onClick={handleRestart}
+      startIcon={<BackwardIcon />}
     >
       Start Over
-    </Button>
+    </TextLink>
   )
 }
 
@@ -138,7 +128,8 @@ export const Header = () => {
   }, [])
 
   const spotifyLinks = [
-    '<a href="https://open.spotify.com/playlist/75USLqe4N3RsMtFvPZfOhM?si=895d78082ce64abb"> ultimate Aussie dad rock playlist</a>',
+    '<a href="https://open.spotify.com/playlist/75USLqe4N3RsMtFvPZfOhM?si=895d78082ce64abb">this ultimate Aussie dad rock playlist</a>',
+    '<a href="https://open.spotify.com/playlist/7p36TIjl8d7v9LXUuuTBg8?si=9f335ffd65fc4488&pt=d8e1e8318c3fcb53fb185c1ffa7e9cff"> magnificent Misfits playlist </a>',
     '<a href="https://open.spotify.com/playlist/7p36TIjl8d7v9LXUuuTBg8?si=9f335ffd65fc4488&pt=d8e1e8318c3fcb53fb185c1ffa7e9cff"> magnificent Misfits playlist </a>',
   ]
 
@@ -156,13 +147,10 @@ export const Header = () => {
       <Container width="full">
         <div className="flex items-center justify-between py-2">
           <Logo />
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 md:gap-6">
             {isRestart ? <RestartButton /> : null}
             {token.get() ? <LogoutButton /> : null}
-            <NavButton
-              isNavOpen={isNavOpen}
-              handleMenu={handleMenu}
-            />
+            <NavButton isNavOpen={isNavOpen} handleMenu={handleMenu} />
           </div>
         </div>
       </Container>

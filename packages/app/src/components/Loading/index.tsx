@@ -7,13 +7,15 @@ type LoadingProps = {
 
 export const Loading = ({ title, copy }: LoadingProps) => {
   return (
-    <div className="flex flex-row items-center justify-center gap-x-3">
+    <div className="flex flex-col items-center justify-center gap-x-3 md:flex-row">
       <span className="text-white">
         <AnimatedStars />
       </span>
-      <span>
-        {title && <h1 className="text-4xl font-bold text-white">{title}</h1>}
-        {copy && <p className="text-white">{copy}</p>}
+      <span className="from-pear to-yale-blue bg-gradient-to-r bg-clip-text text-center">
+        {title && (
+          <h1 className="mb-1 text-4xl font-bold text-transparent">{title}</h1>
+        )}
+        {copy && <p className="text-transparent">{copy}</p>}
       </span>
     </div>
   )
