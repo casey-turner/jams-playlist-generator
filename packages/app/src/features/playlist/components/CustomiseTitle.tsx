@@ -1,4 +1,4 @@
-// @ts-nocheck
+//@ts-nocheck
 import { useEffect, useState } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
@@ -33,11 +33,11 @@ const CustomiseTitle = () => {
       // )
     })
   }, [watch])
+  console.log('errors', errors)
+  // console.log('watch', watch('playlistTitle'))
+  // console.log('getValues', getValues('playlistTitle'))
+  // console.log('fields', fields)
 
-  console.log('watch', watch('playlistTitle'))
-  console.log('getValues', getValues('playlistTitle'))
-
-  console.log('fields', fields)
   return (
     <>
       <div className="flex flex-col items-center space-y-3 md:space-y-6">
@@ -50,7 +50,7 @@ const CustomiseTitle = () => {
           <div className="text-center" key={title.id}>
             <input
               id={title.id}
-              className="peer hidden"
+              className="peer opacity-0"
               type="radio"
               {...register(`playlistTitle`)}
               value={title.title}
@@ -74,7 +74,7 @@ const CustomiseTitle = () => {
         <div>
           <input
             id="playlistTitle-custom"
-            className="peer hidden"
+            className="peer opacity-0"
             type="radio"
             {...register(`playlistTitle`)}
             checked={customTitleSelected}
@@ -89,10 +89,11 @@ const CustomiseTitle = () => {
             id="customPlaylistTitle"
             className={
               'placeholder:text-paynes-gray mx-auto w-full cursor-pointer border-0 border-transparent bg-transparent text-center text-xl font-bold focus:ring-0 md:text-2xl lg:text-3xl' +
-              (customTitleSelected ? 'text-yale-blue underline' : 'no-underline text-paynes-gray')
+              (customTitleSelected
+                ? 'text-yale-blue underline'
+                : 'text-paynes-gray no-underline')
             }
             type="text"
-            name="customPlaylistTitle"
             placeholder="Enter your own title"
             {...register(`customPlaylistTitle`)}
             onChange={(e) => {
