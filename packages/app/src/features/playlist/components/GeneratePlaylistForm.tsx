@@ -40,6 +40,8 @@ const GeneratePlaylistForm = () => {
           }
         }
       )
+      console.log('updatedPlaylist', updatedPlaylist)
+      localStorage.setItem('JAMS_tracks', JSON.stringify(updatedPlaylist))
       setAiTracks(updatedPlaylist)
       setAiPlaylistTitles(updatedPlaylistTitles)
 
