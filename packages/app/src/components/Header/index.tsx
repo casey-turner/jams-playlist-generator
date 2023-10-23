@@ -1,6 +1,7 @@
 import { BackwardIcon, EjectIcon } from '@assets/icons'
 import { Container } from '@components/Container'
 import { TextLink } from '@components/TextLink'
+import authClient from '@utils/api'
 import token from '@utils/token'
 import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
@@ -84,9 +85,16 @@ const Logo = () => {
 }
 
 const LogoutButton = () => {
-  const handleLogout = () => {
-    localStorage.clear()
-    token.remove()
+  const handleLogout = async () => {
+    try {
+      const response = await authClient.post('/logout')
+      if (response.status === 200) {
+        localStorage.clear()
+        window.location.href = '/'
+      }
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
   return (
