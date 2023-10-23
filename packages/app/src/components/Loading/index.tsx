@@ -7,7 +7,7 @@ type LoadingProps = {
 
 export const Loading = ({ title, copy }: LoadingProps) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-x-3 md:flex-row">
+    <div className="absolute left-1/2 top-1/3 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-x-3 md:flex-row">
       <span className="text-white">
         <AnimatedStars />
       </span>
