@@ -18,7 +18,7 @@ const CustomiseTitle = () => {
   })
 
   useEffect(() => {
-    const customTitle = localStorage.getItem('JAMS_custom_title')
+    const customTitle = localStorage.getItem('Jams_custom_title')
     if (customTitle) {
       setValue('customPlaylistTitle', JSON.parse(customTitle))
     }
@@ -28,7 +28,7 @@ const CustomiseTitle = () => {
     watch((value, { customPlaylistTitle }) => {
       console.log('value', customPlaylistTitle)
       // localStorage.setItem(
-      //   'JAMS_custom_title',
+      //   'Jams_custom_title',
       //   JSON.stringify(value.customPlaylistTitle)
       // )
     })

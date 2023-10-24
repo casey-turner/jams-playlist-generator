@@ -36,7 +36,7 @@ const Nav = ({ isNavOpen, getSpotifyLink }: NavProps) => {
     <nav
       className={`${
         isNavOpen ? 'translate-x-0' : 'translate-x-full'
-      } bg-oxford-blue text-peach fixed right-0 top-0 z-40 flex h-screen w-full transform flex-col px-8 pb-4 pt-20 transition duration-700 ease-in-out md:w-1/2`}
+      } bg-oxford-blue text-peach fixed right-0 top-0 z-40 flex h-[100dvh] w-full transform flex-col px-8 pb-4 pt-20 transition duration-700 ease-in-out md:h-screen md:w-1/2`}
     >
       <ul>
         {navigationItems.map((item) => (
@@ -77,7 +77,7 @@ const NavButton = ({ isNavOpen, handleMenu }: NavProps) => {
 
 const Logo = () => {
   return (
-    <Link to="/" className="">
+    <Link to="/" className="text-yale-blue font-extrabold">
       Jams
     </Link>
   )
@@ -117,8 +117,8 @@ export const Header = () => {
   const [isRestart, setIsRestart] = useState(false)
 
   useEffect(() => {
-    const jamsTracks = localStorage.getItem('JAMS_tracks')
-    const jamsPlaylistTitles = localStorage.getItem('JAMS_playlist_titles')
+    const jamsTracks = localStorage.getItem('Jams_tracks')
+    const jamsPlaylistTitles = localStorage.getItem('Jams_playlist_titles')
 
     if (jamsTracks !== null || jamsPlaylistTitles !== null) {
       setIsRestart(true)

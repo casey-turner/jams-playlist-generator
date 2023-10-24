@@ -24,7 +24,7 @@ const Connect = () => {
             </h1>
             <p className="text-gunmetal mb-5 text-center text-sm md:text-lg">
               Amplify your playlist creating experience by connecting your
-              Spotify account, enabling JAMS to seamlessly save your custom
+              Spotify account, enabling Jams to seamlessly save your custom
               curated playlists direcly to your account.
             </p>
             <Button onClick={handleConnectClick}>Connect to Spotify</Button>
