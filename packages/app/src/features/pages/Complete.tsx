@@ -16,7 +16,7 @@ const Complete = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const storedPlaylistId = localStorage.getItem('JAMS_playlist_id')
+    const storedPlaylistId = localStorage.getItem('Jams_playlist_id')
     if (storedPlaylistId) {
       // time out to simulate loading
       setIsLoading(true)
@@ -34,9 +34,9 @@ const Complete = () => {
   }, [])
 
   const handleMakeAnother = () => {
-    localStorage.removeItem('JAMS_playlist_id')
-    localStorage.removeItem('JAMS_tracks')
-    localStorage.removeItem('JAMS_playlist_titles')
+    localStorage.removeItem('Jams_playlist_id')
+    localStorage.removeItem('Jams_tracks')
+    localStorage.removeItem('Jams_playlist_titles')
     navigate('/generate-playlist')
   }
 
@@ -48,7 +48,7 @@ const Complete = () => {
             {isLoading && (
               <Loading
                 title="Brb, making music magic"
-                copy="Your perfect personalised playlist is just seconds away..."
+                copy="Creating your playlist in Spotify..."
               />
             )}
             {playlistId && !isLoading && (

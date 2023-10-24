@@ -26,17 +26,16 @@ const CustomiseTracks = () => {
   })
 
   useEffect(() => {
-    const tracks = localStorage.getItem('JAMS_tracks')
+    const tracks = localStorage.getItem('Jams_tracks')
     if (tracks) {
       setValue('tracks', JSON.parse(tracks))
     }
   }, [])
 
   useEffect(() => {
-    watch((value) => {
-      console.log('value', value)
-      localStorage.setItem('JAMS_tracks', JSON.stringify(value.tracks))
-    })
+    watch((value) =>
+      localStorage.setItem('Jams_tracks', JSON.stringify(value.tracks))
+    )
   }, [watch])
 
   const trackNumber = (index) => {

@@ -17,8 +17,8 @@ export const Head = ({
 
   return (
     <Helmet
-      title={title ? `${title} | JAMS - AI Playlist Generator` : undefined}
-      defaultTitle="JAMS - AI Playlist Generator"
+      title={title ? `${title} | Jams - AI Playlist Generator` : undefined}
+      defaultTitle="Jams - AI Playlist Generator"
     >
       {description && <meta name="description" content={description} />}
       {url && <link rel="canonical" href={url} />}

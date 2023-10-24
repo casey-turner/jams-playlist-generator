@@ -34,7 +34,7 @@ const CustomisePlaylistForm = () => {
       })
 
       if (status === 200 && data.playlistId) {
-        localStorage.setItem('JAMS_playlist_id', data.playlistId)
+        localStorage.setItem('Jams_playlist_id', data.playlistId)
         navigate('/complete')
       } else {
         console.log(data)
@@ -53,7 +53,7 @@ const CustomisePlaylistForm = () => {
   }
 
   useEffect(() => {
-    const titles = localStorage.getItem('JAMS_playlist_titles')
+    const titles = localStorage.getItem('Jams_playlist_titles')
     if (titles) {
       setValue('playlistTitle', JSON.parse(titles))
     }
@@ -61,7 +61,7 @@ const CustomisePlaylistForm = () => {
 
   useEffect(() => {
     localStorage.setItem(
-      'JAMS_playlist_titles',
+      'Jams_playlist_titles',
       JSON.stringify(watch('playlistTitle'))
     )
   }, [watch])

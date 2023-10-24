@@ -1,1 +1,1 @@
-# JAMS - AI Playlist Generator
+# Jams - AI Playlist Generator
