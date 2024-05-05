@@ -46,30 +46,20 @@ Install jams-playlist-generator with npm
 
 ## Environment Variables
 
-To run this project, you will need to add the following environment variables:
+To run this project, you will need to add the following environment variables. Refer to the relevant `env.example` files for guidance:
 
-<b>packages/server .env file</b>
+**packages/server .env file:**
+- `NODE_ENV`
+- `SPOTIFY_CLIENT_ID`
+- `SPOTIFY_CLIENT_SECRET`
+- `SPOTIFY_REDIRECT_URI`
+- `OPENAI_API_KEY`
+- `JWT_SECRET`
+- `CLIENT_URL`
+- `DOMAIN`
+- `PORT`
 
-`NODE_ENV`
+**packages/app .env file:**
+- `VITE_API_URL`
+- `VITE_DOMAIN`
 
-`SPOTIFY_CLIENT_ID`
-
-`SPOTIFY_CLIENT_SECRET`
-
-`SPOTIFY_REDIRECT_URI`
-
-`OPENAI_API_KEY`
-
-`JWT_SECRET`
-
-`CLIENT_URL`
-
-`DOMAIN`
-
-`PORT`
-
-<b>packages/app .env file</b>
-
-`VITE_API_URL`
-
-`VITE_DOMAIN`
