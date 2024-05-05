@@ -3,7 +3,7 @@ import { Container } from '@components/Container'
 import { TextLink } from '@components/TextLink'
 import token from '@utils/token'
 import { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 type NavigationItem = {
   name: string
@@ -36,7 +36,7 @@ const Nav = ({ isNavOpen, getSpotifyLink }: NavProps) => {
     <nav
       className={`${
         isNavOpen ? 'translate-x-0' : 'translate-x-full'
-      } bg-oxford-blue text-peach fixed right-0 top-0 z-40 flex h-screen w-full transform flex-col px-8 pb-4 pt-20 transition duration-700 ease-in-out md:w-1/2`}
+      } bg-oxford-blue text-peach fixed right-0 top-0 z-40 flex h-[100dvh] w-full transform flex-col px-8 pb-4 pt-20 transition duration-700 ease-in-out md:h-screen md:w-1/2`}
     >
       <ul>
         {navigationItems.map((item) => (
@@ -77,7 +77,7 @@ const NavButton = ({ isNavOpen, handleMenu }: NavProps) => {
 
 const Logo = () => {
   return (
-    <Link to="/" className="">
+    <Link to="/" className="text-yale-blue font-extrabold">
       Jams
     </Link>
   )
@@ -112,15 +112,13 @@ const RestartButton = () => {
 }
 
 export const Header = () => {
-  const location = useLocation()
-
   const [isNavOpen, setIsNavOpen] = useState(false)
   const [randomSpotifyLink, setRandomSpotifyLink] = useState('')
   const [isRestart, setIsRestart] = useState(false)
 
   useEffect(() => {
-    const jamsTracks = localStorage.getItem('JAMS_tracks')
-    const jamsPlaylistTitles = localStorage.getItem('JAMS_playlist_titles')
+    const jamsTracks = localStorage.getItem('Jams_tracks')
+    const jamsPlaylistTitles = localStorage.getItem('Jams_playlist_titles')
 
     if (jamsTracks !== null || jamsPlaylistTitles !== null) {
       setIsRestart(true)
@@ -128,9 +126,13 @@ export const Header = () => {
   }, [])
 
   const spotifyLinks = [
-    '<a href="https://open.spotify.com/playlist/75USLqe4N3RsMtFvPZfOhM?si=895d78082ce64abb">this ultimate Aussie dad rock playlist</a>',
-    '<a href="https://open.spotify.com/playlist/7p36TIjl8d7v9LXUuuTBg8?si=9f335ffd65fc4488&pt=d8e1e8318c3fcb53fb185c1ffa7e9cff"> magnificent Misfits playlist </a>',
-    '<a href="https://open.spotify.com/playlist/7p36TIjl8d7v9LXUuuTBg8?si=9f335ffd65fc4488&pt=d8e1e8318c3fcb53fb185c1ffa7e9cff"> magnificent Misfits playlist </a>',
+    '<a href="https://open.spotify.com/playlist/75USLqe4N3RsMtFvPZfOhM?si=895d78082ce64abb" target="_blank">this ultimate Aussie "dad-rock" playlist 🦘</a>',
+    '<a href="https://open.spotify.com/playlist/4fGQSI2AZumVGqe0ACqtWd?si=5601f74539cb4e1b" target="_blank">this playlist of all my favourite heart-melty, pop-punk love songs 💘</a>',
+    '<a href="https://open.spotify.com/playlist/7p36TIjl8d7v9LXUuuTBg8?si=2e7adbf177014fe0" target="_blank">this tribute to the Godfather of horror-punk, Glen Danzig 💀</a>',
+    '<a href="https://open.spotify.com/playlist/7KFiQ2NmLPZqghjHBaeBQx?si=ab930f02973f4178" target="_blank">this playlist of rockabilly classics 🐅</a>',
+    '<a href="https://open.spotify.com/playlist/5WqZzNMhgJ9GSLL0XOKKqf?si=c4dcaafff3124e14" target="_blank">this playlist of nothin but 90s rom-com vibes 💟</a>',
+    '<a href="https://open.spotify.com/playlist/2CVrmypPxGJSZpa908OK07?si=8d6eea1ef4284db9" target="_blank">this playlist of my favourite punx gone solo ✨</a>',
+    '<a href="https://open.spotify.com/playlist/1OmQZZVL62rZedDeTr0P0h?si=c92d8f0c5594497e" target="_blank">this playlist of youth crew & HC classics 👊🏼</a>',
   ]
 
   const handleMenu = () => {

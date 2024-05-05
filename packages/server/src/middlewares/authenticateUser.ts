@@ -12,14 +12,14 @@ import { RefreshTokenResult } from '../types/spotifyTypes'
 import { generateToken } from '../utils/generateToken'
 import { logLevels, logger } from '../utils/logger'
 
-const isAccessTokenExpired = (
+const isAccess_tokenExpired = (
   timestamp: number,
-  expiresIn: number,
-  accessToken: string
+  expires_in: number,
+  access_token: string
 ): boolean => {
-  if (timestamp && expiresIn && accessToken) {
+  if (timestamp && expires_in && access_token) {
     const now = Date.now()
-    const expiresAt = timestamp + expiresIn * 1000
+    const expiresAt = timestamp + expires_in * 1000
     return expiresAt < now
   }
   return true
@@ -70,13 +70,13 @@ const refreshAccessToken = (
         statusText: string
       }) => {
         if (response.status === 200) {
-          const accessToken = response.data.access_token
-          const expiresIn = response.data.expires_in
+          const access_token = response.data.access_token
+          const expires_in = response.data.expires_in
           const timestamp = Date.now()
           const token = {
-            accessToken,
+            access_token,
             refreshToken,
-            expiresIn,
+            expires_in,
             timestamp,
             userId,
           }
@@ -124,10 +124,10 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
 
       let newToken
       if (
-        isAccessTokenExpired(
+        isAccess_tokenExpired(
           decodedToken.timestamp as number,
-          decodedToken.expiresIn as number,
-          decodedToken.accessToken as string
+          decodedToken.expires_in as number,
+          decodedToken.access_token as string
         )
       ) {
         newToken = await refreshAccessToken(
@@ -141,9 +141,9 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
         const newTimestamp = Date.now()
         const token = generateToken(
           {
-            accessToken: newToken.accessToken,
+            accessToken: newToken.access_token,
             refreshToken: decodedToken.refreshToken as string,
-            expiresIn: newToken.expiresIn,
+            expiresIn: newToken.expires_in,
             timestamp: newTimestamp,
             userId: decodedToken.userId as string,
           },
@@ -152,17 +152,17 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
 
         res.cookie('jams_token', token, ENVIRONMENTS[ENV].cookieSettings)
         req.spotifyAuthData = {
-          accessToken: newToken.accessToken,
-          refreshToken: decodedToken.refreshToken as string,
-          expiresIn: newToken.expiresIn,
+          access_token: newToken.access_token,
+          refresh_token: decodedToken.refreshToken as string,
+          expires_in: newToken.expires_in,
           timestamp: newTimestamp,
           userId: decodedToken.userId as string,
         }
       } else {
         req.spotifyAuthData = {
-          accessToken: decodedToken.accessToken as string,
-          refreshToken: decodedToken.refreshToken as string,
-          expiresIn: decodedToken.expiresIn as number,
+          access_token: decodedToken.access_token as string,
+          refresh_token: decodedToken.refreshToken as string,
+          expires_in: decodedToken.expires_in as number,
           timestamp: decodedToken.timestamp as number,
           userId: decodedToken.userId as string,
         }
@@ -192,3 +192,4 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
 }
 
 export { authenticateUser }
+

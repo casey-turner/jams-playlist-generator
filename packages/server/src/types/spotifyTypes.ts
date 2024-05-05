@@ -1,14 +1,18 @@
 export type SpotifyAuthData = {
-  accessToken: string
-  refreshToken: string
-  expiresIn: number
+  access_token: string
+  refresh_token: string
+  expires_in: number
   timestamp: number
   userId: string
 }
 
+export type SpotifyUserProfileData = {
+  id: string
+}
+
 export type RefreshTokenResult = {
-  accessToken: string
-  expiresIn: number
+  access_token: string
+  expires_in: number
   error?: string
 }
 

@@ -1,4 +1,4 @@
-// @ts-nocheck
+import { AxiosResponse } from 'axios'
 import { Request, Response } from 'express'
 import querystring from 'querystring'
 import { spotifyApi, spotifyTokenApi } from '../apis/spotifyApi'
@@ -10,6 +10,7 @@ import {
   SPOTIFY_CLIENT_ID,
   SPOTIFY_REDIRECT_URI,
 } from '../config'
+import { SpotifyAuthData, SpotifyUserProfileData } from '../types/spotifyTypes'
 import { generateRandomString } from '../utils/generateRandomString'
 import { generateToken } from '../utils/generateToken'
 import { logLevels, logger } from '../utils/logger'
@@ -42,7 +43,7 @@ const callbackController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const code = req.query.code || null
+    const code = req.query.code as string
 
     const data = querystring.stringify({
       grant_type: 'authorization_code',
@@ -50,14 +51,15 @@ const callbackController = async (
       redirect_uri: SPOTIFY_REDIRECT_URI,
     })
 
-    const tokenResponse = await spotifyTokenApi.post('', data)
+    const tokenResponse: AxiosResponse<SpotifyAuthData> = await spotifyTokenApi.post('', data) 
+    console.log('tokenResponse', tokenResponse.data)
 
     if (tokenResponse.status === 200) {
       const accessToken: string = tokenResponse.data.access_token
       const refreshToken: string = tokenResponse.data.refresh_token
       const expiresIn: number = tokenResponse.data.expires_in
 
-      const userInfoResponse = await spotifyApi.get('/me', {
+      const userInfoResponse: AxiosResponse<SpotifyUserProfileData> = await spotifyApi.get('/me', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -73,13 +75,14 @@ const callbackController = async (
       res.cookie('jams_token', token, ENVIRONMENTS[ENV].cookieSettings)
       res.redirect(`${CLIENT_URL}/generate-playlist`)
     } else {
-      logger(logLevels.error, 'something', '/callback', 'something')
+      logger(logLevels.error, 'token response failed', '/callback', tokenResponse)
       res.status(500).send()
     }
   } catch (error) {
-    logger(logLevels.error, 'error', '/callback', 'error')
+    logger(logLevels.error, 'error', '/callback', error)
     res.status(500).send()
   }
 }
 
 export { callbackController, connectController }
+

@@ -26,7 +26,7 @@ const CustomiseTracks = () => {
   })
 
   useEffect(() => {
-    const tracks = localStorage.getItem('JAMS_tracks')
+    const tracks = localStorage.getItem('Jams_tracks')
     if (tracks) {
       setValue('tracks', JSON.parse(tracks))
     }
@@ -34,7 +34,7 @@ const CustomiseTracks = () => {
 
   useEffect(() => {
     watch((value) =>
-      localStorage.setItem('JAMS_tracks', JSON.stringify(value.tracks))
+      localStorage.setItem('Jams_tracks', JSON.stringify(value.tracks))
     )
   }, [watch])
 

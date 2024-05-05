@@ -11,3 +11,13 @@ export type Track = {
 export type Tracks = {
   tracks: Track
 }
+
+export type PlaylistTitle = {
+  title: string
+}
+
+export type PlaylistData = {
+  genres: string[]
+  numberOfSongs: number
+  success: boolean
+}

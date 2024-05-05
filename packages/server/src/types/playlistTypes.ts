@@ -1,4 +1,8 @@
 export type PlaylistGenerationRequest = {
+  data: PlaylistGenerationData
+}
+
+export type PlaylistGenerationData = {
   genres: string[]
   numberOfSongs: number
   repeatArtist: boolean

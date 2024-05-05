@@ -11,7 +11,7 @@ import usePlaylistDataContext from '../hooks/usePlaylistDataContext'
 
 const GeneratePlaylistForm = () => {
   const { handleSubmit, control } = useForm<PlaylistData>()
-  const [isLoading, setIsLoading] = useState(false)
+  const [Jams, setIsLoading] = useState(false)
 
   const navigate = useNavigate()
   const { setAiTracks, setAiPlaylistTitles } = usePlaylistDataContext()
@@ -49,7 +49,7 @@ const GeneratePlaylistForm = () => {
     }
   }
 
-  if (isLoading) {
+  if (!Jams) {
     return (
       <Loading
         title="Brb, making music magic"
