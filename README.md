@@ -2,7 +2,7 @@
 
 Jams is a web app that leverages OpenAI's Chat GPT to allow users to generate a Spotify playlist and playlist title, based on their selected genre/s of music.
 
-🔗 https://jamsplaylist.app
+🔗 <a href="https://jamsplaylist.app" target="_blank">https://jamsplaylist.app</a>
 
 ## Demo
 
