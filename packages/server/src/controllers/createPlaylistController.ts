@@ -17,14 +17,11 @@ const createPlaylist = async (req: Request, res: Response) => {
     }
 
     // EXTRACT - extract necessary data from request body and authentication data
-    const { accessToken, userId } = req.spotifyAuthData
+    const { access_token, userId } = req.spotifyAuthData
     const { tracks, playlistTitle } = req.body as PlaylistCreationRequest
 
-    console.log('tracks', tracks)
-    console.log('playlistTitle', playlistTitle)
-
     // VALIDATE - validate input data
-    if (!accessToken || !userId || !tracks) {
+    if (!access_token || !userId || !tracks) {
       logger(
         logLevels.error,
         'Missing or invalid input data.',
@@ -43,7 +40,7 @@ const createPlaylist = async (req: Request, res: Response) => {
     // CREATE PLAYLIST - send POST request to create a playlist on Spotify
     const createPlaylistResponse: AxiosResponse<CreatePlaylistResponse> =
       await spotifyApi.post(`/users/${userId}/playlists`, playlistOptions, {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: { Authorization: `Bearer ${access_token}` },
       })
 
     // EXTRACT - extract playlist ID from response
@@ -67,13 +64,14 @@ const createPlaylist = async (req: Request, res: Response) => {
         `/playlists/${playlistId}/tracks`,
         { uris: tracks },
         {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${access_token}` },
         }
       )
 
     // VALIDATE - validate adding tracks to playlist response
     const addTracksStatus = addTracksToPlaylistResponse.status
-    if (addTracksStatus !== 201) {
+
+    if (addTracksStatus !== 200) {
       logger(
         logLevels.error,
         'Adding tracks to playlist failed',
@@ -101,3 +99,4 @@ const createPlaylist = async (req: Request, res: Response) => {
 }
 
 export { createPlaylist }
+

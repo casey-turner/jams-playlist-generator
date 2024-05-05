@@ -1,6 +1,5 @@
-// @ts-nocheck
 import { Request, Response } from 'express'
-import { Configuration, OpenAIApi } from 'openai'
+import { OpenAI } from 'openai'
 import { spotifyApi } from '../apis/spotifyApi'
 import { OPENAI_API_KEY } from '../config'
 import {
@@ -10,20 +9,19 @@ import {
 } from '../types/playlistTypes'
 import { logLevels, logger } from '../utils/logger'
 
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: OPENAI_API_KEY,
 })
-const openai = new OpenAIApi(configuration)
 
 const generatePlaylist = async (req: Request, res: Response) => {
   try {
     if (!req.spotifyAuthData) {
       throw new Error('Spotify authentication data is missing.')
     }
-    const accessToken: string = req.spotifyAuthData.accessToken
-    const { data } = req.body as PlaylistGenerationRequest
-
-    const openAIResponse = await generateOpenAIResponse(data)
+    const accessToken: string = req.spotifyAuthData.access_token
+    const requestData  = req.body as PlaylistGenerationRequest
+  
+    const openAIResponse = await generateOpenAIResponse(requestData)
 
     if (!openAIResponse) {
       throw new Error('OpenAI response is missing.')
@@ -43,31 +41,32 @@ const generatePlaylist = async (req: Request, res: Response) => {
 
     res.status(200).json(playlistData)
   } catch (error) {
+    console.error(error)
     logger(logLevels.error, 'generate playlist failed', '/playlist', error)
     res.status(500).json({ message: 'Something went wrong' })
   }
 }
 
 const generateOpenAIResponse = async (data: PlaylistGenerationRequest) => {
-  const { genres, numberOfSongs, repeatArtist } = data
+  const { genres, numberOfSongs } = data.data
 
-  // Sometimes the OpenAI API will return less than number of artists requested so we need to account for that
-  const requestBands = repeatArtist ? numberOfSongs / 2 : numberOfSongs + 5
-
-  const openaiPrompt = `You are an incredible Playlist Generation Tool, here to help users discover some awesome bands or singers based on their favorite music genres. Please provide a list of ${requestBands} bands and/or singers of the following genres: ${genres.join(
+  const openaiPrompt = `You are an incredible Playlist Generation Tool, here to help users discover some awesome bands or singers based on their favorite music genres. Please provide a list of ${numberOfSongs} bands and/or singers of the following genres: ${genres.join(
     ', '
   )}. Include well-known and lesser-known artists in order to create a comprehensive list. Do not repeat artists. All bands/artists should be available on Spotify. Additionally, suggest 5 playlist titles that are humorous but maintain a non-offensive tone for these afrobeat artists. The titles should reflect the unique characteristics or themes associated with the genre/s. The playlist and titles must be returned as a JSON object in the following format { "playlist": [ {"artist": "Queen"}, {"artist": "AC/DC"} ], "playlistTitles": [ {"title":"First playlist name option"}, {"title":"Second playlist name option"} ] }`
 
-  const aiCompletion = await openai.createCompletion({
-    model: 'text-davinci-003',
-    prompt: openaiPrompt,
-    max_tokens: 3000,
-    temperature: 0.9,
-  })
+  const aiCompletion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: [
+      {
+        role: 'system',
+        content: openaiPrompt,
+      },
+    ],
+  });
 
-  const text = aiCompletion.data.choices[0].text
+  const text =  aiCompletion.choices[0]?.message?.content
   const openaiResponse =
-    text !== undefined ? (JSON.parse(text) as OpenAiResponse) : null
+    text ? (JSON.parse(text) as OpenAiResponse) : null
   return openaiResponse
 }
 
@@ -88,8 +87,6 @@ const getSpotifyTracks = async (
       },
     })
   })
-
-  console.log(getSpotifyTrackDataPromises)
 
   const getSpotifyTrackData = await Promise.all(getSpotifyTrackDataPromises)
 
@@ -121,3 +118,4 @@ const getSpotifyTracks = async (
   return playlistData
 }
 export { generatePlaylist }
+
