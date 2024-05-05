@@ -1,4 +1,3 @@
-//@ts-nocheck
 import express from 'express'
 import { ENV, ENVIRONMENTS } from '../config'
 import {
