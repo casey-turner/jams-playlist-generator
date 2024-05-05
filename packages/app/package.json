@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@mui/base": "^5.0.0-beta.7",
+    "axios": "^1.6.8",
     "js-cookie": "^3.0.5",
     "lottie-react": "^2.4.0",
     "react": "^18.2.0",
