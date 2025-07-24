@@ -28,6 +28,13 @@ Authentication and Security:
 - The use of JWT helps negate the need for a traditional database, enhancing scalability and reducing complexity.
 - Sensitive user data, such as Spotify credentials, is securely handled using JWT.
 
+Testing:
+
+- The backend uses Jest as the primary testing framework with TypeScript support via ts-jest.
+- Supertest is used for testing HTTP endpoints and API routes.
+- Tests are organized by component type (controllers, middlewares, routes, etc.) in the `__tests__` directory.
+- Mocking utilities are provided to simulate external dependencies like OpenAI and Spotify APIs.
+
 ## Obtaining API Keys
 
 - Spotify - https://developer.spotify.com/documentation/web-api
@@ -42,6 +49,21 @@ Install jams-playlist-generator with npm
   // launch the server and app in separate terminals
   npm run dev:server
   npm run dev:app
+```
+
+## Running Tests
+
+To run the backend tests:
+
+```bash
+  # Run all tests
+  npm run -w @playlistify/server test
+
+  # Run tests in watch mode (for development)
+  npm run -w @playlistify/server test:watch
+
+  # Run tests with coverage report
+  npm run -w @playlistify/server test:coverage
 ```
 
 ## Environment Variables
