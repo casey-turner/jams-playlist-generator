@@ -13,7 +13,8 @@
     "test:server": "npm run -w @playlistify/server test",
     "test:server:watch": "npm run -w @playlistify/server test:watch",
     "test:server:coverage": "npm run -w @playlistify/server test:coverage",
-    "test": "npm run test:server"
+    "test": "npm run test:server",
+    "prepare": "npm install"
   },
   "keywords": [],
   "author": "",
