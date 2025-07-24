@@ -28,6 +28,23 @@ Authentication and Security:
 - The use of JWT helps negate the need for a traditional database, enhancing scalability and reducing complexity.
 - Sensitive user data, such as Spotify credentials, is securely handled using JWT.
 
+## Testing
+
+The backend includes comprehensive integration tests covering all major API endpoints:
+
+- Authentication endpoints (/connect and /callback)
+- Playlist generation endpoint (/playlist)
+- Playlist creation endpoint (/create-playlist)
+- Authentication middleware
+
+To run the tests:
+
+```bash
+npm test
+```
+
+For more detailed information about the testing setup, see [TESTING.md](/packages/server/TESTING.md).
+
 ## Obtaining API Keys
 
 - Spotify - https://developer.spotify.com/documentation/web-api

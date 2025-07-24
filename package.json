@@ -9,7 +9,11 @@
     "dev:server": "npm run -w @playlistify/server dev",
     "build:app": "npm run -w @playlistify/app build",
     "build:server": "npm run -w @playlistify/server build",
-    "start:app": "npm run -w @playlistify/app start"
+    "start:app": "npm run -w @playlistify/app start",
+    "test:server": "npm run -w @playlistify/server test",
+    "test:server:watch": "npm run -w @playlistify/server test:watch",
+    "test:server:coverage": "npm run -w @playlistify/server test:coverage",
+    "test": "npm run test:server"
   },
   "keywords": [],
   "author": "",
